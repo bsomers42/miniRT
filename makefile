@@ -6,7 +6,7 @@
 #    By: bsomers <bsomers@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/09/22 14:52:38 by bsomers       #+#    #+#                  #
-#    Updated: 2022/09/22 16:17:05 by jaberkro      ########   odam.nl          #
+#    Updated: 2022/09/22 16:30:41 by jaberkro      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ LIBMLX42 = libmlx42
 
 SRC = main.c
 
-HEADER = miniRT.h minirt.h
+INCLUDE = -I include -I ./MLX42/include/MLX42
 
 CFLAGS = -Wall -Wextra -Werror -g
 
@@ -26,11 +26,11 @@ OBJ = $(SRC:.c=.o)
 
 all: $(NAME)
 
-$(NAME): $(OBJ)  $(LIBMLX42).a $(LIBFT).a
-		$(CC) $(CFLAGS) libmlx42.a -I include -lglfw3 -framework Cocoa -framework OpenGL -framework IOKit -L. $(OBJ) -o $(NAME) #-lft
+$(NAME): $(OBJ) $(LIBMLX42).a $(LIBFT).a
+		$(CC) $(CFLAGS) libmlx42.a $(INCLUDE) -lglfw3 -framework Cocoa -framework OpenGL -framework IOKit -L. $(OBJ) -o $(NAME) #-lft
 
-%.o: %.c $(HEADER)
-		$(CC) -Imlx -c $(CFLAGS) -o $@ $<
+%.o: %.c
+		$(CC) -c $(INCLUDE) $(CFLAGS) -o $@ $<
 
 $(LIBFT).a:
 	@make -C $(LIBFT)
