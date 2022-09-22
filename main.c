@@ -6,11 +6,12 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 14:54:42 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/09/22 14:55:28 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/09/22 16:28:55 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "miniRT.h"
+#include "minirt.h"
+#include "MLX42.h"
 
 int	main()
 {
