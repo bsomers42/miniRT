@@ -6,7 +6,7 @@
 #    By: bsomers <bsomers@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/09/22 14:52:38 by bsomers       #+#    #+#                  #
-#    Updated: 2022/09/22 16:17:05 by jaberkro      ########   odam.nl          #
+#    Updated: 2022/09/22 16:44:38 by bsomers       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,9 +16,10 @@ LIBFT = libft
 
 LIBMLX42 = libmlx42
 
-SRC = main.c
+SRC = main.c \
+		error.c
 
-HEADER = miniRT.h minirt.h
+HEADER = minirt.h
 
 CFLAGS = -Wall -Wextra -Werror -g
 
