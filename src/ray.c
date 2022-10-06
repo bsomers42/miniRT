@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 13:00:24 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/06 16:53:21 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/06 17:19:46 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_coord	ray_at(t_ray ray, float t)
 	return (result);
 }
 
-t_color	ray_color(t_ray ray)
+t_color	ray_color(t_sphere *spheres, t_ray ray)
 {
 	t_coord	unit_direction;
 	float	t;
@@ -32,15 +32,20 @@ t_color	ray_color(t_ray ray)
 	t_color	color;
 	t_coord point;
 	t_coord normal;
+	t_besthit record;
+	int		closest_index;
 
 	point.x = 0;
 	point.y = 0;
 	point.z = -1;
-	t = hit_sphere(point, 0.5, ray);
-	if (t > 0.0)
+	t = 0.0;
+	closest_index = hit_anything(spheres, ray, &record);
+	if (closest_index >= 0)
 	{
-		normal = unit_vector_coord(distract_points(ray_at(ray, t), point));
+		normal = unit_vector_coord(distract_points(ray_at(ray, record.t), spheres[closest_index].center));
 		color = new_color(0.5 * (normal.x + 1) * 255, 0.5 * (normal.y + 1) * 255, 0.5 * (normal.z + 1) * 255);
+ 		// color = new_color(0.5 * (normal.x + 1) * 255, 0.5 * (normal.y + 1), 0.5 * (normal.z + 1), samples_per_pixel);
+		// normal = unit_vector_coord(distract_points(ray_at(ray, t), point));
 	}
 	else
 	{
@@ -56,4 +61,26 @@ t_color	ray_color(t_ray ray)
 	return (color);
 }
 
+// unsigned int	find_colour(t_sphere *spheres, t_ray ray, int samples_per_pixel)
+// {
+// 	t_coord			normal;
+// 	unsigned int	colour;
+// 	t_coord			unit_dir;
+// 	int				closest_index;
+// 	t_besthit		hit_rec;
+
+// 	closest_index = hit_anything(spheres, ray, &hit_rec);
+// 	if (closest_index >= 0)
+// 	{
+// 		normal = unit_vector(minus(at(ray, hit_rec.t), spheres[closest_index].center));
+// 		colour = calculate_colour(0.5 * (normal.x + 1), 0.5 * (normal.y + 1), 0.5 * (normal.z + 1), samples_per_pixel);
+// 	}
+// 	else
+// 	{
+// 		unit_dir = (unit_vector(ray.dir));
+// 		hit_rec.t = 0.5 * (unit_dir.y + 1.0);
+// 		colour =  calculate_colour(1.0 * (1.0 - hit_rec.t), 1.0 * (1.0 - hit_rec.t), 1.0 * (1.0 - hit_rec.t), samples_per_pixel) + calculate_colour(0.5 * hit_rec.t, 0.7 * hit_rec.t, 1.0 * hit_rec.t, samples_per_pixel);
+// 	}
+// 	return (colour);
+// }
 

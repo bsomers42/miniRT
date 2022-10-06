@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 13:26:28 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/06 16:43:38 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/06 17:16:15 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,6 @@ t_color	decide_color(t_sphere *spheres, t_ray ray, int i, int j)
 	ray.dir.x = lower_left_corner.x + u * VIEWPORT_WIDTH - ray.origin.x;
 	ray.dir.y = lower_left_corner.y + v * VIEWPORT_HEIGHT - ray.origin.y;
 	ray.dir.z = lower_left_corner.z - ray.origin.z;
-	color = ray_color(ray);
+	color = ray_color(spheres, ray);
 	return (color);
 }
