@@ -6,14 +6,15 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 15:46:19 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/06 16:43:51 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/06 16:51:45 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include <stdio.h> //weghalen
+#include <math.h>
 
-int	hit_sphere(t_coord sphere_center, float radius, t_ray ray)
+float	hit_sphere(t_coord sphere_center, float radius, t_ray ray)
 {
 	t_coord	oc;
 	float	a;
@@ -26,7 +27,7 @@ int	hit_sphere(t_coord sphere_center, float radius, t_ray ray)
 	b = 2.0 * dot_points(oc, ray.dir);
 	c = dot_points(oc, oc) - radius * radius;
 	discriminant = b * b - 4 * a * c;
-	if (discriminant > 0)
-		return (1);
-	return (0);
+	if (discriminant < 0)
+		return (-1.0);
+	return ((-b - sqrt(discriminant)) / (2.0 * a));
 }

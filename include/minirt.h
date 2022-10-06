@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 12:11:34 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/06 15:55:52 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/06 16:52:02 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,6 @@ void	put_color(t_mlx_str mlx_str, int i, int j, t_color color);
 t_coord	ray_at(t_ray ray, float t);
 t_color	ray_color(t_ray ray);
 
-int		hit_sphere(t_coord sphere_center, float radius, t_ray ray);
+float	hit_sphere(t_coord sphere_center, float radius, t_ray ray);
 
 #endif
