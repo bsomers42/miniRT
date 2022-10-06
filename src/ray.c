@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 13:00:24 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/06 15:25:19 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/06 16:42:54 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,24 @@ t_color	ray_color(t_ray ray)
 	t_color	white;
 	t_color	blue;
 	t_color	color;
+	t_coord point;
 
-	(void)ray;
-	white = new_color(1.0, 1.0, 1.0);
-	blue = new_color(0.5, 0.7, 1.0);
-	unit_direction = unit_vector_coord(ray.dir);
-	t = 0.5 * (unit_direction.y + 1.0);
-	// printf("t:%f\n", t);
-	// color = multiply_color_float(white, 1.0 - t);
-	printf("unit_dir x:%f, y:%f, z:%f\n", unit_direction.x, unit_direction.y, unit_direction.z);
-	// color = add_colors(multiply_color_float(white, 1.0 - t), multiply_color_float(blue, t));
-	color.r = 255 * ((1.0 - t) * 1.0 + 0.5 * t);
-	color.g = 255 * ((1.0 - t) * 1.0 + 0.7 * t);
-	color.b = 255 * ((1.0 - t) * 1.0 + 1.0 * t);
+	point.x = 0;
+	point.y = 0;
+	point.z = -1;
+	if (hit_sphere(point, 0.5, ray))
+		color = new_color(255, 0, 0);
+	else
+	{
+		white = new_color(1.0, 1.0, 1.0);
+		blue = new_color(0.5, 0.7, 1.0);
+		unit_direction = unit_vector_coord(ray.dir);
+		t = 0.5 * (unit_direction.y + 1.0);
+		// color = multiply_color_float(add_colors(multiply_color_float(white, 1.0 - t), multiply_color_float(blue, t)), 255);
+		color.r = 255 * ((1.0 - t) * 1.0 + 0.5 * t);
+		color.g = 255 * ((1.0 - t) * 1.0 + 0.7 * t);
+		color.b = 255 * ((1.0 - t) * 1.0 + 1.0 * t);
+	}
 	return (color);
 }
 

@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 12:01:54 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/06 13:26:52 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/06 16:44:19 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,6 @@ void	renderer(t_sphere *spheres, t_ray ray, t_mlx_str mlx_str)
 		i = 0;
 		while (i < WIDTH)
 		{
-			// color.r = 255;
-			// color.g = 255;
-			// color.b = 0;
 			color = decide_color(spheres, ray, i, j);
 			put_color(mlx_str, i, j, color);
 			i++;

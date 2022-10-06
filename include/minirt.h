@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 12:11:34 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/06 15:34:26 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/06 15:55:52 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define MINIRT_H
 
 # define WIDTH 400
-# define HEIGHT 400// / 16 * 9
+# define HEIGHT 400 / 16 * 9
 # define VIEWPORT_WIDTH 2.0 * 16.0 / 9.0
 # define VIEWPORT_HEIGHT 2.0
 # define FOCAL_LENGTH 1.0
@@ -94,5 +94,7 @@ t_color	decide_color(t_sphere *spheres, t_ray ray, int i, int j);
 void	put_color(t_mlx_str mlx_str, int i, int j, t_color color);
 t_coord	ray_at(t_ray ray, float t);
 t_color	ray_color(t_ray ray);
+
+int		hit_sphere(t_coord sphere_center, float radius, t_ray ray);
 
 #endif
