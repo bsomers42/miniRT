@@ -6,7 +6,7 @@
 #    By: bsomers <bsomers@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/09/22 14:52:38 by bsomers       #+#    #+#                  #
-#    Updated: 2022/09/22 16:30:41 by jaberkro      ########   odam.nl          #
+#    Updated: 2022/10/06 13:32:38 by jaberkro      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,11 +16,22 @@ LIBFT = libft
 
 LIBMLX42 = libmlx42
 
-SRC = main.c
+SRC = main.c \
+	src/vector_math/add.c \
+	src/vector_math/distract.c \
+	src/vector_math/multiply.c \
+	src/vector_math/devide.c \
+	src/vector_math/dot.c \
+	src/vector_math/unit_vector.c \
+	src/color/new_color.c \
+	src/color/decide_color.c \
+	src/color/put_color.c \
+	src/ray.c \
+	src/renderer.c
 
 INCLUDE = -I include -I ./MLX42/include/MLX42
 
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 
 OBJ = $(SRC:.c=.o)
 

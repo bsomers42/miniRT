@@ -1,0 +1,30 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   put_color.c                                        :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/10/06 12:45:02 by jaberkro      #+#    #+#                 */
+/*   Updated: 2022/10/06 15:26:08 by jaberkro      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minirt.h"
+#include "MLX42.h"
+#include <stdio.h> //weghalen
+
+void	put_color(t_mlx_str mlx_str, int i, int j, t_color color)
+{
+	unsigned int	color_hex;
+	// float			r;
+	// float			g;
+	// float			b;
+
+	// r = color.r * 255;
+	// g = color.g * 255;
+	// b = color.b * 255;
+	color_hex = color.r * 16777216 + color.g * 65536 + color.b * 256 + 255;
+	printf("color:%d\n", color_hex);
+	mlx_put_pixel(mlx_str.img, i, HEIGHT - j - 1, color_hex);
+}
