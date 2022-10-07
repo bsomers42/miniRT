@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 14:54:42 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/10/06 12:12:23 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/07 15:29:32 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_sphere	*init_spheres(void)
 {
 	t_sphere	*spheres;
 
-	spheres = malloc((2) * sizeof(t_sphere));
+	spheres = malloc((4) * sizeof(t_sphere));
 	if (spheres == NULL)
 		printf("Malloc failed!\n");
 	/* sphere 1 */
@@ -38,6 +38,22 @@ t_sphere	*init_spheres(void)
 	spheres[1].color.r = 0;
 	spheres[1].color.g = 255;
 	spheres[1].color.b = 0;
+	/* sphere 3 */
+	spheres[2].center.x = 0.0;
+	spheres[2].center.y = -0.5;
+	spheres[2].center.z = -1.0;
+	spheres[2].radius = 0.5;
+	spheres[2].color.r = 0;
+	spheres[2].color.g = 0;
+	spheres[2].color.b = 255;
+	/* sphere 4 */
+	spheres[3].center.x = 0.3;
+	spheres[3].center.y = 0.3;
+	spheres[3].center.z = -1.5;
+	spheres[3].radius = 0.5;
+	spheres[3].color.r = 255;
+	spheres[3].color.g = 255;
+	spheres[3].color.b = 0;
 	return (spheres);
 }
 
@@ -46,7 +62,7 @@ t_ray	init_ray(void)
 	t_ray	ray;
 
 	ray.origin.x = 0.0;
-	ray.origin.y = 0.0;
+	ray.origin.y = -0.3;
 	ray.origin.z = 0.0;
 	ray.dir.x = 0.0;
 	ray.dir.y = 0.0;

@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 12:11:34 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/06 17:16:26 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/07 14:31:10 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # define VIEWPORT_WIDTH 2.0 * 16.0 / 9.0
 # define VIEWPORT_HEIGHT 2.0
 # define FOCAL_LENGTH 1.0
+
+# define AA 2 //anti-aliasing
 
 typedef struct s_mlx_str
 {
@@ -90,7 +92,7 @@ float	dot_colors(t_color first, t_color second);
 
 void	renderer(t_sphere *spheres, t_ray ray, t_mlx_str mlx_str);
 t_color	new_color(float r, float g, float b);
-t_color	decide_color(t_sphere *spheres, t_ray ray, int i, int j);
+t_color	decide_color(t_sphere *spheres, t_ray ray, float i, float j);
 void	put_color(t_mlx_str mlx_str, int i, int j, t_color color);
 t_coord	ray_at(t_ray ray, float t);
 t_color	ray_color(t_sphere *spheres, t_ray ray);

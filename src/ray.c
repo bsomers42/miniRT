@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 13:00:24 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/06 17:19:46 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/07 13:07:39 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ t_color	ray_color(t_sphere *spheres, t_ray ray)
 	{
 		normal = unit_vector_coord(distract_points(ray_at(ray, record.t), spheres[closest_index].center));
 		color = new_color(0.5 * (normal.x + 1) * 255, 0.5 * (normal.y + 1) * 255, 0.5 * (normal.z + 1) * 255);
- 		// color = new_color(0.5 * (normal.x + 1) * 255, 0.5 * (normal.y + 1), 0.5 * (normal.z + 1), samples_per_pixel);
 		// normal = unit_vector_coord(distract_points(ray_at(ray, t), point));
 	}
 	else

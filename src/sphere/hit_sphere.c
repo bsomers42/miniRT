@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 15:46:19 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/06 17:10:47 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/07 13:48:28 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	hit_anything(t_sphere *spheres, t_ray ray, t_besthit *hit_rec)
 	i = 0;
 	closest_so_far = INFINITY;
 	hit_anything = -1;
-	while (i < 2) // amount spheres
+	while (i < 4) // amount spheres
 	{
 		if (hit_sphere(spheres[i], ray, 0, closest_so_far, &tmp_rec))
 		{
