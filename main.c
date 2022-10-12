@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 14:54:42 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/10/12 17:00:57 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/10/12 17:51:55 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,18 +132,23 @@ void	*fill_pixels(void *ptr)
 	// 	if (info->data->pixels_done == WIDTH * HEIGHT)
 	// 		break ;
 	// 	pthread_mutex_unlock(&(info->data->pixel_lock));
+	
 	while (count < THREADS * 2)
 	{
 		y = count % THREADS;
-		printf("new line: thread:[%d], count:[%d], y=[%d], x=[%d]\n", info->i, count, y, (info->i + (count % 2) * THREADS));
+		// if (info->i == 0)
+		write(1, "■", 4);//bijna werkend
+		// write(1, "#", 1);
+		// printf("#\n\b\r");
+		// printf("\rnew line: thread:[%d], count:[%d], y=[%d], x=[%d]", info->i, count, y, (info->i + (count % 2) * THREADS));
 		while (y <= HEIGHT - 1)//j + (HEIGHT - 1) / THREADS)
 		{
 			x = (info->i + (count % 2) * THREADS);// % (THREADS * 2);
 			while (x <= WIDTH - 1)
 			{
+				pthread_mutex_lock(&(info->data->pixel_lock));
 				if (info->data->pixels[y * WIDTH + x] == 0)
 				{
-					pthread_mutex_lock(&(info->data->pixel_lock));
 					info->data->pixels[y * WIDTH + x] = 1;
 					info->data->pixels_done++;
 					pthread_mutex_unlock(&(info->data->pixel_lock));
@@ -153,14 +158,24 @@ void	*fill_pixels(void *ptr)
 						mlx_put_pixel(info->data->mlx_str.img, x, y, 0xffffffff);
 				}
 				else
+				{
+					pthread_mutex_unlock(&(info->data->pixel_lock));
 					return (NULL);
-				usleep(1000);
+				}
+				if (info->i == 0)
+					usleep(1000);
+				else 
+					usleep (2000);
 				x+=THREADS * 2;
 			}
 			y+=THREADS;
 		}
 		count++;
 	}
+	pthread_mutex_lock(&(info->data->pixel_lock));
+	if (info->data->pixels_done == WIDTH * HEIGHT)
+		write(1, "\nDONE!\n", 7);
+	pthread_mutex_unlock(&(info->data->pixel_lock));
 	return (NULL);
 }
 
@@ -230,6 +245,8 @@ int	main(void)//int argc, char *argv[])
 	// mlx_put_pixel(data.mlx_str.img, 0, 0, 0xff0000ff);
 	mlx_image_to_window(data.mlx_str.mlx, data.mlx_str.img, 0, 0);
 	// usleep(2000000);
+	write(1, "loading threads: ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■\n", 313);
+	write(1, "loading pixels:  ", 17);
 	make_threads(&infos);
 	// ray = init_ray();
 	// renderer(spheres, ray, mlx_str);
