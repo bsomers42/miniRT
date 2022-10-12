@@ -1,16 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   raytracer.c                                        :+:    :+:            */
+/*   put_color.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/09/22 14:46:04 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/09/22 14:49:17 by jaberkro      ########   odam.nl         */
+/*   Created: 2022/10/06 12:45:02 by jaberkro      #+#    #+#                 */
+/*   Updated: 2022/10/07 14:17:01 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-void	tracer(t_pixel pixel);
+#include "minirt.h"
+#include "MLX42.h"
+#include <stdio.h> //weghalen
+
+void	put_color(t_mlx_str mlx_str, int i, int j, t_color color)
 {
-	
+	unsigned int	color_hex;
+
+	color_hex = color.r * 16777216 + color.g * 65536 + color.b * 256 + 255;
+	printf("color:%x\n", color_hex);
+	mlx_put_pixel(mlx_str.img, i, HEIGHT - j - 1, color_hex);
 }

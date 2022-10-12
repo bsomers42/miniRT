@@ -6,7 +6,7 @@
 #    By: bsomers <bsomers@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/09/22 14:52:38 by bsomers       #+#    #+#                  #
-#    Updated: 2022/09/22 16:44:38 by bsomers       ########   odam.nl          #
+#    Updated: 2022/10/12 13:05:09 by bsomers       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,21 +17,32 @@ LIBFT = libft
 LIBMLX42 = libmlx42
 
 SRC = main.c \
-		error.c
+	src/vector_math/add.c \
+	src/vector_math/distract.c \
+	src/vector_math/multiply.c \
+	src/vector_math/devide.c \
+	src/vector_math/dot.c \
+	src/vector_math/unit_vector.c \
+	src/color/new_color.c \
+	src/color/decide_color.c \
+	src/color/put_color.c \
+	src/sphere/hit_sphere.c \
+	src/ray.c \
+	src/renderer.c
 
-HEADER = minirt.h
+INCLUDE = -I include -I ./MLX42/include/MLX42
 
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 
 OBJ = $(SRC:.c=.o)
 
 all: $(NAME)
 
-$(NAME): $(OBJ)  $(LIBMLX42).a $(LIBFT).a
-		$(CC) $(CFLAGS) libmlx42.a -I include -lglfw3 -framework Cocoa -framework OpenGL -framework IOKit -L. $(OBJ) -o $(NAME) #-lft
+$(NAME): $(OBJ) $(LIBMLX42).a $(LIBFT).a
+		$(CC) $(CFLAGS) libmlx42.a $(INCLUDE) -lglfw3 -framework Cocoa -framework OpenGL -framework IOKit -L. $(OBJ) -o $(NAME) #-lft
 
-%.o: %.c $(HEADER)
-		$(CC) -Imlx -c $(CFLAGS) -o $@ $<
+%.o: %.c
+		$(CC) -c $(INCLUDE) $(CFLAGS) -o $@ $<
 
 $(LIBFT).a:
 	@make -C $(LIBFT)
