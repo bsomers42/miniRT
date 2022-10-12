@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 12:11:34 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/12 15:52:33 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/12 17:00:03 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # define FOCAL_LENGTH 1.0
 
 # define AA 2 //anti-aliasing
-# define THREADS 8
+# define THREADS 7
 # include "libft.h"
 # include "MLX42.h"
 

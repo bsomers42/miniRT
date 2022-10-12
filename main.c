@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 14:54:42 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/10/12 16:31:37 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/12 17:00:57 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,13 +132,14 @@ void	*fill_pixels(void *ptr)
 	// 	if (info->data->pixels_done == WIDTH * HEIGHT)
 	// 		break ;
 	// 	pthread_mutex_unlock(&(info->data->pixel_lock));
-	while (count < THREADS)
+	while (count < THREADS * 2)
 	{
-		y = count;
-		while (y < HEIGHT - 1)//j + (HEIGHT - 1) / THREADS)
+		y = count % THREADS;
+		printf("new line: thread:[%d], count:[%d], y=[%d], x=[%d]\n", info->i, count, y, (info->i + (count % 2) * THREADS));
+		while (y <= HEIGHT - 1)//j + (HEIGHT - 1) / THREADS)
 		{
-			x = info->i + count;// * THREADS;
-			while (x < WIDTH - 1)
+			x = (info->i + (count % 2) * THREADS);// % (THREADS * 2);
+			while (x <= WIDTH - 1)
 			{
 				if (info->data->pixels[y * WIDTH + x] == 0)
 				{
@@ -146,15 +147,15 @@ void	*fill_pixels(void *ptr)
 					info->data->pixels[y * WIDTH + x] = 1;
 					info->data->pixels_done++;
 					pthread_mutex_unlock(&(info->data->pixel_lock));
-					if (info->i % 2 == 1)
-						mlx_put_pixel(info->data->mlx_str.img, x, y, 0x0000ffff);
+					if (count / THREADS >= 1)
+						mlx_put_pixel(info->data->mlx_str.img, x, y, 0xffffffff);
 					else
 						mlx_put_pixel(info->data->mlx_str.img, x, y, 0xffffffff);
 				}
 				else
 					return (NULL);
 				usleep(1000);
-				x+=THREADS;
+				x+=THREADS * 2;
 			}
 			y+=THREADS;
 		}
