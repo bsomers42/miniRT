@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/12 15:10:32 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/09/22 16:44:28 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/10/11 11:16:55 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	write_exit(char *message, int exit_code)
 		error_exit("malloc", 1);
 	return_value = ft_strjoin("?=", exit_num);
 	free(exit_num);
-	set_env_variable(return_value);
 	free(return_value);
 	ft_putstr_fd("mickeyshell: ", STDERR_FILENO);
 	ft_putstr_fd(message, STDERR_FILENO);
@@ -51,7 +50,6 @@ void	error_exit(char *message, int exit_code)
 		error_exit("malloc", 1);
 	return_value = ft_strjoin("?=", exit_num);
 	free(exit_num);
-	set_env_variable(return_value);
 	free(return_value);
 	ft_putstr_fd("miniRT: ", STDOUT_FILENO);
 	perror(message);
