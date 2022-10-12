@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 12:11:34 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/12 13:04:51 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/10/12 15:52:33 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@
 # define FOCAL_LENGTH 1.0
 
 # define AA 2 //anti-aliasing
-
-# include "../libft/libft.h"
-# include "../MLX42/include/MLX42/MLX42.h"
+# define THREADS 8
+# include "libft.h"
+# include "MLX42.h"
 
 typedef struct s_mlx_str
 {

@@ -6,15 +6,18 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 14:54:42 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/10/12 13:54:27 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/10/12 16:31:37 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include "MLX42.h"
+#include "thread.h"
 #include <stdlib.h>
 #include <stdio.h>	//misschien weghalen
 #include <pthread.h>
+#include <sys/time.h> //weghalen
+#include "libft.h"
 
 void	minirt_keyhook(mlx_key_data_t keydata, void *ptr)
 {
@@ -30,8 +33,6 @@ void	minirt_close(void *ptr)
 	(void)ptr;
 	exit(EXIT_SUCCESS);
 }
-
-
 
 t_sphere	*init_spheres(void)
 {
@@ -112,73 +113,128 @@ t_ray	init_ray(void)
 // 	mlx_delete_image(mlx_str.mlx, mlx_str.img);
 // 	mlx_terminate(mlx_str.mlx);
 // }
-typedef struct s_data
-{
-	t_mlx_str	mlx_str;
-	int			i;
-}	t_data;
 
 void	*fill_pixels(void *ptr)
 {
-	t_data	*data;
-	int	i;
-	int	x;
-	int	y;
-	int threadno;
+	t_threadinfo	*info;
+	int				j;
+	int				x;
+	int				y;
+	int				count;
 
-	data = ptr;
-	threadno = data->i;
-	i = HEIGHT * (data->i + 1) / 7;
-	y = i;
-	printf("thread:[%d], y:[%d], threadno: [%d]\n", data->i, y, threadno);
-	while (y < i + (HEIGHT - 1) / 7 && y < HEIGHT - 1)
+	count = 0;
+	info = ptr;
+	j = HEIGHT * (info->i) / THREADS;
+	// printf("thread:[%d], y:[%d]\n", info->i, y);
+	// while (42)
+	// {
+	// 	pthread_mutex_lock(&(info->data->pixel_lock));
+	// 	if (info->data->pixels_done == WIDTH * HEIGHT)
+	// 		break ;
+	// 	pthread_mutex_unlock(&(info->data->pixel_lock));
+	while (count < THREADS)
 	{
-		x = 0;
-		while (x < WIDTH - 1)
+		y = count;
+		while (y < HEIGHT - 1)//j + (HEIGHT - 1) / THREADS)
 		{
-			mlx_put_pixel(data->mlx_str.img, x, y, 0xffffffff);
-			mlx_image_to_window(data->mlx_str.mlx, data->mlx_str.img, 0, 0);
-			x++;
+			x = info->i + count;// * THREADS;
+			while (x < WIDTH - 1)
+			{
+				if (info->data->pixels[y * WIDTH + x] == 0)
+				{
+					pthread_mutex_lock(&(info->data->pixel_lock));
+					info->data->pixels[y * WIDTH + x] = 1;
+					info->data->pixels_done++;
+					pthread_mutex_unlock(&(info->data->pixel_lock));
+					if (info->i % 2 == 1)
+						mlx_put_pixel(info->data->mlx_str.img, x, y, 0x0000ffff);
+					else
+						mlx_put_pixel(info->data->mlx_str.img, x, y, 0xffffffff);
+				}
+				else
+					return (NULL);
+				usleep(1000);
+				x+=THREADS;
+			}
+			y+=THREADS;
 		}
-		y++;
+		count++;
 	}
 	return (NULL);
 }
 
-void	make_threads(t_data *data)
+void	make_threads(t_threadinfo **infos)
 {
 	pthread_t	*threads;
+	int			i;
 
-	data->i = 0;
-	threads = malloc(7 * sizeof(pthread_t));
-	while (data->i < 7)
+	i = 0;
+	threads = malloc(THREADS * sizeof(pthread_t));
+	while (i < THREADS)
 	{
-		pthread_create(&threads[data->i], NULL, &fill_pixels, &data);
-		data->i++;
+		// printf("infos[%d].i=[%d]\n", i, infos[i]->i);
+		pthread_create(&threads[i], NULL, &fill_pixels, &(*infos)[i]);
+		i++;
 	}
+	i = 0;
+	while (i < THREADS)
+	{
+		pthread_detach(threads[i]);
+		i++;
+	}
+}
+
+void	init_infos(t_data *data, t_threadinfo **infos)
+{
+	int	i;
+
+	i = 0;
+	*infos = malloc(THREADS * sizeof(t_threadinfo));
+	if (*infos == NULL)
+		printf("malloc failed!\n");
+	while (i < THREADS)
+	{
+		(*infos)[i].data = data;
+		(*infos)[i].i = i;
+		i++;
+	}
+}
+
+void	init_data(t_data *data)
+{
+	data->mlx_str.mlx = mlx_init(WIDTH, HEIGHT, "MickeyRT", true);
+	if (data->mlx_str.mlx == NULL)
+		printf("mlx_init failed!\n");
+	data->mlx_str.img = mlx_new_image(data->mlx_str.mlx, WIDTH, HEIGHT);
+	if (data->mlx_str.img == NULL)
+		printf("mlx_new_image failed!\n");
+	data->pixels = ft_calloc(WIDTH * HEIGHT, sizeof(int));
+	data->pixels_done = 0;
+	pthread_mutex_init(&(data->pixel_lock), NULL);
 }
 
 int	main(void)//int argc, char *argv[])
 {
 	// t_mlx_str	mlx_str;
-	t_data		*data;
+	t_data			data;
+	t_threadinfo 	*infos;
 
-	data = (t_data *)malloc(sizeof(t_data));
-	//bij fail iets doen
-	data->mlx_str.mlx = mlx_init(WIDTH, HEIGHT, "MickeyRT", true);
-	// if (!mlx_str.mlx)
-		//hier error exitten
-	data->mlx_str.img = mlx_new_image(data->mlx_str.mlx, WIDTH, HEIGHT);
-	mlx_key_hook(data->mlx_str.mlx, &minirt_keyhook, &data->mlx_str);
-	mlx_close_hook(data->mlx_str.mlx, &minirt_close, NULL);
+	init_data(&data);
+	init_infos(&data, &infos);
+	// printf("infos[0].i=[%d]\n", infos[0].i);
+	mlx_key_hook(data.mlx_str.mlx, &minirt_keyhook, &data.mlx_str);
+	mlx_close_hook(data.mlx_str.mlx, &minirt_close, NULL);
 	//HIER ANDERE DINGEN DOEN EN OA PIXELS PUTTEN met mlx_put_pixel(img, x value, y value, color) waarbij img in mlx.img zit
 	// spheres = init_spheres();
-	make_threads(data);
+	// mlx_put_pixel(data.mlx_str.img, 0, 0, 0xff0000ff);
+	mlx_image_to_window(data.mlx_str.mlx, data.mlx_str.img, 0, 0);
+	// usleep(2000000);
+	make_threads(&infos);
 	// ray = init_ray();
 	// renderer(spheres, ray, mlx_str);
-	// mlx_image_to_window(data->mlx_str.mlx, mlx_str.img, 0, 0);
-	mlx_loop(data->mlx_str.mlx);
-	mlx_delete_image(data->mlx_str.mlx, data->mlx_str.img);
-	mlx_terminate(data->mlx_str.mlx);
+	// mlx_image_to_window(data.mlx_str.mlx, mlx_str.img, 0, 0);
+	mlx_loop(data.mlx_str.mlx);
+	mlx_delete_image(data.mlx_str.mlx, data.mlx_str.img);
+	mlx_terminate(data.mlx_str.mlx);
 	return (0);
 }

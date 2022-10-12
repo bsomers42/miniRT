@@ -6,7 +6,7 @@
 #    By: bsomers <bsomers@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/09/22 14:52:38 by bsomers       #+#    #+#                  #
-#    Updated: 2022/10/12 13:42:50 by bsomers       ########   odam.nl          #
+#    Updated: 2022/10/12 15:39:21 by jaberkro      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ SRC = main.c \
 	src/ray.c \
 	src/renderer.c
 
-INCLUDE = -I include -I ./MLX42/include/MLX42
+INCLUDE = -I include -I ./MLX42/include/MLX42 -I $(LIBFT)
 
 CFLAGS = -Wall -Wextra -Werror -g -fsanitize=thread
 
@@ -39,7 +39,7 @@ OBJ = $(SRC:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJ) $(LIBMLX42).a $(LIBFT).a
-		$(CC) $(CFLAGS) libmlx42.a $(INCLUDE) -lglfw3 -framework Cocoa -framework OpenGL -framework IOKit -L. $(OBJ) -o $(NAME) #-lft
+		$(CC) $(CFLAGS) libmlx42.a $(INCLUDE) -lglfw3 -framework Cocoa -framework OpenGL -framework IOKit -L. $(OBJ) -o $(NAME) -lft
 
 %.o: %.c
 		$(CC) -c $(INCLUDE) $(CFLAGS) -o $@ $<
