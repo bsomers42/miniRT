@@ -6,7 +6,7 @@
 #    By: bsomers <bsomers@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/09/22 14:52:38 by bsomers       #+#    #+#                  #
-#    Updated: 2022/10/17 17:16:24 by jaberkro      ########   odam.nl          #
+#    Updated: 2022/10/17 17:31:52 by jaberkro      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,8 +32,8 @@ SRC = main.c \
 	color/new_color.c \
 	color/decide_color.c \
 	color/put_color.c \
+	color/antialias_color.c \
 	sphere/hit_sphere.c \
-	renderer.c \
 	error.c \
 	threads.c
 

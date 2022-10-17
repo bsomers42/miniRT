@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 14:54:42 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/10/17 17:16:03 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/17 17:28:39 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_sphere	*init_spheres(void)
 
 	spheres = malloc((4) * sizeof(t_sphere));
 	if (spheres == NULL)
-		printf("Malloc failed!\n");
+		printf("malloc failed!\n");
 	/* sphere 1 */
 	spheres[0].center.x = 0.0;
 	spheres[0].center.y = 0.0;
@@ -108,10 +108,10 @@ void	init_data(t_data *data)
 {
 	data->mlx_str.mlx = mlx_init(WIDTH, HEIGHT, "MickeyRT", true);
 	if (data->mlx_str.mlx == NULL)
-		printf("mlx_init failed!\n");
+		error_exit("mlx_init failed!\n", 1);
 	data->mlx_str.img = mlx_new_image(data->mlx_str.mlx, WIDTH, HEIGHT);
 	if (data->mlx_str.img == NULL)
-		printf("mlx_new_image failed!\n");
+		error_exit("mlx_new_image failed!\n", 1);
 	data->pixels_done = 0;
 	data->spheres = init_spheres();
 	data->ray = init_ray();
@@ -119,7 +119,7 @@ void	init_data(t_data *data)
 	pthread_mutex_init(&(data->mlx_lock), NULL);
 }
 
-int	main(void)//int argc, char *argv[])
+int	main(void)
 {
 	t_data			data;
 	t_threadinfo	*infos;
@@ -128,16 +128,11 @@ int	main(void)//int argc, char *argv[])
 	init_infos(&data, &infos);
 	mlx_key_hook(data.mlx_str.mlx, &minirt_keyhook, &data.mlx_str);
 	mlx_close_hook(data.mlx_str.mlx, &minirt_close, NULL);
-	//HIER ANDERE DINGEN DOEN EN OA PIXELS PUTTEN met mlx_put_pixel(img, x value, y value, color) waarbij img in mlx.img zit
-	// spheres = init_spheres();
-	// mlx_put_pixel(data.mlx_str.img, 0, 0, 0xff0000ff);
 	mlx_image_to_window(data.mlx_str.mlx, data.mlx_str.img, 0, 0);
-	write(1, "loading threads: ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■\n", 313);
+	write(1, "loading threads: ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■\
+				■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■\n", 313);
 	write(1, "loading pixels:  ", 17);
 	make_threads(&infos);
-	// ray = init_ray();
-	// renderer(spheres, ray, mlx_str);
-	// mlx_image_to_window(data.mlx_str.mlx, mlx_str.img, 0, 0);
 	mlx_loop(data.mlx_str.mlx);
 	mlx_delete_image(data.mlx_str.mlx, data.mlx_str.img);
 	mlx_terminate(data.mlx_str.mlx);

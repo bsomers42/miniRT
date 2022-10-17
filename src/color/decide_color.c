@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 13:26:28 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/17 17:21:04 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/17 17:29:38 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_coord	ray_at(t_ray ray, float t)
 	return (result);
 }
 
-t_color	ray_color(t_sphere *spheres, t_ray ray)
+static t_color	ray_color(t_sphere *spheres, t_ray ray)
 {
 	t_color		color;
 	t_coord		normal;
