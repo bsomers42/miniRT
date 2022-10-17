@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 15:11:47 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/09/22 17:45:58 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/10/17 13:15:46 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,42 @@ typedef struct s_intersect
 	t_colour	colour;
 }	t_intersect;
 
+typedef struct s_amb
+{
+	float	ratio;
+	int		r;
+	int		g;
+	int		b;	
+}	t_amb;
+
+typedef struct s_cam
+{
+	float	x;
+	float	y;
+	float	z;
+	float	vect_x;
+	float	vect_y;
+	float	vect_z;
+	int		fov;	
+}	t_cam;
+
+typedef struct s_light
+{
+	float	x;
+	float	y;
+	float	z;
+	float	bright;	
+}	t_light;
+
+typedef struct s_parse
+{
+	t_light *light;
+	t_cam	*cam;
+	t_amb	*amb;
+	t_list	**sp;
+	t_list	**pl;
+	t_list	**cy;
+}
 
 
 #endif
