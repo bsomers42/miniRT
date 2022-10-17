@@ -6,63 +6,18 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 16:47:20 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/10/17 13:40:10 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/10/17 14:27:29 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
-
-// int	set_coord(char *str, int *x_ptr, int *y_ptr, int *z_ptr)
-// {
-// 	// int	x;
-// 	// int	y;
-// 	// int	z;
-// 	char **split;
-
-// 	// x = *x_ptr;
-// 	// y = *y_ptr;
-// 	// z = *z_ptr;
-// 	split = ft_split(str, ',');
-// 	*x_ptr = ft_atoi(split[0]);
-// 	*y_ptr = ft_atoi(split[1]);
-// 	*z_ptr = ft_atoi(split[2]);
-// 	free (split);
-// 	return (0);
-// }
-
-// int	assign_shapes(int sp, int pl, int cy, char **map_split_newline)
-// {
-// 	int			i;
-// 	t_sphere	sphere;
-// 	char	**sphere_info
-// 	char	**coord;
-
-// 	i = 0;
-// 	if (sp > 0)
-// 	{
-// 		sphere = malloc(sp * sizeof(t_sphere))
-// 		while (map_split_newline[i] != NULL)
-// 		{
-// 			if (ft_strncmp(map_split_newline[i], "sp ", 3) == 0)
-// 			{
-// 				sphere_info = ft_split(map_split_newline[i], ' ');
-// 				sphere.diam = ft_atoi(sphere_info[2]); //Maar dit moet een float worden!?!?!?!?!???
-// 				set_coord(sphere_info[1], *sphere.coord.x, *sphere.coord.y, *sphere.coord.z);
-// 				set_coord(sphere_info[3], *sphere.color.r, *sphere.color.g, *sphere.color.b);
-// 			}
-// 			i++;
-// 		}
-// 	}
-// }
+#include "include/minirt.h"
 
 void	assign_ambient(char *str, int *amb_ptr, t_amb *amb)
 {
-	int	i;
 	char **split;
 	char **tmp;
 
 	split = ft_split(str, ' ');
-	i = 0;
 	amb->ratio = ft_stofl(split[1]);
 	tmp = ft_split(split[2], 2);
 	amb->r = ft_atoi(tmp[0]);
@@ -74,15 +29,51 @@ void	assign_ambient(char *str, int *amb_ptr, t_amb *amb)
 	*amb_ptr++;
 }
 
-void	assign_camera(char *str, int *cam, t_cam )
+void	assign_camera(char *str, int *cam_ptr, t_cam *cam)
+{
+	char	**split;
+	char	**tmp;
 
-int	assign_to_struct(char **map_split_newline)
+	split = ft_split(str, ' ');
+	tmp = ft_split(split[1], ',');
+	cam->x = ft_stofl(tmp[0]);
+	cam->y = ft_stofl(tmp[1]);
+	cam->z = ft_stofl(tmp[2]);
+	free(tmp);
+	tmp = ft_split(split[2], ',');
+	cam->vect_x = ft_stofl(tmp[0]);
+	cam->vect_y = ft_stofl(tmp[1]);
+	cam->vect_z = ft_stofl(tmp[2]);
+	free(tmp);
+	cam->fov = ft_atoi(split[3]);
+	free(split);
+	free(str);
+	*cam_ptr++;
+}
+
+void	assign_light(char *str, int *light_ptr, t_light *light)
+{
+	char	**split;
+	char	**tmp;
+
+	split = ft_split(str, ' ');
+	tmp = ft_split(split[1], ',');
+	light->x = ft_stofl(tmp[0]);
+	light->y = ft_stofl(tmp[1]);
+	light->z = ft_stofl(tmp[2]);
+	free(tmp);
+	light->bright = ft_stofl(split[2]);
+	free(split);
+	free(str);
+	*light_ptr++;
+}
+
+int	assign_to_struct(char **map_split_newline, t_parse *parse)
 {
 	int	i;
 	int	amb;
 	int	cam;
 	int	light;
-	t_parse	*parse;
 
 	i = 0;
 	amb = 0;
@@ -95,9 +86,9 @@ int	assign_to_struct(char **map_split_newline)
 			if (ft_strncmp(map_split_newline[i], "A ", 2) == 0)
 				assign_ambient(map_split_newline[i], &amb, parse->amb);
 			else if (ft_strncmp(map_split_newline[i], "C ", 2) == 0)
-				assign_camera(map_split_newline[i], &cam, parse);
+				assign_camera(map_split_newline[i], &cam, parse->cam);
 			else if (ft_strncmp(map_split_newline[i], "L ", 2) == 0)
-				assign_light(map_split_newline[i], &light, parse);
+				assign_light(map_split_newline[i], &light, parse->light);
 			// else if (ft_strncmp(map_split_newline[i], "sp ", 3) == 0)
 			// else if (ft_strncmp(map_split_newline[i], "pl ", 3) == 0)
 			// else if (ft_strncmp(map_split_newline[i], "cy ", 3) == 0)
@@ -106,7 +97,6 @@ int	assign_to_struct(char **map_split_newline)
 	}
 	if (cam > 1 || cam == 0 || amb > 1 || amb == 0 || light == 0 || light > 1)
 		write_exit("Incorrect ambient/light/camera!\n", 1);
-	// assign_shapes(sp, pl, cy);
 	return (0);
 }
 
@@ -130,13 +120,14 @@ int get_map(char *argv[])
 	return (strdef);
 }
 
-int parse_map(char *argv[])
+t_parse	*parse_map(char *argv[])
 {
 	char    *map_char;
 	char	**map_split_newline;
+	t_parse	*parse;
 
 	map_char = get_map(argv);
 	map_split_newline = ft_split(map_char, '\n');
-	assign_to_struct(map_split_newline);
-	return (0);
+	assign_to_struct(map_split_newline, parse);
+	return (parse);
 }
