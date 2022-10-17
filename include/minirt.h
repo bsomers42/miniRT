@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 12:11:34 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/17 17:34:22 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/17 17:52:39 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,8 @@ t_coord	distract_points(t_coord first, t_coord second);
 t_coord	multiply_points(t_coord first, t_coord second);
 t_coord	multiply_point_float(t_coord point, float t);
 t_coord	devide_point_with_float(t_coord point, float t);
-float	dot_points(t_coord first, t_coord second);
 t_coord	unit_vector_coord(t_coord p);
+float	dot_points(t_coord first, t_coord second);
 
 t_color	add_colors(t_color first, t_color second);
 t_color	distract_colors(t_color first, t_color second);
@@ -94,7 +94,7 @@ t_color	multiply_color_float(t_color color, float t);
 t_color	devide_color_with_float(t_color color, float t);
 float	dot_colors(t_color first, t_color second);
 
-t_color	antialias_color(t_sphere *spheres, t_ray ray, int i, int j);
+t_color	antialias_color(t_sphere *spheres, t_ray ray, int x, int y);
 t_coord	ray_at(t_ray ray, float t);
 t_color	decide_color(t_sphere *spheres, t_ray ray, float i, float j);
 t_color	new_color(float r, float g, float b);
