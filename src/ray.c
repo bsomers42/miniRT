@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 13:00:24 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/07 13:07:39 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/17 15:45:00 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,37 +25,42 @@ t_coord	ray_at(t_ray ray, float t)
 
 t_color	ray_color(t_sphere *spheres, t_ray ray)
 {
-	t_coord	unit_direction;
-	float	t;
-	t_color	white;
-	t_color	blue;
+	// t_coord	unit_direction;
+	// float	t;
+	// t_color	white;
+	// t_color	blue;
 	t_color	color;
-	t_coord point;
+	// t_coord point;
 	t_coord normal;
 	t_besthit record;
 	int		closest_index;
 
-	point.x = 0;
-	point.y = 0;
-	point.z = -1;
-	t = 0.0;
+	// point.x = 0;
+	// point.y = 0;
+	// point.z = -1;
+	// t = 0.0;
 	closest_index = hit_anything(spheres, ray, &record);
 	if (closest_index >= 0)
 	{
+		// //actual color
+		// color = record.color;
+		//colored spheres
 		normal = unit_vector_coord(distract_points(ray_at(ray, record.t), spheres[closest_index].center));
 		color = new_color(0.5 * (normal.x + 1) * 255, 0.5 * (normal.y + 1) * 255, 0.5 * (normal.z + 1) * 255);
-		// normal = unit_vector_coord(distract_points(ray_at(ray, t), point));
 	}
 	else
 	{
-		white = new_color(1.0, 1.0, 1.0);
-		blue = new_color(0.5, 0.7, 1.0);
-		unit_direction = unit_vector_coord(ray.dir);
-		t = 0.5 * (unit_direction.y + 1.0);
-		// color = multiply_color_float(add_colors(multiply_color_float(white, 1.0 - t), multiply_color_float(blue, t)), 255);
-		color.r = 255 * ((1.0 - t) * 1.0 + 0.5 * t);
-		color.g = 255 * ((1.0 - t) * 1.0 + 0.7 * t);
-		color.b = 255 * ((1.0 - t) * 1.0 + 1.0 * t);
+		//black
+		color = new_color(0, 0, 0);
+		// // white-blue
+		// white = new_color(1.0, 1.0, 1.0);
+		// blue = new_color(0.5, 0.7, 1.0);
+		// unit_direction = unit_vector_coord(ray.dir);
+		// t = 0.5 * (unit_direction.y + 1.0);
+		// // color = multiply_color_float(add_colors(multiply_color_float(white, 1.0 - t), multiply_color_float(blue, t)), 255);
+		// color.r = 255 * ((1.0 - t) * 1.0 + 0.5 * t);
+		// color.g = 255 * ((1.0 - t) * 1.0 + 0.7 * t);
+		// color.b = 255 * ((1.0 - t) * 1.0 + 1.0 * t);
 	}
 	return (color);
 }

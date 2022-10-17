@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 15:46:19 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/07 13:48:28 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/17 15:43:36 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int	hit_sphere(t_sphere sphere, t_ray ray, float t_min, float t_max, t_besthit *
 	hit_rec->normal.x = hit_rec->hit_point.x - sphere.center.x / sphere.radius;
 	hit_rec->normal.y = hit_rec->hit_point.y - sphere.center.y / sphere.radius;
 	hit_rec->normal.z = hit_rec->hit_point.z - sphere.center.z / sphere.radius;
+	hit_rec->color = sphere.color;
 	outward_normal.x = (hit_rec->hit_point.x - sphere.center.x) / sphere.radius;
 	outward_normal.y = (hit_rec->hit_point.y - sphere.center.y) / sphere.radius;
 	outward_normal.z = (hit_rec->hit_point.z - sphere.center.z) / sphere.radius;

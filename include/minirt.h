@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 12:11:34 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/17 13:47:10 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/17 15:45:43 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # define VIEWPORT_HEIGHT 2.0
 # define FOCAL_LENGTH 1.0
 
-# define AA 2 //anti-aliasing
+# define AA 10 //anti-aliasing
 # define THREADS 7
 # include "libft.h"
 # include "MLX42.h"
@@ -62,6 +62,7 @@ typedef struct s_besthit
 	t_coord	normal;
 	float	t;
 	int		front_face;
+	t_color	color;
 }	t_besthit;
 
 //radius is diameter devided by 2
