@@ -6,11 +6,12 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/17 11:04:13 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/10/17 11:10:21 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/10/17 17:01:03 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+#include <stdio.h> //voor printf, wegggg!!!
 
 float	ft_stofl(char *str)
 {

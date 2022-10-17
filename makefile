@@ -6,55 +6,75 @@
 #    By: bsomers <bsomers@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/09/22 14:52:38 by bsomers       #+#    #+#                  #
-#    Updated: 2022/09/22 16:44:38 by bsomers       ########   odam.nl          #
+#    Updated: 2022/10/17 17:27:54 by bsomers       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minirt
 
-LIBFT = libft
+FLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+INCLUDE = -I include -I ./MLX42/include/MLX42 -I ./libft
 
-LIBMLX42 = libmlx42
+LIBFT_DIR = libft/
+LIBFT = libft/libft.a
+LIBMLX42 = libmlx42.a
+
+SRC_DIR = src
+BUILD_DIR = obj
 
 SRC = main.c \
-		error.c
+	vector_math/add.c \
+	vector_math/distract.c \
+	vector_math/multiply.c \
+	vector_math/devide.c \
+	vector_math/dot.c \
+	vector_math/unit_vector.c \
+	color/new_color.c \
+	color/decide_color.c \
+	color/put_color.c \
+	parser/parse.c \
+	parser/parse_utils.c \
+	parser/list_add.c \
+	sphere/hit_sphere.c \
+	ray.c \
+	renderer.c \
+	error.c \
+	threads.c
 
-HEADER = minirt.h
-
-CFLAGS = -Wall -Wextra -Werror -g
-
-OBJ = $(SRC:.c=.o)
+OBJ := $(addprefix $(BUILD_DIR)/, $(SRC:.c=.o))
+SRC := $(addprefix $(SRC_DIR)/, $(SRC))
 
 all: $(NAME)
 
-$(NAME): $(OBJ)  $(LIBMLX42).a $(LIBFT).a
-		$(CC) $(CFLAGS) libmlx42.a -I include -lglfw3 -framework Cocoa -framework OpenGL -framework IOKit -L. $(OBJ) -o $(NAME) #-lft
+$(NAME): $(LIBFT) $(OBJ) $(LIBMLX42)
+	# cp $(LIBFT) ./$(NAME)
+	# cp $(LIBMLX42) ./$(NAME)
+	$(CC) $(OBJ) $(FLAGS) $(INCLUDE) $(LIBMLX42) $(LIBFT) -lglfw3 -framework Cocoa -framework OpenGL -framework IOKit -L. -o $(NAME)
 
-%.o: %.c $(HEADER)
-		$(CC) -Imlx -c $(CFLAGS) -o $@ $<
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
+	mkdir -p $(dir $@)
+	$(CC) -c $(INCLUDE) $(FLAGS) -o $@ $<
 
-$(LIBFT).a:
-	@make -C $(LIBFT)
-	@cp $(LIBFT)/$(LIBFT).a .
+$(LIBFT):
+	@$(MAKE) -C $(LIBFT_DIR)
+	@cp ./$(LIBFT) .
 
-$(LIBMLX42).a:
+$(LIBMLX42):
 	@make -C ./MLX42
-	@cp ./MLX42/$(LIBMLX42).a .
+	@cp ./MLX42/$(LIBMLX42) .
 
 clean:
-		rm -f $(OBJ)
-		@make clean -C $(LIBFT)
-		@make clean -C ./MLX42
+	rm -rf $(BUILD_DIR)
+	@make clean -C $(LIBFT_DIR)
+	@make clean -C ./MLX42
 
 
 fclean: clean
-		rm -f $(NAME)
-		rm -f $(LIBFT).a
-		rm -f $(LIBMLX42).a
-		@make fclean -C $(LIBFT)
+	rm -f $(NAME)
+	rm -f libft.a
+	rm -f $(LIBMLX42)
+	@make fclean -C $(LIBFT_DIR)
 
-re:
-		$(MAKE) fclean
-		$(MAKE) all
+re: fclean all
 
 .PHONY: all clean fclean re
