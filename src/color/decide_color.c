@@ -6,12 +6,45 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 13:26:28 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/07 13:22:41 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/17 17:21:04 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-#include <stdio.h> //weghalen
+// #include <stdio.h> //weghalen
+
+t_coord	ray_at(t_ray ray, float t)
+{
+	t_coord	result;
+
+	result.x = ray.origin.x + t * ray.dir.x;
+	result.y = ray.origin.y + t * ray.dir.y;
+	result.z = ray.origin.z + t * ray.dir.z;
+	return (result);
+}
+
+t_color	ray_color(t_sphere *spheres, t_ray ray)
+{
+	t_color		color;
+	t_coord		normal;
+	t_besthit	record;
+	int			closest_index;
+
+	closest_index = hit_anything(spheres, ray, &record);
+	if (closest_index >= 0)
+	{
+		// //actual color
+		// color = record.color;
+		//colored spheres
+		normal = unit_vector_coord(distract_points(ray_at(ray, record.t), spheres[closest_index].center));
+		color = new_color(0.5 * (normal.x + 1) * 255, 0.5 * (normal.y + 1) * 255, 0.5 * (normal.z + 1) * 255);
+	}
+	else
+	{
+		color = new_color(0, 0, 0);
+	}
+	return (color);
+}
 
 t_color	decide_color(t_sphere *spheres, t_ray ray, float i, float j)
 {
@@ -32,3 +65,4 @@ t_color	decide_color(t_sphere *spheres, t_ray ray, float i, float j)
 	color = ray_color(spheres, ray);
 	return (color);
 }
+

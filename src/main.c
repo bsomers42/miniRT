@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 14:54:42 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/10/17 13:38:01 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/17 17:16:03 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,12 +116,13 @@ void	init_data(t_data *data)
 	data->spheres = init_spheres();
 	data->ray = init_ray();
 	pthread_mutex_init(&(data->pixel_lock), NULL);
+	pthread_mutex_init(&(data->mlx_lock), NULL);
 }
 
 int	main(void)//int argc, char *argv[])
 {
 	t_data			data;
-	t_threadinfo 	*infos;
+	t_threadinfo	*infos;
 
 	init_data(&data);
 	init_infos(&data, &infos);

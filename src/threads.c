@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/17 13:15:51 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/17 13:49:48 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/17 17:18:50 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ static void	fill_pixel(t_threadinfo *info, int x, int y)
 	t_color	color;
 
 	color = antialias_color(info->data->spheres, info->data->ray, x, y);
+	put_color(info, x, y, color);
 	if (pthread_mutex_lock(&(info->data->pixel_lock)) != 0)
 		error_exit("pthread_mutex_lock", 1);
-	put_color(info, x, y, color);
 	info->data->pixels_done++;
 	if (pthread_mutex_unlock(&(info->data->pixel_lock)) != 0)
 		error_exit("pthread_mutex_unlock", 1);
