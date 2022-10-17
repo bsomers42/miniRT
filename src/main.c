@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 14:54:42 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/10/17 17:28:39 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/17 17:42:23 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_sphere	*init_spheres(void)
 
 	spheres = malloc((4) * sizeof(t_sphere));
 	if (spheres == NULL)
-		printf("malloc failed!\n");
+		error_exit("malloc failed!\n", 1);
 	/* sphere 1 */
 	spheres[0].center.x = 0.0;
 	spheres[0].center.y = 0.0;
@@ -119,6 +119,20 @@ void	init_data(t_data *data)
 	pthread_mutex_init(&(data->mlx_lock), NULL);
 }
 
+void	draw_loading_bar(void)
+{
+	int	i;
+
+	i = 0;
+	write(1, "loading threads: ", 17);
+	while (i < 98)
+	{
+		write(1, "■", 4);
+		i++;
+	}
+	write(1, "\nloading pixels:  ", 18);
+}
+
 int	main(void)
 {
 	t_data			data;
@@ -129,9 +143,7 @@ int	main(void)
 	mlx_key_hook(data.mlx_str.mlx, &minirt_keyhook, &data.mlx_str);
 	mlx_close_hook(data.mlx_str.mlx, &minirt_close, NULL);
 	mlx_image_to_window(data.mlx_str.mlx, data.mlx_str.img, 0, 0);
-	write(1, "loading threads: ■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■\
-				■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■\n", 313);
-	write(1, "loading pixels:  ", 17);
+	draw_loading_bar();
 	make_threads(&infos);
 	mlx_loop(data.mlx_str.mlx);
 	mlx_delete_image(data.mlx_str.mlx, data.mlx_str.img);

@@ -6,12 +6,12 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/12 14:07:57 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/17 17:15:49 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/17 17:34:49 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef THREAD_H
-# define THREAD_H
+#ifndef THREADS_H
+# define THREADS_H
 # include "MLX42.h"
 # include <pthread.h>
 # include "minirt.h"
