@@ -6,12 +6,13 @@
 /*   By: bsomers <bsomers@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/12 15:10:32 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/11 11:16:55 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/10/17 14:24:05 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-
+#include "libft.h"
+#include <stdio.h> //laten staan voor perror!
 /**
  * @brief writes a message to stderr and exits
  * 
@@ -29,7 +30,7 @@ void	write_exit(char *message, int exit_code)
 	return_value = ft_strjoin("?=", exit_num);
 	free(exit_num);
 	free(return_value);
-	ft_putstr_fd("mickeyshell: ", STDERR_FILENO);
+	ft_putstr_fd("miniRT: ", STDERR_FILENO);
 	ft_putstr_fd(message, STDERR_FILENO);
 	exit(exit_code);
 }
@@ -66,8 +67,8 @@ void	error_exit(char *message, int exit_code)
 int	error_return(char *message, int return_code)
 {
 	ft_putstr_fd("miniRT: ", STDOUT_FILENO);
-	if (return_code == -1)
-		set_exit_code(1);
+	// if (return_code == -1)
+	// 	set_exit_code(1);
 	perror(message);
 	return (return_code);
 }

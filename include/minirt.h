@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 12:11:34 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/12 17:00:03 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/10/17 13:47:10 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,11 +96,15 @@ float	dot_colors(t_color first, t_color second);
 void	renderer(t_sphere *spheres, t_ray ray, t_mlx_str mlx_str);
 t_color	new_color(float r, float g, float b);
 t_color	decide_color(t_sphere *spheres, t_ray ray, float i, float j);
-void	put_color(t_mlx_str mlx_str, int i, int j, t_color color);
 t_coord	ray_at(t_ray ray, float t);
 t_color	ray_color(t_sphere *spheres, t_ray ray);
 
-int	hit_sphere(t_sphere sphere, t_ray ray, float t_min, float t_max, t_besthit *hit_rec);
-int	hit_anything(t_sphere *spheres, t_ray ray, t_besthit *hit_rec);
+int		hit_sphere(t_sphere sphere, t_ray ray, float t_min, float t_max, t_besthit *hit_rec);
+int		hit_anything(t_sphere *spheres, t_ray ray, t_besthit *hit_rec);
+
+void	error_exit(char *message, int exit_code);
+void	write_exit(char *message, int exit_code);
+int		error_return(char *message, int return_code);
+t_color	antialias_color(t_sphere *spheres, t_ray ray, int i, int j);
 
 #endif

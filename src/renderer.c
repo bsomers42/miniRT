@@ -6,12 +6,13 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 12:01:54 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/07 15:29:38 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/17 13:47:57 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include "MLX42.h"
+#include "threads.h"
 
 t_color	antialias_color(t_sphere *spheres, t_ray ray, int i, int j)
 {
@@ -35,23 +36,23 @@ t_color	antialias_color(t_sphere *spheres, t_ray ray, int i, int j)
 	return (color);
 }
 
-void	renderer(t_sphere *spheres, t_ray ray, t_mlx_str mlx_str)
-{
-	int		i;
-	int		j;
-	t_color	color;
+// void	renderer(t_sphere *spheres, t_ray ray, t_mlx_str mlx_str)
+// {
+// 	int		i;
+// 	int		j;
+// 	t_color	color;
 
-	j = HEIGHT - 1;
-	while (j >= 0)
-	{
-		i = 0;
-		while (i < WIDTH)
-		{
-			color = antialias_color(spheres, ray, i, j);
-			put_color(mlx_str, i, j, color);
-			// mlx_image_to_window(mlx_str.mlx, mlx_str.img, 0, 0);
-			i++;
-		}
-		j--;
-	}
-}
+// 	j = HEIGHT - 1;
+// 	while (j >= 0)
+// 	{
+// 		i = 0;
+// 		while (i < WIDTH)
+// 		{
+// 			color = antialias_color(spheres, ray, i, j);
+// 			// put_color(mlx_str, i, j, color);
+// 			// mlx_image_to_window(mlx_str.mlx, mlx_str.img, 0, 0);
+// 			i++;
+// 		}
+// 		j--;
+// 	}
+// }
