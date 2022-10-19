@@ -6,7 +6,7 @@
 #    By: bsomers <bsomers@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/09/22 14:52:38 by bsomers       #+#    #+#                  #
-#    Updated: 2022/10/17 17:27:54 by bsomers       ########   odam.nl          #
+#    Updated: 2022/10/19 13:30:59 by bsomers       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,23 +23,25 @@ SRC_DIR = src
 BUILD_DIR = obj
 
 SRC = main.c \
+	error.c \
+	utils.c \
+	parser/parse.c \
+	parser/parse_utils.c \
+	parser/list_add.c \
+	color/put_color.c \
+	renderer.c \
+	color/new_color.c \
+	color/decide_color.c \
+	threads.c \
+	ray.c \
 	vector_math/add.c \
 	vector_math/distract.c \
 	vector_math/multiply.c \
 	vector_math/devide.c \
 	vector_math/dot.c \
 	vector_math/unit_vector.c \
-	color/new_color.c \
-	color/decide_color.c \
-	color/put_color.c \
-	parser/parse.c \
-	parser/parse_utils.c \
-	parser/list_add.c \
-	sphere/hit_sphere.c \
-	ray.c \
-	renderer.c \
-	error.c \
-	threads.c
+	sphere/hit_sphere.c
+
 
 OBJ := $(addprefix $(BUILD_DIR)/, $(SRC:.c=.o))
 SRC := $(addprefix $(SRC_DIR)/, $(SRC))
@@ -56,7 +58,7 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 	$(CC) -c $(INCLUDE) $(FLAGS) -o $@ $<
 
 $(LIBFT):
-	@$(MAKE) -C $(LIBFT_DIR)
+	@make bonus -C $(LIBFT_DIR)
 	@cp ./$(LIBFT) .
 
 $(LIBMLX42):

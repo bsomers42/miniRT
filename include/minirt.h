@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 15:11:47 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/19 10:47:44 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/10/19 12:34:17 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,19 +67,19 @@ typedef struct s_besthit
 
 
 //radius is diameter devided by 2
-typedef struct s_sphere
-{
-	t_coord		center;
-	t_color	color;
-	float		radius;
-}	t_sphere;
+// typedef struct s_sphere
+// {
+// 	t_coord		center;
+// 	t_color	color;
+// 	float		radius;
+// }	t_sphere;
 
-typedef struct s_plane
-{
-	t_coord		center;
-	t_color	color;
-	float		radius;
-}	t_plane;
+// typedef struct s_plane
+// {
+// 	t_coord		center;
+// 	t_color	color;
+// 	float		radius;
+// }	t_plane;
 
 typedef struct s_intersect
 {
@@ -119,13 +119,14 @@ typedef struct s_parse
 	t_light *light;
 	t_cam	*cam;
 	t_amb	*amb;
-	t_node_sp	**lst_sp;
-	t_node_pl	**lst_pl;
-	t_node_cy	**lst_cy;
+	t_list	*lst_sphere;
+	t_list	*lst_cyl;
+	t_list	*lst_plane;
 }	t_parse;
 
 t_parse	*parse_map(char *argv[], t_parse *parse);
 float	ft_stofl(char *str);
+void	free_minirt(t_parse *parse);
 // void	write_exit(char *message, int exit_code);
 
 t_coord	add_points(t_coord first, t_coord second);

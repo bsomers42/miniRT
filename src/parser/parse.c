@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 16:47:20 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/10/17 17:26:20 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/10/19 13:30:21 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,16 @@ void	assign_light(char *str, int *light_ptr, t_light *light)
 	*light_ptr = *light_ptr + 1;
 }
 
+void	test_lists(t_list **lst_sphere)
+{
+	t_list *last;
+	t_sphere	*sphere;
+
+	last = ft_lstlast(*lst_sphere);
+	sphere = (t_sphere *)last->content;
+	printf("[r: %d, g: %d, b: %d]\n", sphere->r, sphere->g, sphere->b);
+}
+
 int	assign_to_struct(char **map_split_newline, t_parse *parse)
 {
 	int	i;
@@ -81,6 +91,8 @@ int	assign_to_struct(char **map_split_newline, t_parse *parse)
 	amb = 0;
 	cam = 0;
 	light = 0;
+	parse->lst_sphere = NULL;
+	
 	while (map_split_newline[i] != NULL)
 	{
 		// if (ft_isnumber(map_split_newline[i]) == 0)
@@ -92,12 +104,13 @@ int	assign_to_struct(char **map_split_newline, t_parse *parse)
 			else if (ft_strncmp(map_split_newline[i], "L ", 2) == 0)
 				assign_light(map_split_newline[i], &light, parse->light);
 			else if (ft_strncmp(map_split_newline[i], "sp ", 3) == 0)
-				ft_lstadd_sp(parse->lst_sp, ft_split(map_split_newline[i], ' '));
+				ft_lstadd_sp(&(parse->lst_sphere), ft_split(map_split_newline[i], ' '));
 			// else if (ft_strncmp(map_split_newline[i], "pl ", 3) == 0)
 			// else if (ft_strncmp(map_split_newline[i], "cy ", 3) == 0)
 		// }	
 		i++;
 	}
+	test_lists(&(parse->lst_sphere));
 	if (cam > 1 || cam == 0 || amb > 1 || amb == 0 || light == 0 || light > 1)
 		write_exit("Incorrect ambient/light/camera!\n", 1);
 	return (0);

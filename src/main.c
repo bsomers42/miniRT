@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 14:54:42 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/10/17 15:53:54 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/10/19 12:09:19 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,5 @@ int	main(int argc, char *argv[])
 	mlx_loop(mlx_str.mlx);
 	mlx_delete_image(mlx_str.mlx, mlx_str.img);
 	mlx_terminate(mlx_str.mlx);
-	free(parse);
+	free_minirt(parse);
 }
