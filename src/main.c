@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 14:54:42 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/10/19 18:06:48 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/10/19 18:58:37 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,8 @@ void	init_infos(t_data *data, t_threadinfo **infos)
 
 	i = 0;
 	*infos = malloc(THREADS * sizeof(t_threadinfo));
-	if (*infos == NULL)
-		printf("malloc failed!\n");
+	if (infos == NULL)
+		error_exit("malloc", 1);
 	while (i < THREADS)
 	{
 		(*infos)[i].data = data;
@@ -134,10 +134,17 @@ void	draw_loading_bar(void)
 	write(1, "\nloading pixels:  ", 18);
 }
 
+// void	func_atexit(void)
+// {
+// 	system("leaks minirt");
+// }
+
 int	main(int argc, char *argv[])
 {
 	t_data			data;
 	t_threadinfo	*infos;
+
+	// atexit(func_atexit);
 
 	(void)argc;
 	init_data(&data, argv);

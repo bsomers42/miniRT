@@ -6,17 +6,16 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/11 11:13:12 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/10/19 17:53:18 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/10/19 18:56:35 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-#include <stdio.h> //wegggg
 
 void	ft_lstadd_sp(t_list **lst, char **line)
 {
 	t_sphere	sp;
-	t_sphere	*sp_void;//jma
+	t_sphere	*sp_void;
 	char    **tmp;
 
 	tmp = ft_split(line[1], ',');
@@ -29,11 +28,12 @@ void	ft_lstadd_sp(t_list **lst, char **line)
 	sp.color.r = ft_atoi(tmp[0]) * 1.0;
 	sp.color.g = ft_atoi(tmp[1]) * 1.0;
 	sp.color.b = ft_atoi(tmp[2]) * 1.0;
-	printf("[r: %d, g: %d, b: %d]\n", sp.color.r, sp.color.g, sp.color.b);
-	sp_void = malloc(sizeof(t_sphere));//jma
-	*sp_void = sp;//jma
+	sp_void = malloc(sizeof(t_sphere));
+	if (sp_void == NULL)
+		error_exit("malloc", 1);
+	*sp_void = sp;
 	free_array(tmp);
-	ft_lstadd_back(lst, ft_lstnew(sp_void));//node); //jma
+	ft_lstadd_back(lst, ft_lstnew(sp_void));
 	free_array(line);
 }
 
@@ -58,9 +58,11 @@ void	ft_lstadd_pl(t_list **lst, char **line)
 	pl.color.g = ft_atoi(tmp[1]) * 1.0;
 	pl.color.b = ft_atoi(tmp[2]) * 1.0;
 	free_array(tmp);
-	pl_void = malloc(sizeof(t_plane));//jma
-	*pl_void = pl;//jma
-	ft_lstadd_back(lst, ft_lstnew(pl_void));//node); //jma
+	pl_void = malloc(sizeof(t_plane));
+	if (pl_void == NULL)
+		error_exit("malloc", 1);
+	*pl_void = pl;
+	ft_lstadd_back(lst, ft_lstnew(pl_void));
 	free_array(line);
 }
 
@@ -87,8 +89,10 @@ void	ft_lstadd_cy(t_list **lst, char **line)
 	cy.color.g = ft_atoi(tmp[1]) * 1.0;
 	cy.color.b = ft_atoi(tmp[2]) * 1.0;
 	free_array(tmp);
-	cy_void = malloc(sizeof(t_cyl));//jma
-	*cy_void = cy;//jma
-	ft_lstadd_back(lst, ft_lstnew(cy_void));//node); //jma
+	cy_void = malloc(sizeof(t_cyl));
+	if (cy_void == NULL)
+		error_exit("malloc", 1);
+	*cy_void = cy;
+	ft_lstadd_back(lst, ft_lstnew(cy_void));
 	free_array(line);
 }

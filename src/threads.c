@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/17 13:15:51 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/19 15:04:26 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/19 18:31:22 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,4 +92,5 @@ void	make_threads(t_threadinfo **infos)
 			error_exit("pthread_detach", 1);
 		i++;
 	}
+	free(threads);
 }

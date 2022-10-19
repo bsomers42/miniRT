@@ -6,66 +6,63 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 16:47:20 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/10/19 17:59:51 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/10/19 18:57:07 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include <stdio.h> //voor printf, wegggg!!!
 
-void	assign_ambient(char *str, int *amb_ptr, t_amb *amb)
+void	assign_ambient(char *str, int *amb_ptr, t_parse *parse)
 {
 	char **split;
 	char **tmp;
 
-	amb = (t_amb *)malloc(sizeof(t_amb));
 	split = ft_split(str, ' ');
-	amb->ratio = ft_stofl(split[1]);
+	parse->amb.ratio = ft_stofl(split[1]);
 	tmp = ft_split(split[2], ',');
-	amb->r = ft_atoi(tmp[0]);
-	amb->g = ft_atoi(tmp[1]);
-	amb->b = ft_atoi(tmp[2]);
-	free(tmp);
-	free(split);
+	parse->amb.r = ft_atoi(tmp[0]);
+	parse->amb.g = ft_atoi(tmp[1]);
+	parse->amb.b = ft_atoi(tmp[2]);
+	free_array(tmp);
+	free_array(split);
 	*amb_ptr = *amb_ptr + 1;
 }
 
-void	assign_camera(char *str, int *cam_ptr, t_cam *cam)
+void	assign_camera(char *str, int *cam_ptr, t_parse *parse)
 {
 	char	**split;
 	char	**tmp;
 
-	cam = (t_cam *)malloc(sizeof(t_cam));
 	split = ft_split(str, ' ');
 	tmp = ft_split(split[1], ',');
-	cam->x = ft_stofl(tmp[0]);
-	cam->y = ft_stofl(tmp[1]);
-	cam->z = ft_stofl(tmp[2]);
-	free(tmp);
+	parse->cam.x = ft_stofl(tmp[0]);
+	parse->cam.y = ft_stofl(tmp[1]);
+	parse->cam.z = ft_stofl(tmp[2]);
+	free_array(tmp);
 	tmp = ft_split(split[2], ',');
-	cam->vect_x = ft_stofl(tmp[0]);
-	cam->vect_y = ft_stofl(tmp[1]);
-	cam->vect_z = ft_stofl(tmp[2]);
-	free(tmp);
-	cam->fov = ft_atoi(split[3]);
-	free(split);
+	parse->cam.vect_x = ft_stofl(tmp[0]);
+	parse->cam.vect_y = ft_stofl(tmp[1]);
+	parse->cam.vect_z = ft_stofl(tmp[2]);
+	free_array(tmp);
+	parse->cam.fov = ft_atoi(split[3]);
+	free_array(split);
 	*cam_ptr = *cam_ptr + 1;
 }
 
-void	assign_light(char *str, int *light_ptr, t_light *light)
+void	assign_light(char *str, int *light_ptr, t_parse *parse)
 {
 	char	**split;
 	char	**tmp;
 
-	light = (t_light *)malloc(sizeof(t_light));
 	split = ft_split(str, ' ');
 	tmp = ft_split(split[1], ',');
-	light->x = ft_stofl(tmp[0]);
-	light->y = ft_stofl(tmp[1]);
-	light->z = ft_stofl(tmp[2]);
-	free(tmp);
-	light->bright = ft_stofl(split[2]);
-	free(split);
+	parse->light.x = ft_stofl(tmp[0]);
+	parse->light.y = ft_stofl(tmp[1]);
+	parse->light.z = ft_stofl(tmp[2]);
+	free_array(tmp);
+	parse->light.bright = ft_stofl(split[2]);
+	free_array(split);
 	*light_ptr = *light_ptr + 1;
 }
 
@@ -94,19 +91,18 @@ int	assign_to_struct(char **map_split_newline, t_parse *parse)
 	
 	while (map_split_newline[i] != NULL)
 	{
-		// if (ft_isnumber(map_split_newline[i]) == 0)
-		// {
-			if (ft_strncmp(map_split_newline[i], "A ", 2) == 0)
-				assign_ambient(map_split_newline[i], &amb, parse->amb);
-			else if (ft_strncmp(map_split_newline[i], "C ", 2) == 0)
-				assign_camera(map_split_newline[i], &cam, parse->cam);
-			else if (ft_strncmp(map_split_newline[i], "L ", 2) == 0)
-				assign_light(map_split_newline[i], &light, parse->light);
-			else if (ft_strncmp(map_split_newline[i], "sp ", 3) == 0)
-				ft_lstadd_sp(&(parse->lst_sphere), ft_split(map_split_newline[i], ' '));
-			// else if (ft_strncmp(map_split_newline[i], "pl ", 3) == 0)
-			// else if (ft_strncmp(map_split_newline[i], "cy ", 3) == 0)
-		// }	
+		if (ft_strncmp(map_split_newline[i], "A ", 2) == 0)
+			assign_ambient(map_split_newline[i], &amb, parse);
+		else if (ft_strncmp(map_split_newline[i], "C ", 2) == 0)
+			assign_camera(map_split_newline[i], &cam, parse);
+		else if (ft_strncmp(map_split_newline[i], "L ", 2) == 0)
+			assign_light(map_split_newline[i], &light, parse);
+		else if (ft_strncmp(map_split_newline[i], "sp ", 3) == 0)
+			ft_lstadd_sp(&(parse->lst_sphere), ft_split(map_split_newline[i], ' '));
+		else if (ft_strncmp(map_split_newline[i], "pl ", 3) == 0)
+			ft_lstadd_pl(&(parse->lst_plane), ft_split(map_split_newline[i], ' '));
+		else if (ft_strncmp(map_split_newline[i], "cy ", 3) == 0)
+			ft_lstadd_cy(&(parse->lst_cyl), ft_split(map_split_newline[i], ' '));
 		i++;
 	}
 	test_lists(&(parse->lst_sphere));
@@ -139,14 +135,15 @@ char *get_map(char *argv[])
 	return (strdef);
 }
 
-t_parse	*parse_map(char *argv[])//, t_parse *parse)
+t_parse	*parse_map(char *argv[])
 {
 	char    *map_char;
 	char	**map_split_newline;
 	t_parse *parse;
 
 	parse = (t_parse *)malloc(sizeof(t_parse));
-
+	if (parse == NULL)
+		error_exit("malloc", 1);
 	map_char = get_map(argv);
 	map_split_newline = ft_split(map_char, '\n');
 	free(map_char);

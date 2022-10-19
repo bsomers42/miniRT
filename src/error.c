@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/12 15:10:32 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/19 13:40:59 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/19 18:50:43 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,12 @@
  */
 void	write_exit(char *message, int exit_code)
 {
-	char	*return_value;
 	char	*exit_num;
 
 	exit_num = ft_itoa(exit_code);
 	if (exit_num == NULL)
 		error_exit("malloc", 1);
-	return_value = ft_strjoin("?=", exit_num);
 	free(exit_num);
-	free(return_value);
 	ft_putstr_fd("miniRT: ", STDERR_FILENO);
 	ft_putstr_fd(message, STDERR_FILENO);
 	exit(exit_code);
@@ -44,15 +41,12 @@ void	write_exit(char *message, int exit_code)
  */
 void	error_exit(char *message, int exit_code)
 {
-	char	*return_value;
 	char	*exit_num;
 
 	exit_num = ft_itoa(exit_code);
 	if (exit_num == NULL)
 		error_exit("malloc", 1);
-	return_value = ft_strjoin("?=", exit_num);
 	free(exit_num);
-	free(return_value);
 	ft_putstr_fd("miniRT: ", STDOUT_FILENO);
 	perror(message);
 	exit(exit_code);

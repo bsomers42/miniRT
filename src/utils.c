@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/19 11:41:16 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/10/19 16:24:34 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/10/19 18:47:45 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,9 @@ void	free_minirt(t_parse *parse)
 		last = ft_lstlast(parse->lst_plane);
 	}
 	free(parse->lst_plane);
+	// free(parse->amb);
+	// free(parse->cam);
+	// free(parse->light);
 	free(parse);
 	free(last);
 }
