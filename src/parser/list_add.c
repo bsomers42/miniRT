@@ -6,12 +6,11 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/11 11:13:12 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/10/19 15:19:45 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/19 18:21:00 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-#include "nodes.h"
 #include <stdio.h> //wegggg
 
 float	ft_stofl(char *str);
