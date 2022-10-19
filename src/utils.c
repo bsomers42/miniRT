@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/19 11:41:16 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/10/19 11:52:47 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/10/19 13:59:18 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,26 +19,26 @@ void	free_minirt(t_parse *parse)
 	last = (t_list *)malloc(sizeof(t_list));
 	while (last->next != NULL)
 	{
-		last = ft_lstlast(*parse->lst_cyl);
+		last = ft_lstlast(parse->lst_cyl);
 		free(last->content);
 		free(last->next);
-		last = ft_lstlast(*parse->lst_cyl);
+		last = ft_lstlast(parse->lst_cyl);
 	}
 	free(parse->lst_cyl);
 	while (last->next != NULL)
 	{
-		last = ft_lstlast(*parse->lst_sphere);
+		last = ft_lstlast(parse->lst_sphere);
 		free(last->content);
 		free(last->next);
-		last = ft_lstlast(*parse->lst_sphere);
+		last = ft_lstlast(parse->lst_sphere);
 	}
 	free(parse->lst_sphere);
 	while (last->next != NULL)
 	{
-		last = ft_lstlast(*parse->lst_plane);
+		last = ft_lstlast(parse->lst_plane);
 		free(last->content);
 		free(last->next);
-		last = ft_lstlast(*parse->lst_plane);
+		last = ft_lstlast(parse->lst_plane);
 	}
 	free(parse->lst_plane);
 	free(parse);
