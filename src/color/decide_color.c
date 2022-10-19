@@ -6,12 +6,11 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 13:26:28 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/19 16:05:27 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/19 18:14:15 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-#include <stdio.h> //weghalen
 
 t_coord	ray_at(t_ray ray, float t)
 {
@@ -26,19 +25,18 @@ t_coord	ray_at(t_ray ray, float t)
 static t_color	ray_color(t_list *spheres, t_ray ray)
 {
 	t_color		color;
-	// t_coord		normal;
+	t_coord		normal;
 	t_besthit	record;
 	int			closest_index;
 
 	closest_index = hit_anything(spheres, ray, &record);
 	if (closest_index >= 0)
 	{
-		// printf("sphere center: %f, %f, %f\n", sphere->center.x, sphere->center.y, sphere->center.x);
 		// //actual color
-		color = record.color;
+		// color = record.color;
 		//colored spheres
-		// normal = unit_vector_coord(distract_points(ray_at(ray, record.t), record.center));
-		// color = new_color(0.5 * (normal.x + 1) * 255, 0.5 * (normal.y + 1) * 255, 0.5 * (normal.z + 1) * 255);
+		normal = unit_vector_coord(distract_points(ray_at(ray, record.t), record.center));
+		color = new_color(0.5 * (normal.x + 1) * 255, 0.5 * (normal.y + 1) * 255, 0.5 * (normal.z + 1) * 255);
 	}
 	else
 	{
