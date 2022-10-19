@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 15:11:47 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/17 17:18:33 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/10/19 10:47:44 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,9 +119,9 @@ typedef struct s_parse
 	t_light *light;
 	t_cam	*cam;
 	t_amb	*amb;
-	t_list	**lst_sp;
-	t_list	**lst_pl;
-	t_list	**lst_cy;
+	t_node_sp	**lst_sp;
+	t_node_pl	**lst_pl;
+	t_node_cy	**lst_cy;
 }	t_parse;
 
 t_parse	*parse_map(char *argv[], t_parse *parse);
