@@ -6,7 +6,7 @@
 #    By: bsomers <bsomers@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/09/22 14:52:38 by bsomers       #+#    #+#                  #
-#    Updated: 2022/10/17 17:31:52 by jaberkro      ########   odam.nl          #
+#    Updated: 2022/10/19 14:35:34 by jaberkro      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,11 @@ SRC_DIR = src
 BUILD_DIR = obj
 
 SRC = main.c \
+	error.c \
+	utils.c \
+	parser/parse.c \
+	parser/parse_utils.c \
+	parser/list_add.c \
 	vector_math/add.c \
 	vector_math/distract.c \
 	vector_math/multiply.c \
@@ -34,7 +39,6 @@ SRC = main.c \
 	color/put_color.c \
 	color/antialias_color.c \
 	sphere/hit_sphere.c \
-	error.c \
 	threads.c
 
 OBJ := $(addprefix $(BUILD_DIR)/, $(SRC:.c=.o))
@@ -43,8 +47,6 @@ SRC := $(addprefix $(SRC_DIR)/, $(SRC))
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJ) $(LIBMLX42)
-	# cp $(LIBFT) ./$(NAME)
-	# cp $(LIBMLX42) ./$(NAME)
 	$(CC) $(OBJ) $(FLAGS) $(INCLUDE) $(LIBMLX42) $(LIBFT) -lglfw3 -framework Cocoa -framework OpenGL -framework IOKit -L. -o $(NAME)
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
@@ -52,7 +54,7 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 	$(CC) -c $(INCLUDE) $(FLAGS) -o $@ $<
 
 $(LIBFT):
-	@$(MAKE) -C $(LIBFT_DIR)
+	@$(MAKE) bonus -C $(LIBFT_DIR)
 	@cp ./$(LIBFT) .
 
 $(LIBMLX42):

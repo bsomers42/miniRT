@@ -6,13 +6,12 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 12:23:19 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/06 16:43:36 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/19 13:39:15 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include <math.h>
-#include <stdio.h> //weg
 
 t_coord	unit_vector_coord(t_coord dir)
 {
