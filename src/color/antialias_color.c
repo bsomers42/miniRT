@@ -6,13 +6,14 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/17 17:20:40 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/17 17:50:13 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/19 14:58:50 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+#include <stdio.h> //weghalen
 
-t_color	antialias_color(t_sphere *spheres, t_ray ray, int x, int y)
+t_color	antialias_color(t_list *spheres, t_ray ray, int x, int y)
 {
 	t_color	color;
 	int		k;
