@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 15:46:19 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/19 16:03:26 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/19 18:19:57 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,3 +92,98 @@ int	hit_anything(t_list *spheres, t_ray ray, t_besthit *hit_rec)
 	}
 	return (hit_anything);
 }
+// void	update_rec(float root, t_sphere *sphere, t_ray ray, t_besthit *tmp_rec)
+// {
+// 	tmp_rec->t = root;
+// 	tmp_rec->hit_point = ray_at(ray, tmp_rec->t);
+// 	tmp_rec->normal.x = tmp_rec->hit_point.x - sphere->center.x / sphere->diam;
+// 	tmp_rec->normal.y = tmp_rec->hit_point.y - sphere->center.y / sphere->diam;
+// 	tmp_rec->normal.z = tmp_rec->hit_point.z - sphere->center.z / sphere->diam;
+// 	tmp_rec->color = sphere->color;
+// 	tmp_rec->center = sphere->center;
+// }
+
+// float	calculate_root(float a, float half_b, float d, float t_max)
+// {
+// 	float	root;
+
+// 	if (d < 0)
+// 		return (0.0);
+// 	root = (-half_b - sqrt(d)) / a;
+// 	if (root < 0.0 || t_max < root)
+// 	{
+// 		root = (-half_b + sqrt(d)) / a;
+// 		if (root < 0.0 || t_max < root)
+// 			return (0.0);
+// 	}
+// 	return (root);
+// }
+
+// float	abc_formula(t_sphere *sphere, t_ray ray, float t_max)
+// {
+// 	float	a;
+// 	float	half_b;
+// 	float	c;
+// 	float	d;
+// 	t_coord	dist;
+
+// 	dist = distract_points(ray.origin, sphere->center);
+// 	a = dot_points(ray.dir, ray.dir);
+// 	half_b = dot_points(dist, ray.dir);
+// 	c = dot_points(dist, dist) - sphere->diam * sphere->diam;
+// 	d = half_b * half_b - a * c;
+// 	return (calculate_root(a, half_b, d, t_max));
+// }
+
+// int	hit_sphere(t_sphere *sphere, t_ray ray, float t_max, t_besthit *tmp_rec)
+// {
+// 	float	root;
+// 	t_coord	outward_normal;
+
+// 	root = abc_formula(sphere, ray, t_max);
+// 	if (root == 0.0)
+// 		return (0);
+// 	update_rec(root, sphere, ray, tmp_rec);
+// 	outward_normal.x = (tmp_rec->hit_point.x - sphere->center.x) / sphere->diam;
+// 	outward_normal.y = (tmp_rec->hit_point.y - sphere->center.y) / sphere->diam;
+// 	outward_normal.z = (tmp_rec->hit_point.z - sphere->center.z) / sphere->diam;
+// 	if (dot_points(ray.dir, outward_normal) < 0)
+// 	{
+// 		tmp_rec->front_face = 1;
+// 		tmp_rec->normal = outward_normal;
+// 	}
+// 	else
+// 	{
+// 		tmp_rec->front_face = 0;
+// 		tmp_rec->normal = outward_normal;
+// 	}
+// 	return (1);
+// }
+
+// int	hit_anything(t_list *spheres, t_ray ray, t_besthit *hit_rec)
+// {
+// 	float		closest_so_far;
+// 	int			hit_anything;
+// 	t_besthit	tmp_rec;
+// 	int			i;
+// 	t_list		*tmp;
+// 	t_sphere	*sphere;
+
+// 	tmp = spheres;
+// 	i = 0;
+// 	closest_so_far = INFINITY;
+// 	hit_anything = -1;
+// 	while (tmp)
+// 	{
+// 		sphere = spheres->content;
+// 		if (hit_sphere(sphere, ray, closest_so_far, &tmp_rec))
+// 		{
+// 			hit_anything = i;
+// 			closest_so_far = tmp_rec.t;
+// 			*hit_rec = tmp_rec;
+// 		}
+// 		tmp = tmp->next;
+// 		i++;
+// 	}
+// 	return (hit_anything);
+// }
