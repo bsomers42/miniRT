@@ -6,12 +6,11 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 16:47:20 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/10/19 13:30:21 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/10/19 17:59:51 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-#include "nodes.h"
 #include <stdio.h> //voor printf, wegggg!!!
 
 void	assign_ambient(char *str, int *amb_ptr, t_amb *amb)
@@ -77,7 +76,7 @@ void	test_lists(t_list **lst_sphere)
 
 	last = ft_lstlast(*lst_sphere);
 	sphere = (t_sphere *)last->content;
-	printf("[r: %d, g: %d, b: %d]\n", sphere->r, sphere->g, sphere->b);
+	printf("[TESTr: %d, g: %d, b: %d]\n", sphere->color.r, sphere->color.g, sphere->color.b);
 }
 
 int	assign_to_struct(char **map_split_newline, t_parse *parse)
@@ -140,10 +139,13 @@ char *get_map(char *argv[])
 	return (strdef);
 }
 
-t_parse	*parse_map(char *argv[], t_parse *parse)
+t_parse	*parse_map(char *argv[])//, t_parse *parse)
 {
 	char    *map_char;
 	char	**map_split_newline;
+	t_parse *parse;
+
+	parse = (t_parse *)malloc(sizeof(t_parse));
 
 	map_char = get_map(argv);
 	map_split_newline = ft_split(map_char, '\n');

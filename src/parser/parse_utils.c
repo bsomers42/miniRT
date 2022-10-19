@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/17 11:04:13 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/10/17 17:01:03 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/10/19 15:17:30 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ float	ft_stofl(char *str)
 				fact /= 10.0f;
 				res = res * 10.0f + (float)d;
 			}
+			else //jma
+				res = res * 10.0f + (float)d;//jma 
 		}
 		str++;
 	}

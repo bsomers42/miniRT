@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/12 14:07:57 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/17 13:46:43 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/19 13:49:39 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ typedef struct s_data
 	t_mlx_str		mlx_str;
 	int				pixels_done;
 	pthread_mutex_t	pixel_lock;
-	t_sphere		*spheres;
+	pthread_mutex_t	mlx_lock;
+	t_parse			*parse; //over hebben
 	t_ray			ray;
 }	t_data;
 

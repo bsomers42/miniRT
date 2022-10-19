@@ -6,13 +6,13 @@
 #    By: bsomers <bsomers@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/09/22 14:52:38 by bsomers       #+#    #+#                  #
-#    Updated: 2022/10/19 13:30:59 by bsomers       ########   odam.nl          #
+#    Updated: 2022/10/19 14:35:34 by jaberkro      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minirt
 
-FLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+FLAGS = -Wall -Wextra -Werror -g -fsanitize=thread
 INCLUDE = -I include -I ./MLX42/include/MLX42 -I ./libft
 
 LIBFT_DIR = libft/
@@ -28,20 +28,18 @@ SRC = main.c \
 	parser/parse.c \
 	parser/parse_utils.c \
 	parser/list_add.c \
-	color/put_color.c \
-	renderer.c \
-	color/new_color.c \
-	color/decide_color.c \
-	threads.c \
-	ray.c \
 	vector_math/add.c \
 	vector_math/distract.c \
 	vector_math/multiply.c \
 	vector_math/devide.c \
 	vector_math/dot.c \
 	vector_math/unit_vector.c \
-	sphere/hit_sphere.c
-
+	color/new_color.c \
+	color/decide_color.c \
+	color/put_color.c \
+	color/antialias_color.c \
+	sphere/hit_sphere.c \
+	threads.c
 
 OBJ := $(addprefix $(BUILD_DIR)/, $(SRC:.c=.o))
 SRC := $(addprefix $(SRC_DIR)/, $(SRC))
@@ -49,8 +47,6 @@ SRC := $(addprefix $(SRC_DIR)/, $(SRC))
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJ) $(LIBMLX42)
-	# cp $(LIBFT) ./$(NAME)
-	# cp $(LIBMLX42) ./$(NAME)
 	$(CC) $(OBJ) $(FLAGS) $(INCLUDE) $(LIBMLX42) $(LIBFT) -lglfw3 -framework Cocoa -framework OpenGL -framework IOKit -L. -o $(NAME)
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
@@ -58,7 +54,7 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 	$(CC) -c $(INCLUDE) $(FLAGS) -o $@ $<
 
 $(LIBFT):
-	@make bonus -C $(LIBFT_DIR)
+	@$(MAKE) bonus -C $(LIBFT_DIR)
 	@cp ./$(LIBFT) .
 
 $(LIBMLX42):
