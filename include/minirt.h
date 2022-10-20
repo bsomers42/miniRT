@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 15:11:47 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/19 18:38:57 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/10/20 10:37:16 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,6 @@ typedef struct s_parse
 }	t_parse;
 
 t_parse	*parse_map(char *argv[]);
-float	ft_stofl(char *str);
 void	free_minirt(t_parse *parse);
 // void	write_exit(char *message, int exit_code);
 

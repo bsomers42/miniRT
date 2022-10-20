@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 16:47:20 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/10/19 18:57:07 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/10/20 10:42:34 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 void	assign_ambient(char *str, int *amb_ptr, t_parse *parse)
 {
-	char **split;
-	char **tmp;
+	char	**split;
+	char	**tmp;
 
 	split = ft_split(str, ' ');
 	parse->amb.ratio = ft_stofl(split[1]);
@@ -68,7 +68,7 @@ void	assign_light(char *str, int *light_ptr, t_parse *parse)
 
 void	test_lists(t_list **lst_sphere)
 {
-	t_list *last;
+	t_list		*last;
 	t_sphere	*sphere;
 
 	last = ft_lstlast(*lst_sphere);
@@ -88,7 +88,6 @@ int	assign_to_struct(char **map_split_newline, t_parse *parse)
 	cam = 0;
 	light = 0;
 	parse->lst_sphere = NULL;
-	
 	while (map_split_newline[i] != NULL)
 	{
 		if (ft_strncmp(map_split_newline[i], "A ", 2) == 0)
@@ -111,11 +110,11 @@ int	assign_to_struct(char **map_split_newline, t_parse *parse)
 	return (0);
 }
 
-char *get_map(char *argv[])
+char	*get_map(char *argv[])
 {
-	int fd;
-	char *str;
-	char *strdef;
+	int		fd;
+	char	*str;
+	char	*strdef;
 
 	strdef = NULL;
 	fd = open(argv[1], O_RDONLY);
@@ -125,21 +124,21 @@ char *get_map(char *argv[])
 	{
 		str = get_next_line(fd);
 		if (str == NULL)
-			break;
+			break ;
 		if (strdef == NULL)
 			strdef = ft_strdup(str);
 		else
 			strdef = ft_strjoin_fr(strdef, str);
-		free (str);		
+		free(str);		
 	}
 	return (strdef);
 }
 
 t_parse	*parse_map(char *argv[])
 {
-	char    *map_char;
+	char	*map_char;
 	char	**map_split_newline;
-	t_parse *parse;
+	t_parse	*parse;
 
 	parse = (t_parse *)malloc(sizeof(t_parse));
 	if (parse == NULL)

@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 13:26:28 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/19 18:09:03 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/10/20 10:57:01 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_coord	ray_at(t_ray ray, float t)
 static t_color	ray_color(t_list *spheres, t_ray ray)
 {
 	t_color		color;
-	// t_coord		normal;
+	t_coord		normal;
 	t_besthit	record;
 	int			closest_index;
 
@@ -35,10 +35,10 @@ static t_color	ray_color(t_list *spheres, t_ray ray)
 	{
 		// printf("sphere center: %f, %f, %f\n", sphere->center.x, sphere->center.y, sphere->center.x);
 		// //actual color
-		color = record.color;
+		// color = record.color;
 		//colored spheres
-		// normal = unit_vector_coord(distract_points(ray_at(ray, record.t), record.center));
-		// color = new_color(0.5 * (normal.x + 1) * 255, 0.5 * (normal.y + 1) * 255, 0.5 * (normal.z + 1) * 255);
+		normal = unit_vector_coord(distract_points(ray_at(ray, record.t), record.center));
+		color = new_color(0.5 * (normal.x + 1) * 255, 0.5 * (normal.y + 1) * 255, 0.5 * (normal.z + 1) * 255);
 	}
 	else
 	{
