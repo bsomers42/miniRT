@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 15:11:47 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/19 16:03:00 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/20 15:24:01 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # define VIEWPORT_HEIGHT 2.0
 # define FOCAL_LENGTH 1.0
 
-# define AA 1 //anti-aliasing
+# define AA 8 //anti-aliasing
 # define THREADS 7
 # include "libft.h"
 # include "MLX42.h"
@@ -197,7 +197,7 @@ t_color	decide_color(t_list *spheres, t_ray ray, float i, float j);
 t_color	new_color(float r, float g, float b);
 
 // int		hit_sphere(t_sphere sphere, t_ray ray, float t_min, float t_max, t_besthit *hit_rec);
-int		hit_anything(t_list *spheres, t_ray ray, t_besthit *hit_rec);
+int		hit_anything(t_list *spheres, t_ray ray, t_besthit *hit_rec, float t_min);
 
 void	error_exit(char *message, int exit_code);
 void	write_exit(char *message, int exit_code);

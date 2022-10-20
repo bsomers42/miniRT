@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 13:26:28 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/19 18:14:15 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/20 15:27:24 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,21 +22,42 @@ t_coord	ray_at(t_ray ray, float t)
 	return (result);
 }
 
+int	calculate_shadow(t_list *spheres, t_besthit record)
+{
+	t_coord		light;
+	t_ray		light_ray;
+	t_besthit	not_needed;
+
+	light.x = 1.0;
+	light.y = 1.0;
+	light.z = -0.1;
+	light_ray.origin = record.hit_point;
+	light_ray.dir = distract_points(light, light_ray.origin);
+	if (hit_anything(spheres, light_ray, &not_needed, 0.1) >= 0)
+		return (1);
+	return (0);
+}
+
 static t_color	ray_color(t_list *spheres, t_ray ray)
 {
 	t_color		color;
-	t_coord		normal;
+	// t_coord		normal;
 	t_besthit	record;
 	int			closest_index;
-
-	closest_index = hit_anything(spheres, ray, &record);
+	
+	closest_index = hit_anything(spheres, ray, &record, 0);
 	if (closest_index >= 0)
 	{
+		if (calculate_shadow(spheres, record) == 1)
+			return (new_color(64, 64, 64)); // final shadow color should be black
 		// //actual color
-		// color = record.color;
+		color = record.color;
+		//als geen schaduw dan shading berekenen en terug sturen
+		// record.normal;
+		
 		//colored spheres
-		normal = unit_vector_coord(distract_points(ray_at(ray, record.t), record.center));
-		color = new_color(0.5 * (normal.x + 1) * 255, 0.5 * (normal.y + 1) * 255, 0.5 * (normal.z + 1) * 255);
+		// normal = unit_vector_coord(distract_points(ray_at(ray, record.t), record.center));
+		// color = new_color(0.5 * (normal.x + 1) * 255, 0.5 * (normal.y + 1) * 255, 0.5 * (normal.z + 1) * 255);
 	}
 	else
 	{

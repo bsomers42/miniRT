@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 15:46:19 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/19 18:19:57 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/20 15:21:50 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	hit_sphere(t_sphere *sphere, t_ray ray, float t_min, float t_max, t_besthit 
 	return (1);
 }
 
-int	hit_anything(t_list *spheres, t_ray ray, t_besthit *hit_rec)
+int	hit_anything(t_list *spheres, t_ray ray, t_besthit *hit_rec, float t_min)
 {
 	float		closest_so_far;
 	int			hit_anything;
@@ -78,10 +78,10 @@ int	hit_anything(t_list *spheres, t_ray ray, t_besthit *hit_rec)
 	i = 0;
 	closest_so_far = INFINITY;
 	hit_anything = -1;
-	while (tmp) // amount spheres
+	while (tmp)
 	{
 		sphere = (t_sphere *)tmp->content;
-		if (hit_sphere(sphere, ray, 0, closest_so_far, &tmp_rec))
+		if (hit_sphere(sphere, ray, t_min, closest_so_far, &tmp_rec))
 		{
 			hit_anything = i;
 			closest_so_far = tmp_rec.t;
