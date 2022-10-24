@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/17 13:15:51 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/19 17:25:24 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/24 12:12:34 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ void	check_done(t_threadinfo *info)
 static void	fill_pixel(t_threadinfo *info, int x, int y)
 {
 	t_color	color;
-	t_list	*lst_sphere;
+	t_parse	map_info;
 
-	lst_sphere = info->data->parse->lst_sphere;
-	color = antialias_color(lst_sphere, info->data->ray, x, y);
+	map_info = *(info->data->parse);
+	color = antialias_color(map_info, x, y);
 	put_color(info, x, y, color);
 	if (pthread_mutex_lock(&(info->data->pixel_lock)) != 0)
 		error_exit("pthread_mutex_lock", 1);
