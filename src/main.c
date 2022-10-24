@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 14:54:42 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/10/19 17:27:57 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/24 12:25:13 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,19 +33,6 @@ void	minirt_close(void *ptr)
 	exit(EXIT_SUCCESS);
 }
 
-t_ray	init_ray(void)
-{
-	t_ray	ray;
-
-	ray.origin.x = 0.0;
-	ray.origin.y = -0.1;
-	ray.origin.z = 0.0;
-	ray.dir.x = 0.0;
-	ray.dir.y = 0.0;
-	ray.dir.z = 0.0;
-	return (ray);
-}
-
 void	init_infos(t_data *data, t_threadinfo **infos)
 {
 	int	i;
@@ -65,6 +52,7 @@ void	init_infos(t_data *data, t_threadinfo **infos)
 void	init_data(t_data *data, char **argv)
 {
 	data->parse = parse_map(argv);
+	// printf("origin camera:(%f,%f,%f)\n", data->parse->cam->origin.x, data->parse->cam->origin.y, data->parse->cam->origin.z);
 	data->mlx_str.mlx = mlx_init(WIDTH, HEIGHT, "MickeyRT", true);
 	if (data->mlx_str.mlx == NULL)
 		error_exit("mlx_init failed!\n", 1);
@@ -72,7 +60,6 @@ void	init_data(t_data *data, char **argv)
 	if (data->mlx_str.img == NULL)
 		error_exit("mlx_new_image failed!\n", 1);
 	data->pixels_done = 0;
-	data->ray = init_ray();
 	pthread_mutex_init(&(data->pixel_lock), NULL);
 	pthread_mutex_init(&(data->mlx_lock), NULL);
 }
