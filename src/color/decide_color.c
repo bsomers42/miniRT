@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 13:26:28 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/20 18:53:13 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/24 14:25:34 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,63 +43,52 @@ t_coord	ray_at(t_ray ray, float t)
 	return (result);
 }
 
-t_color	calculate_shadow_shade(t_list *spheres, t_besthit record)
+t_color	calculate_shadow_shade(t_parse map_info, t_besthit record)
 {
 	t_ray		light_ray;
 	t_besthit	not_needed;
 	t_color		color;
-	t_coord		light;
-	float		brightness;
-	t_color		test_print;
-	float angle;
+	t_coord		light; //temporary
+	float		brightness; //temporary
+	// t_color		test_print;
+	float		angle;
 
-	light.x = 1.0;
-	light.y = 1.0;
-	light.z = -0.1;
-	brightness = 1.0;
+	light.x = 1.0; //temporary
+	light.y = 1.0; //temporary
+	light.z = 0.0; //temporary
+	brightness = 1.0; //temporary
 	light_ray.origin = record.hit_point;
-	light_ray.dir = distract_points(light, light_ray.origin);
+	light_ray.dir = distract_points(light, light_ray.origin); //temporary
+	// light_ray.dir = distract_points(map_info.light->origin, light_ray.origin); above should become this
 	light_ray.dir = unit_vector_coord(light_ray.dir);
-	if (hit_anything(spheres, light_ray, &not_needed, 0.001, sqrt(dot_points(light_ray.dir, light_ray.dir))) >= 0)
-		return (new_color(64, 64, 64));
-	light_ray.dir = distract_points(light_ray.origin, light); // twijfel
-	light_ray.dir = unit_vector_coord(light_ray.dir); //twijfel
-	light_ray.dir = multiply_point_float(light_ray.dir, -1.0); //twijfel
-	angle = dot_points(record.normal, light_ray.dir); // lijkt niet het goede resultaat te hebben
-	if (angle > 0)
-	{
-		printf("angle:%f\n", angle);
-		test_print = multiply_color_float(new_color(255, 255, 255), 0.18 / M_PI * brightness * angle);
-	// 	// color = multiply_color_float(new_color(255, 255, 255), 0.18 / M_PI * brightness * fmax(0.0, dot_points(record.normal, light_ray.dir)));
-		test_print = clamp_color(test_print, 0, 255);
-		color = multiply_colors(record.color, test_print);
-		color = clamp_color(color, 0, 255);
-		// color = record.color; // als je dit uitcomment komt er random shit
-	}
-	else
-		color = new_color(64, 64, 64);
-	// color = multiply_color_float(record.color, test_print * 255);
-	// color = multiply_color_float(new_color(255, 255, 255), 0.18 / M_PI * brightness * fmax(0.0, dot_points(record.normal, light_ray.dir)));
+	if (hit_anything(map_info, light_ray, &not_needed, 0.001, sqrt(dot_points(light_ray.dir, light_ray.dir))) >= 0)
+		return (new_color(0, 0, 0));
+	light_ray.dir = distract_points(light_ray.origin, light); // temporary
+	// light_ray.dir = distract_points(light_ray.origin, map_info.light->origin); // above should become this, but not sure about this line yet
+	light_ray.dir = unit_vector_coord(light_ray.dir);
+	light_ray.dir = multiply_point_float(light_ray.dir, -1.0);
+	angle = dot_points(record.normal, light_ray.dir);
+	if (angle < 0)
+		angle = 0;
+	color = multiply_color_float(record.color, (float)angle * (float)brightness); //test
 	return (color);
 }
 
-static t_color	ray_color(t_list *spheres, t_ray ray)
+static t_color	ray_color(t_parse map_info, t_ray ray)
 {
 	t_color		color;
 	// t_coord		normal;
 	t_besthit	record;
 	int			closest_index;
 
-	closest_index = hit_anything(spheres, ray, &record, 0, INFINITY);
+	closest_index = hit_anything(map_info, ray, &record, 0, INFINITY);
 	if (closest_index >= 0)
 	{
-		// if (calculate_shadow_shade(light, spheres, record) == 1)
-		// 	return (new_color(64, 64, 64)); // final shadow color should be black
-		//actual color
-		color = calculate_shadow_shade(spheres, record); //record.color;
-		//als geen schaduw dan shading berekenen en terug sturen
-		// record.normal;
-		
+		color = calculate_shadow_shade(map_info, record);
+
+		//real color without shading
+		// color = record.color;
+
 		//colored spheres
 		// normal = unit_vector_coord(distract_points(ray_at(ray, record.t), record.center));
 		// color = new_color(0.5 * (normal.x + 1) * 255, 0.5 * (normal.y + 1) * 255, 0.5 * (normal.z + 1) * 255);
@@ -111,13 +100,18 @@ static t_color	ray_color(t_list *spheres, t_ray ray)
 	return (color);
 }
 
-t_color	decide_color(t_list *spheres, t_ray ray, float i, float j)
+t_color	decide_color(t_parse map_info, float i, float j)
 {
 	t_color	color;
 	float	u;
 	float	v;
 	t_coord	lower_left_corner;
+	t_ray	ray;
 
+	ray.origin.x = 0.0; // this should be removed
+	ray.origin.y = 0.0; // this should be removed
+	ray.origin.z = 0.0; // this should be removed
+	// ray.origin = map_info.cam->origin; // create the ray
 	lower_left_corner.x = ray.origin.x - VIEWPORT_WIDTH / 2;
 	lower_left_corner.y = ray.origin.y - VIEWPORT_HEIGHT / 2;
 	lower_left_corner.z = ray.origin.z - FOCAL_LENGTH;
@@ -126,6 +120,6 @@ t_color	decide_color(t_list *spheres, t_ray ray, float i, float j)
 	ray.dir.x = lower_left_corner.x + u * VIEWPORT_WIDTH - ray.origin.x;
 	ray.dir.y = lower_left_corner.y + v * VIEWPORT_HEIGHT - ray.origin.y;
 	ray.dir.z = lower_left_corner.z - ray.origin.z;
-	color = ray_color(spheres, ray);
+	color = ray_color(map_info, ray);
 	return (color);
 }
