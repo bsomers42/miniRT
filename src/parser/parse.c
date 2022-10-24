@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 16:47:20 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/10/19 18:21:05 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/24 13:58:04 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,13 @@ void	assign_camera(char *str, int *cam_ptr, t_cam *cam)
 	cam->x = ft_stofl(tmp[0]);
 	cam->y = ft_stofl(tmp[1]);
 	cam->z = ft_stofl(tmp[2]);
+	cam->origin = new_coord(ft_stofl(tmp[0]), ft_stofl(tmp[1]), ft_stofl(tmp[2])); //jma
 	free(tmp);
 	tmp = ft_split(split[2], ',');
 	cam->vect_x = ft_stofl(tmp[0]);
 	cam->vect_y = ft_stofl(tmp[1]);
 	cam->vect_z = ft_stofl(tmp[2]);
+	cam->dir = new_coord(ft_stofl(tmp[0]), ft_stofl(tmp[1]), ft_stofl(tmp[2])); //jma
 	free(tmp);
 	cam->fov = ft_atoi(split[3]);
 	free(split);
@@ -63,6 +65,7 @@ void	assign_light(char *str, int *light_ptr, t_light *light)
 	light->x = ft_stofl(tmp[0]);
 	light->y = ft_stofl(tmp[1]);
 	light->z = ft_stofl(tmp[2]);
+	light->origin = new_coord(ft_stofl(tmp[0]), ft_stofl(tmp[1]), ft_stofl(tmp[2]));
 	free(tmp);
 	light->bright = ft_stofl(split[2]);
 	free(split);
@@ -91,7 +94,7 @@ int	assign_to_struct(char **map_split_newline, t_parse *parse)
 	cam = 0;
 	light = 0;
 	parse->lst_sphere = NULL;
-	
+
 	while (map_split_newline[i] != NULL)
 	{
 		// if (ft_isnumber(map_split_newline[i]) == 0)
@@ -152,5 +155,10 @@ t_parse	*parse_map(char *argv[])//, t_parse *parse)
 	free(map_char);
 	assign_to_struct(map_split_newline, parse);
 	free_array(map_split_newline);
+	printf("origin camera:(%f,%f,%f)\n", parse->cam->x, parse->cam->y, parse->cam->z); //jma
+	printf("origin camera:(%f,%f,%f)\n", parse->cam->origin.x, parse->cam->origin.y, parse->cam->origin.z); //jma
+	printf("origin light:(%f,%f,%f)\n", parse->light->x, parse->light->y, parse->light->z); //jma
+	printf("origin light:(%f,%f,%f)\n", parse->light->origin.x, parse->light->origin.y, parse->light->origin.z); //jma
+	printf("brightness light:(%f)\n", parse->light->bright); //jma
 	return (parse);
 }
