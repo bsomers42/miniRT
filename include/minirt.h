@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 15:11:47 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/24 14:03:42 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/24 14:59:38 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,6 +199,7 @@ t_color	decide_color(t_parse map_info, float i, float j);
 t_color	new_color(float r, float g, float b);
 
 // int		hit_sphere(t_sphere sphere, t_ray ray, float t_min, float t_max, t_besthit *hit_rec);
+int		hit_any_sphere(t_parse map_info, t_ray ray, t_besthit *hit_rec, float t_min, float t_max);
 int		hit_anything(t_parse map_info, t_ray ray, t_besthit *hit_rec, float t_min, float t_max);
 
 t_coord	new_coord(float x, float y, float z);

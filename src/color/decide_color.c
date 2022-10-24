@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 13:26:28 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/24 14:25:34 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/24 15:03:12 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ t_color	calculate_shadow_shade(t_parse map_info, t_besthit record)
 	t_color		color;
 	t_coord		light; //temporary
 	float		brightness; //temporary
-	// t_color		test_print;
 	float		angle;
 
 	light.x = 1.0; //temporary
@@ -111,6 +110,9 @@ t_color	decide_color(t_parse map_info, float i, float j)
 	ray.origin.x = 0.0; // this should be removed
 	ray.origin.y = 0.0; // this should be removed
 	ray.origin.z = 0.0; // this should be removed
+	ray.dir.x = 1.0; // this should be removed
+	ray.dir.y = 0.0; // this should be removed
+	ray.dir.z = 0.0; // this should be removed
 	// ray.origin = map_info.cam->origin; // create the ray
 	lower_left_corner.x = ray.origin.x - VIEWPORT_WIDTH / 2;
 	lower_left_corner.y = ray.origin.y - VIEWPORT_HEIGHT / 2;

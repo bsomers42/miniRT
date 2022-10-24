@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 15:46:19 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/24 14:27:33 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/24 14:57:16 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,10 @@ int	hit_sphere(t_sphere *sphere, t_ray ray, float t_min, float t_max, t_besthit 
 		hit_rec->front_face = 0;
 		hit_rec->normal = multiply_point_float(outward_normal, -1.0);
 	}
-	// hit_rec->normal = unit_vector_coord(hit_rec->normal); // deze weghalen?
 	return (1);
 }
 
-int	hit_anything(t_parse map_info, t_ray ray, t_besthit *hit_rec, float t_min, float t_max)
+int	hit_any_sphere(t_parse map_info, t_ray ray, t_besthit *hit_rec, float t_min, float t_max)
 {
 	int			hit_anything;
 	t_besthit	tmp_rec;
@@ -82,7 +81,6 @@ int	hit_anything(t_parse map_info, t_ray ray, t_besthit *hit_rec, float t_min, f
 		if (hit_sphere(sphere, ray, t_min, t_max, &tmp_rec))
 		{
 			hit_anything = i;
-			// printf("ja!\n");
 			t_max = tmp_rec.t;
 			*hit_rec = tmp_rec;
 		}
