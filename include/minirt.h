@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 15:11:47 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/24 14:59:38 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/24 17:24:27 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # define VIEWPORT_HEIGHT 2.0
 # define FOCAL_LENGTH 1.0
 
-# define AA 9 //anti-aliasing
+# define AA 1 //anti-aliasing
 # define THREADS 7
 # include "libft.h"
 # include "MLX42.h"
@@ -179,18 +179,18 @@ void	free_minirt(t_parse *parse);
 // void	write_exit(char *message, int exit_code);
 
 t_coord	add_points(t_coord first, t_coord second);
-t_coord	distract_points(t_coord first, t_coord second);
+t_coord	substract_points(t_coord first, t_coord second);
 t_coord	multiply_points(t_coord first, t_coord second);
 t_coord	multiply_point_float(t_coord point, float t);
-t_coord	devide_point_with_float(t_coord point, float t);
+t_coord	divide_point_with_float(t_coord point, float t);
 t_coord	unit_vector_coord(t_coord p);
 float	dot_points(t_coord first, t_coord second);
 
 t_color	add_colors(t_color first, t_color second);
-t_color	distract_colors(t_color first, t_color second);
+t_color	substract_colors(t_color first, t_color second);
 t_color	multiply_colors(t_color first, t_color second);
 t_color	multiply_color_float(t_color color, float t);
-t_color	devide_color_with_float(t_color color, float t);
+t_color	divide_color_with_float(t_color color, float t);
 float	dot_colors(t_color first, t_color second);
 
 t_color	antialias_color(t_parse map_info, int x, int y);
