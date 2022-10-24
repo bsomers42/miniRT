@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 15:46:19 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/20 18:47:41 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/24 14:27:33 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,10 @@ int	hit_sphere(t_sphere *sphere, t_ray ray, float t_min, float t_max, t_besthit 
 	float	d;
 	float	sqrtd;
 	float	root;
-	t_coord outward_normal;
+	t_coord	outward_normal;
 	float	radius;
 
 	radius = sphere->diam / 2;
-
 	change.x = ray.origin.x - sphere->center.x;
 	change.y = ray.origin.y - sphere->center.y;
 	change.z = ray.origin.z - sphere->center.z;
@@ -62,22 +61,20 @@ int	hit_sphere(t_sphere *sphere, t_ray ray, float t_min, float t_max, t_besthit 
 		hit_rec->front_face = 0;
 		hit_rec->normal = multiply_point_float(outward_normal, -1.0);
 	}
-	hit_rec->normal = unit_vector_coord(hit_rec->normal); // deze weghalen?
+	// hit_rec->normal = unit_vector_coord(hit_rec->normal); // deze weghalen?
 	return (1);
 }
 
-int	hit_anything(t_list *spheres, t_ray ray, t_besthit *hit_rec, float t_min, float t_max)
+int	hit_anything(t_parse map_info, t_ray ray, t_besthit *hit_rec, float t_min, float t_max)
 {
-	// float		closest_so_far;
 	int			hit_anything;
 	t_besthit	tmp_rec;
 	int			i;
 	t_list		*tmp;
 	t_sphere	*sphere;
 
-	tmp = spheres;
+	tmp = map_info.lst_sphere;
 	i = 0;
-	// closest_so_far = INFINITY;
 	hit_anything = -1;
 	while (tmp)
 	{
@@ -85,6 +82,7 @@ int	hit_anything(t_list *spheres, t_ray ray, t_besthit *hit_rec, float t_min, fl
 		if (hit_sphere(sphere, ray, t_min, t_max, &tmp_rec))
 		{
 			hit_anything = i;
+			// printf("ja!\n");
 			t_max = tmp_rec.t;
 			*hit_rec = tmp_rec;
 		}
@@ -93,6 +91,7 @@ int	hit_anything(t_list *spheres, t_ray ray, t_besthit *hit_rec, float t_min, fl
 	}
 	return (hit_anything);
 }
+
 // void	update_rec(float root, t_sphere *sphere, t_ray ray, t_besthit *tmp_rec)
 // {
 // 	tmp_rec->t = root;
