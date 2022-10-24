@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 15:11:47 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/20 18:53:41 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/24 14:03:42 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # define VIEWPORT_HEIGHT 2.0
 # define FOCAL_LENGTH 1.0
 
-# define AA 3 //anti-aliasing
+# define AA 9 //anti-aliasing
 # define THREADS 7
 # include "libft.h"
 # include "MLX42.h"
@@ -146,9 +146,11 @@ typedef struct s_cam
 	float	x;
 	float	y;
 	float	z;
+	t_coord	origin; //jma
 	float	vect_x;
 	float	vect_y;
 	float	vect_z;
+	t_coord	dir; //jma
 	int		fov;	
 }	t_cam;
 
@@ -157,6 +159,7 @@ typedef struct s_light
 	float	x;
 	float	y;
 	float	z;
+	t_coord	origin; //jma
 	float	bright;	
 }	t_light;
 
@@ -190,13 +193,15 @@ t_color	multiply_color_float(t_color color, float t);
 t_color	devide_color_with_float(t_color color, float t);
 float	dot_colors(t_color first, t_color second);
 
-t_color	antialias_color(t_list *spheres, t_ray ray, int x, int y);
+t_color	antialias_color(t_parse map_info, int x, int y);
 t_coord	ray_at(t_ray ray, float t);
-t_color	decide_color(t_list *spheres, t_ray ray, float i, float j);
+t_color	decide_color(t_parse map_info, float i, float j);
 t_color	new_color(float r, float g, float b);
 
 // int		hit_sphere(t_sphere sphere, t_ray ray, float t_min, float t_max, t_besthit *hit_rec);
-int		hit_anything(t_list *spheres, t_ray ray, t_besthit *hit_rec, float t_min, float t_max);
+int		hit_anything(t_parse map_info, t_ray ray, t_besthit *hit_rec, float t_min, float t_max);
+
+t_coord	new_coord(float x, float y, float z);
 
 void	error_exit(char *message, int exit_code);
 void	write_exit(char *message, int exit_code);
