@@ -1,33 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   devide.c                                           :+:    :+:            */
+/*   substract.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/10/06 12:16:03 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/06 13:13:01 by jaberkro      ########   odam.nl         */
+/*   Created: 2022/10/06 12:14:05 by jaberkro      #+#    #+#                 */
+/*   Updated: 2022/10/24 17:22:04 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_coord	devide_point_with_float(t_coord point, float t)
+t_coord	substract_points(t_coord first, t_coord second)
 {
 	t_coord	result;
 
-	result.x = point.x / t;
-	result.y = point.y / t;
-	result.z = point.z / t;
+	result.x = first.x - second.x;
+	result.y = first.y - second.y;
+	result.z = first.z - second.z;
 	return (result);
 }
 
-t_color	devide_color_with_float(t_color color, float t)
+t_color	substract_colors(t_color first, t_color second)
 {
 	t_color	result;
 
-	result.r = color.r / t;
-	result.g = color.g / t;
-	result.b = color.b / t;
+	result.r = first.r - second.r;
+	result.g = first.g - second.g;
+	result.b = first.b - second.b;
 	return (result);
 }

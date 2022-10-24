@@ -6,7 +6,7 @@
 #    By: bsomers <bsomers@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/09/22 14:52:38 by bsomers       #+#    #+#                  #
-#    Updated: 2022/10/24 15:00:10 by jaberkro      ########   odam.nl          #
+#    Updated: 2022/10/24 17:21:44 by jaberkro      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,11 +29,12 @@ SRC = main.c \
 	parser/parse_utils.c \
 	parser/list_add.c \
 	vector_math/add.c \
-	vector_math/distract.c \
+	vector_math/substract.c \
 	vector_math/multiply.c \
-	vector_math/devide.c \
+	vector_math/divide.c \
 	vector_math/dot.c \
 	vector_math/unit_vector.c \
+	vector_math/clamp.c \
 	color/new_color.c \
 	color/decide_color.c \
 	color/put_color.c \
@@ -49,7 +50,7 @@ SRC := $(addprefix $(SRC_DIR)/, $(SRC))
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJ) $(LIBMLX42)
-	$(CC) $(OBJ) $(FLAGS) $(INCLUDE) $(LIBMLX42) $(LIBFT) -lglfw3 -framework Cocoa -framework OpenGL -framework IOKit -L. -o $(NAME)
+	$(CC) $^ $(FLAGS) $(INCLUDE) -lglfw3 -framework Cocoa -framework OpenGL -framework IOKit -L. -o $(NAME)
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 	mkdir -p $(dir $@)

@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/17 17:20:40 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/24 14:09:37 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/24 17:22:19 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,6 @@ t_color	antialias_color(t_parse map_info, int i, int j)
 		}
 		k++;
 	}
-	color = devide_color_with_float(color, AA * AA);
+	color = divide_color_with_float(color, AA * AA);
 	return (color);
 }

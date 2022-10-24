@@ -1,33 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   distract.c                                         :+:    :+:            */
+/*   devide.c                                           :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/10/06 12:14:05 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/06 12:16:56 by jaberkro      ########   odam.nl         */
+/*   Created: 2022/10/06 12:16:03 by jaberkro      #+#    #+#                 */
+/*   Updated: 2022/10/24 17:21:24 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_coord	distract_points(t_coord first, t_coord second)
+t_coord	divide_point_with_float(t_coord point, float t)
 {
 	t_coord	result;
 
-	result.x = first.x - second.x;
-	result.y = first.y - second.y;
-	result.z = first.z - second.z;
+	result.x = point.x / t;
+	result.y = point.y / t;
+	result.z = point.z / t;
 	return (result);
 }
 
-t_color	distract_colors(t_color first, t_color second)
+t_color	divide_color_with_float(t_color color, float t)
 {
 	t_color	result;
 
-	result.r = first.r - second.r;
-	result.g = first.g - second.g;
-	result.b = first.b - second.b;
+	result.r = color.r / t;
+	result.g = color.g / t;
+	result.b = color.b / t;
 	return (result);
 }

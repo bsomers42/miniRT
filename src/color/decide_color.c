@@ -6,32 +6,13 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 13:26:28 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/24 15:03:12 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/24 17:22:43 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include <math.h>
 #include <stdio.h>
-
-t_color	clamp_color(t_color color, unsigned int min, unsigned int max)
-{
-	t_color	new_color;
-
-	if (color.r < min)
-		new_color.r = min;
-	if (color.g < min)
-		new_color.g = min;
-	if (color.b < min)
-		new_color.b = min;
-	if (color.r > max)
-		new_color.r = max;
-	if (color.g > max)
-		new_color.g = max;
-	if (color.b > max)
-		new_color.b = max;
-	return (new_color);
-}
 
 t_coord	ray_at(t_ray ray, float t)
 {
@@ -52,17 +33,17 @@ t_color	calculate_shadow_shade(t_parse map_info, t_besthit record)
 	float		brightness; //temporary
 	float		angle;
 
-	light.x = 1.0; //temporary
+	light.x = 0.0; //temporary
 	light.y = 1.0; //temporary
 	light.z = 0.0; //temporary
 	brightness = 1.0; //temporary
 	light_ray.origin = record.hit_point;
-	light_ray.dir = distract_points(light, light_ray.origin); //temporary
+	light_ray.dir = substract_points(light, light_ray.origin); //temporary
 	// light_ray.dir = distract_points(map_info.light->origin, light_ray.origin); above should become this
 	light_ray.dir = unit_vector_coord(light_ray.dir);
 	if (hit_anything(map_info, light_ray, &not_needed, 0.001, sqrt(dot_points(light_ray.dir, light_ray.dir))) >= 0)
 		return (new_color(0, 0, 0));
-	light_ray.dir = distract_points(light_ray.origin, light); // temporary
+	light_ray.dir = substract_points(light_ray.origin, light); // temporary
 	// light_ray.dir = distract_points(light_ray.origin, map_info.light->origin); // above should become this, but not sure about this line yet
 	light_ray.dir = unit_vector_coord(light_ray.dir);
 	light_ray.dir = multiply_point_float(light_ray.dir, -1.0);
@@ -99,14 +80,18 @@ static t_color	ray_color(t_parse map_info, t_ray ray)
 	return (color);
 }
 
-t_color	decide_color(t_parse map_info, float i, float j)
+t_color	decide_color(t_parse map_info, float i, float j) // point_ray
 {
 	t_color	color;
 	float	u;
 	float	v;
 	t_coord	lower_left_corner;
 	t_ray	ray;
+	// float 	vfov; // VERTICAL field-of-view -> should become horiontal at some point
+	// float	theta;
+	// float	h;
 
+	// theta = 
 	ray.origin.x = 0.0; // this should be removed
 	ray.origin.y = 0.0; // this should be removed
 	ray.origin.z = 0.0; // this should be removed
