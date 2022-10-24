@@ -6,13 +6,13 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/17 17:20:40 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/20 14:23:15 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/24 14:09:37 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_color	antialias_color(t_list *spheres, t_ray ray, int i, int j)
+t_color	antialias_color(t_parse map_info, int i, int j)
 {
 	t_color	color;
 	int		k;
@@ -29,7 +29,7 @@ t_color	antialias_color(t_list *spheres, t_ray ray, int i, int j)
 		{
 			x = (float)i + (float)k / (float)AA;
 			y = (float)j + (float)l / (float)AA;
-			color = add_colors(color, decide_color(spheres, ray, x, y));
+			color = add_colors(color, decide_color(map_info, x, y));
 			l++;
 		}
 		k++;
