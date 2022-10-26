@@ -6,7 +6,7 @@
 #    By: bsomers <bsomers@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/09/22 14:52:38 by bsomers       #+#    #+#                  #
-#    Updated: 2022/10/26 11:17:18 by jaberkro      ########   odam.nl          #
+#    Updated: 2022/10/26 15:11:12 by jaberkro      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,19 +29,16 @@ SRC = main.c \
 	parser/parse.c \
 	parser/parse_utils.c \
 	parser/list_add.c \
-	vector_math/add.c \
-	vector_math/substract.c \
-	vector_math/multiply.c \
-	vector_math/divide.c \
-	vector_math/dot.c \
-	vector_math/unit_vector.c \
-	vector_math/clamp.c \
 	color/new_color.c \
 	color/antialias_color.c \
 	color/point_ray_get_color.c \
 	color/calculate_ambient_color.c \
 	color/put_color.c \
-	coord/new_coord.c \
+	color/color_math_basics.c \
+	color/color_math_advanced.c \
+	point/new_point.c \
+	point/point_math_basics.c \
+	point/point_math_advanced.c \
 	hit/hit_sphere.c \
 	hit/hit_anything.c \
 	threads.c
