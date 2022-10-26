@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 15:46:19 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/26 15:16:18 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/26 15:27:51 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ float	calculate_root(t_sphere *sphere, t_ray ray, float t_min, float t_max)
 	a = dot_points(ray.dir, ray.dir);
 	half_b = dot_points(change, ray.dir);
 	d = half_b * half_b - a * calculate_c(change, sphere->diam);
-	if (d < 0)
+	if (d < 0.0)
 		return (-1.0);
 	root = (-half_b - sqrt(d)) / a;
 	if (root < t_min || t_max < root)
