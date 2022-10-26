@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 16:47:20 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/10/26 10:58:03 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/26 15:15:19 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,13 @@ void	assign_camera(char *str, int *cam_ptr, t_cam *cam)
 	cam->x = ft_stofl(tmp[0]);
 	cam->y = ft_stofl(tmp[1]);
 	cam->z = ft_stofl(tmp[2]);
-	cam->origin = new_coord(ft_stofl(tmp[0]), ft_stofl(tmp[1]), ft_stofl(tmp[2])); //jma
+	cam->origin = new_point(ft_stofl(tmp[0]), ft_stofl(tmp[1]), ft_stofl(tmp[2])); //jma
 	free(tmp);
 	tmp = ft_split(split[2], ',');
 	cam->vect_x = ft_stofl(tmp[0]);
 	cam->vect_y = ft_stofl(tmp[1]);
 	cam->vect_z = ft_stofl(tmp[2]);
-	cam->dir = new_coord(ft_stofl(tmp[0]), ft_stofl(tmp[1]), ft_stofl(tmp[2])); //jma
+	cam->dir = new_point(ft_stofl(tmp[0]), ft_stofl(tmp[1]), ft_stofl(tmp[2])); //jma
 	free(tmp);
 	cam->fov = ft_atoi(split[3]);
 	free(split);
@@ -65,7 +65,7 @@ void	assign_light(char *str, int *light_ptr, t_light *light)
 	light->x = ft_stofl(tmp[0]);
 	light->y = ft_stofl(tmp[1]);
 	light->z = ft_stofl(tmp[2]);
-	light->origin = new_coord(ft_stofl(tmp[0]), ft_stofl(tmp[1]), ft_stofl(tmp[2]));
+	light->origin = new_point(ft_stofl(tmp[0]), ft_stofl(tmp[1]), ft_stofl(tmp[2]));
 	free(tmp);
 	light->bright = ft_stofl(split[2]);
 	free(split);

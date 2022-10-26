@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 15:46:19 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/26 12:24:34 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/26 15:16:18 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <stdio.h> //weghalen
 #include <math.h>
 
-float	calculate_c(t_coord change, float diam)
+float	calculate_c(t_point change, float diam)
 {
 	float	result;
 
@@ -24,7 +24,7 @@ float	calculate_c(t_coord change, float diam)
 
 float	calculate_root(t_sphere *sphere, t_ray ray, float t_min, float t_max)
 {
-	t_coord	change;
+	t_point	change;
 	float	a;
 	float	half_b;
 	float	d;
@@ -49,7 +49,7 @@ float	calculate_root(t_sphere *sphere, t_ray ray, float t_min, float t_max)
 int	hit_sphere(t_sphere *sphere, t_ray ray, float t_min, float t_max, t_besthit *hit_rec)
 {
 	float	root;
-	t_coord	outward_normal;
+	t_point	outward_normal;
 	float	radius;
 
 	radius = sphere->diam / 2;

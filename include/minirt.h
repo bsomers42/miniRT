@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 15:11:47 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/26 11:29:56 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/26 15:17:07 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 # define MINIRT_H
 
 # define WIDTH 400
-# define HEIGHT 400 / 16 * 9
-# define VIEWPORT_WIDTH 2.0 * 16.0 / 9.0
-# define VIEWPORT_HEIGHT 2.0
+# define HEIGHT (int)(400.0 / 16.0 * 9.0)
 # define FOCAL_LENGTH 1.0
 
 # define AA 1 //anti-aliasing
 # define THREADS 7
 # include "libft.h"
 # include "MLX42.h"
+# include "color.h"
+# include "point.h"
 // # include "nodes.h"
 
 typedef struct s_mlx_str
@@ -31,59 +31,45 @@ typedef struct s_mlx_str
 	void			*img;
 }	t_mlx_str;
 
-typedef struct s_coord
-{
-	float	x;
-	float	y;
-	float	z;
-}	t_coord;
-
-typedef struct s_color
-{
-	unsigned int	r;
-	unsigned int	g;
-	unsigned int	b;
-}	t_color;
-
-typedef struct s_pixel
-{
-	unsigned int	x;
-	unsigned int	y;
-}	t_pixel;
+// typedef struct s_pixel
+// {
+// 	unsigned int	x;
+// 	unsigned int	y;
+// }	t_pixel;
 
 typedef struct s_ray
 {
-	t_coord	origin;
-	t_coord	dir;
+	t_point	origin;
+	t_point	dir;
 }	t_ray;
 
 typedef struct s_besthit
 {
-	t_coord	hit_point;
-	t_coord	normal;
+	t_point	hit_point;
+	t_point	normal;
 	float	t;
 	int		front_face;
 	t_color	color;
-	t_coord	center;
+	t_point	center;
 }	t_besthit;
 
-typedef struct s_intersect
-{
-	t_coord	coord;
-	t_color	color;
-}	t_intersect;
+// typedef struct s_intersect
+// {
+// 	t_point	coord;
+// 	t_color	color;
+// }	t_intersect;
 
 //radius is diameter devided by 2
 // typedef struct s_sphere
 // {
-// 	t_coord		center;
+// 	t_point		center;
 // 	t_color	color;
 // 	float		radius;
 // }	t_sphere;
 
 // typedef struct s_plane
 // {
-// 	t_coord		center;
+// 	t_point		center;
 // 	t_color	color;
 // 	float		radius;
 // }	t_plane;
@@ -93,7 +79,7 @@ typedef struct s_sphere
 	float	x;
 	float	y;
 	float	z;
-	t_coord	center; //jma
+	t_point	center; //jma
 	float	diam;
 	int		r;
 	int		g;
@@ -146,11 +132,11 @@ typedef struct s_cam
 	float	x;
 	float	y;
 	float	z;
-	t_coord	origin; //jma
+	t_point	origin; //jma
 	float	vect_x;
 	float	vect_y;
 	float	vect_z;
-	t_coord	dir; //jma
+	t_point	dir; //jma
 	int		fov;	
 }	t_cam;
 
@@ -159,7 +145,7 @@ typedef struct s_light
 	float	x;
 	float	y;
 	float	z;
-	t_coord	origin; //jma
+	t_point	origin; //jma
 	float	bright;	
 }	t_light;
 
@@ -178,32 +164,13 @@ float	ft_stofl(char *str);
 void	free_minirt(t_parse *parse);
 // void	write_exit(char *message, int exit_code);
 
-t_coord	add_points(t_coord first, t_coord second);
-t_coord	substract_points(t_coord first, t_coord second);
-t_coord	multiply_points(t_coord first, t_coord second);
-t_coord	multiply_point_float(t_coord point, float t);
-t_coord	divide_point_with_float(t_coord point, float t);
-t_coord	unit_vector_coord(t_coord p);
-float	dot_points(t_coord first, t_coord second);
-
-t_color	add_colors(t_color first, t_color second);
-t_color	substract_colors(t_color first, t_color second);
-t_color	multiply_colors(t_color first, t_color second);
-t_color	multiply_color_float(t_color color, float t);
-t_color	divide_color_with_float(t_color color, float t);
-t_color	unit_vector_color(t_color dir);
-float	dot_colors(t_color first, t_color second);
-
-t_color	new_color(unsigned int r, unsigned int g, unsigned int b);
-t_color	antialias_color(t_parse map_info, int x, int y);
-t_color	point_ray_get_color(t_parse map_info, float i, float j);
-t_color	calculate_ambient_color(t_color color, t_amb amb);
-t_coord	ray_at(t_ray ray, float t);
-
 int		hit_any_sphere(t_parse map_info, t_ray ray, t_besthit *hit_rec, float t_min, float t_max);
 int		hit_anything(t_parse map_info, t_ray ray, t_besthit *hit_rec, float t_min, float t_max);
 
-t_coord	new_coord(float x, float y, float z);
+t_color	antialias_color(t_parse map_info, int x, int y);
+t_color	point_ray_get_color(t_parse map_info, float i, float j);
+t_color	calculate_ambient_color(t_color color, t_amb amb);
+t_point	ray_at(t_ray ray, float t);
 
 void	error_exit(char *message, int exit_code);
 void	write_exit(char *message, int exit_code);
