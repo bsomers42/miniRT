@@ -6,7 +6,7 @@
 #    By: bsomers <bsomers@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/09/22 14:52:38 by bsomers       #+#    #+#                  #
-#    Updated: 2022/10/24 17:21:44 by jaberkro      ########   odam.nl          #
+#    Updated: 2022/10/26 11:17:18 by jaberkro      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SRC_DIR = src
 BUILD_DIR = obj
 
 SRC = main.c \
+	init.c \
 	error.c \
 	utils.c \
 	parser/parse.c \
@@ -36,9 +37,10 @@ SRC = main.c \
 	vector_math/unit_vector.c \
 	vector_math/clamp.c \
 	color/new_color.c \
-	color/decide_color.c \
-	color/put_color.c \
 	color/antialias_color.c \
+	color/point_ray_get_color.c \
+	color/calculate_ambient_color.c \
+	color/put_color.c \
 	coord/new_coord.c \
 	hit/hit_sphere.c \
 	hit/hit_anything.c \

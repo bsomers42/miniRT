@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 16:47:20 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/10/24 13:58:04 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/26 10:58:03 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,5 +160,6 @@ t_parse	*parse_map(char *argv[])//, t_parse *parse)
 	printf("origin light:(%f,%f,%f)\n", parse->light->x, parse->light->y, parse->light->z); //jma
 	printf("origin light:(%f,%f,%f)\n", parse->light->origin.x, parse->light->origin.y, parse->light->origin.z); //jma
 	printf("brightness light:(%f)\n", parse->light->bright); //jma
+	printf("ambient light: (%u,%u,%u) at ratio %f\n", parse->amb->r, parse->amb->g, parse->amb->b, parse->amb->ratio);
 	return (parse);
 }

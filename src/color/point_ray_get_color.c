@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   decide_color.c                                     :+:    :+:            */
+/*   point_ray_get_color.c                              :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 13:26:28 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/24 17:22:43 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/26 10:53:44 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ t_color	calculate_shadow_shade(t_parse map_info, t_besthit record)
 	return (color);
 }
 
-static t_color	ray_color(t_parse map_info, t_ray ray)
+static t_color	get_ray_color(t_parse map_info, t_ray ray)
 {
 	t_color		color;
 	// t_coord		normal;
@@ -80,7 +80,7 @@ static t_color	ray_color(t_parse map_info, t_ray ray)
 	return (color);
 }
 
-t_color	decide_color(t_parse map_info, float i, float j) // point_ray
+t_color	point_ray_get_color(t_parse map_info, float i, float j) // point_ray
 {
 	t_color	color;
 	float	u;
@@ -107,6 +107,6 @@ t_color	decide_color(t_parse map_info, float i, float j) // point_ray
 	ray.dir.x = lower_left_corner.x + u * VIEWPORT_WIDTH - ray.origin.x;
 	ray.dir.y = lower_left_corner.y + v * VIEWPORT_HEIGHT - ray.origin.y;
 	ray.dir.z = lower_left_corner.z - ray.origin.z;
-	color = ray_color(map_info, ray);
+	color = get_ray_color(map_info, ray);
 	return (color);
 }

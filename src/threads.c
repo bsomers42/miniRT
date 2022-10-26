@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/17 13:15:51 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/24 12:12:34 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/26 11:17:02 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,12 @@
 #include "threads.h"
 #include <unistd.h>
 
-void	check_done(t_threadinfo *info)
+/**
+ * @brief check if all pixels are drawn. In that case, print 'DONE!' at stdout
+ * 
+ * @param info contains all info about the map and threads
+ */
+static void	check_done(t_threadinfo *info)
 {
 	if (pthread_mutex_lock(&(info->data->pixel_lock)) != 0)
 		error_exit("pthread_mutex_lock", 1);
@@ -27,6 +32,13 @@ void	check_done(t_threadinfo *info)
 		error_exit("pthread_mutex_unlock", 1);
 }
 
+/**
+ * @brief decides the color for this pixel and puts it on the window
+ * 
+ * @param info	the info to use
+ * @param x 	the pixel index on width
+ * @param y 	the pixel index on height
+ */
 static void	fill_pixel(t_threadinfo *info, int x, int y)
 {
 	t_color	color;
@@ -34,6 +46,7 @@ static void	fill_pixel(t_threadinfo *info, int x, int y)
 
 	map_info = *(info->data->parse);
 	color = antialias_color(map_info, x, y);
+	color = calculate_ambient_color(color, *map_info.amb);
 	put_color(info, x, y, color);
 	if (pthread_mutex_lock(&(info->data->pixel_lock)) != 0)
 		error_exit("pthread_mutex_lock", 1);
@@ -42,6 +55,12 @@ static void	fill_pixel(t_threadinfo *info, int x, int y)
 		error_exit("pthread_mutex_unlock", 1);
 }
 
+/**
+ * @brief fancy way to render the pixels and make the output faster visible
+ *  
+ * @param ptr points to the info that can be used by the thread
+ * @return void* always NULL
+ */
 static void	*fill_screen(void *ptr)
 {
 	t_threadinfo	*info;
@@ -71,6 +90,11 @@ static void	*fill_screen(void *ptr)
 	return (NULL);
 }
 
+/**
+ * @brief create threads
+ * 
+ * @param infos array of info of which one of them will be sent to each thread
+ */
 void	make_threads(t_threadinfo **infos)
 {
 	pthread_t	*threads;

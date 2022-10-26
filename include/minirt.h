@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 15:11:47 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/24 17:24:27 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/26 11:29:56 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,10 +135,10 @@ void	ft_lstadd_cy(t_list **lst, char **line);
 
 typedef struct s_amb
 {
-	float	ratio;
-	int		r;
-	int		g;
-	int		b;	
+	float			ratio;
+	unsigned int	r; //unsigned int instead of int jma
+	unsigned int	g; //unsigned int instead of int jma
+	unsigned int	b; //unsigned int instead of int jma
 }	t_amb;
 
 typedef struct s_cam
@@ -191,14 +191,15 @@ t_color	substract_colors(t_color first, t_color second);
 t_color	multiply_colors(t_color first, t_color second);
 t_color	multiply_color_float(t_color color, float t);
 t_color	divide_color_with_float(t_color color, float t);
+t_color	unit_vector_color(t_color dir);
 float	dot_colors(t_color first, t_color second);
 
+t_color	new_color(unsigned int r, unsigned int g, unsigned int b);
 t_color	antialias_color(t_parse map_info, int x, int y);
+t_color	point_ray_get_color(t_parse map_info, float i, float j);
+t_color	calculate_ambient_color(t_color color, t_amb amb);
 t_coord	ray_at(t_ray ray, float t);
-t_color	decide_color(t_parse map_info, float i, float j);
-t_color	new_color(float r, float g, float b);
 
-// int		hit_sphere(t_sphere sphere, t_ray ray, float t_min, float t_max, t_besthit *hit_rec);
 int		hit_any_sphere(t_parse map_info, t_ray ray, t_besthit *hit_rec, float t_min, float t_max);
 int		hit_anything(t_parse map_info, t_ray ray, t_besthit *hit_rec, float t_min, float t_max);
 
