@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 13:26:28 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/26 10:53:44 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/26 12:00:58 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,15 @@ t_coord	ray_at(t_ray ray, float t)
 	return (result);
 }
 
+/**
+ * @brief calculate if this pixel can see the light or is in the shadow. In the
+ * case of shadow, color is black. Else, the color will be a gradient between
+ * black and full color of the shape.
+ * 
+ * @param map_info 
+ * @param record 	closest shape to the camera, hit by the ray
+ * @return t_color 
+ */
 t_color	calculate_shadow_shade(t_parse map_info, t_besthit record)
 {
 	t_ray		light_ray;
@@ -54,6 +63,14 @@ t_color	calculate_shadow_shade(t_parse map_info, t_besthit record)
 	return (color);
 }
 
+/**
+ * @brief Get the color is this ray. If you hit nothing, color is black. Else,
+ * the color is the shaded version of the color of the shape closest to you. 
+ * 
+ * @param map_info 
+ * @param ray 
+ * @return t_color 
+ */
 static t_color	get_ray_color(t_parse map_info, t_ray ray)
 {
 	t_color		color;
@@ -80,6 +97,14 @@ static t_color	get_ray_color(t_parse map_info, t_ray ray)
 	return (color);
 }
 
+/**
+ * @brief point the ray in the right direction
+ * 
+ * @param map_info 
+ * @param i 
+ * @param j 
+ * @return t_color 
+ */
 t_color	point_ray_get_color(t_parse map_info, float i, float j) // point_ray
 {
 	t_color	color;
