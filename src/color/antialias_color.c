@@ -6,12 +6,21 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/17 17:20:40 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/26 10:54:19 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/26 11:55:15 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
+/**
+ * @brief dependent on antialiasing settings (AA), make x amount of rays per 
+ * pixel and calculate the average color to be displayed on this pixel;
+ * 
+ * @param map_info 
+ * @param i 		x location of pixel to calculate color
+ * @param j 		y location of pixel to calculate color
+ * @return t_color 
+ */
 t_color	antialias_color(t_parse map_info, int i, int j)
 {
 	t_color	color;
