@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 14:54:42 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/10/26 11:31:10 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/27 09:31:39 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	minirt_keyhook(mlx_key_data_t keydata, void *ptr)
 	t_mlx_str	*mlx_str;
 
 	mlx_str = (t_mlx_str *)ptr;
+	(void)mlx_str; //variable set but not used // jma
 	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
 		exit(EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 13:26:28 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/26 15:17:34 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/27 11:03:29 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_color	calculate_shadow_shade(t_parse map_info, t_besthit record)
 	float		brightness; //temporary
 	float		angle;
 
-	light.x = 0.0; //temporary
+	light.x = 1.0; //temporary
 	light.y = 1.0; //temporary
 	light.z = 0.0; //temporary
 	brightness = 1.0; //temporary
@@ -81,10 +81,10 @@ static t_color	get_ray_color(t_parse map_info, t_ray ray)
 	closest_index = hit_anything(map_info, ray, &record, 0, INFINITY);
 	if (closest_index >= 0)
 	{
-		// color = calculate_shadow_shade(map_info, record);
+		color = calculate_shadow_shade(map_info, record);
 
 		//real color without shading
-		color = record.color;
+		// color = record.color;
 
 		//colored spheres
 		// normal = normalize_point(distract_points(ray_at(ray, record.t), record.center));
@@ -106,36 +106,61 @@ static t_color	get_ray_color(t_parse map_info, t_ray ray)
 t_color	point_ray_get_color(t_parse map_info, float i, float j) // point_ray
 {
 	t_color	color;
-	float	u;
-	float	v;
+	float	s;
+	float	t;
 	t_point	lower_left_corner;
 	t_ray	ray;
 	float 	vfov; // VERTICAL field-of-view -> should become horiontal at some point
 	float	theta;
 	float	h;
+	t_point	lookfrom;
+	t_point	lookat;
+	t_point	vup;
 	unsigned int	viewport_width;
 	unsigned int	viewport_height;
+	t_point	w;
+	t_point	u;
+	t_point	v;
+
+	t_point	horizontal;
+	t_point	vertical;
 
 	vfov = 90.0;
 	theta = vfov * (M_PI / 180.0);
 	h = tan(theta / 2); //atan?
 	viewport_height = 2.0 * h;
 	viewport_width = 16.0 / 9.0 * (float)viewport_height;
-	ray.origin.x = 0.0; // this should be removed
-	ray.origin.y = 0.0; // this should be removed
-	ray.origin.z = 0.0; // this should be removed
+
+	lookfrom = new_point(-2, 2, 1); // get this info from map_info
+	lookat = new_point(0, 0, -1); // 
+	vup = new_point(0, 1, 0);
+
+	w = normalize_point(substract_points(lookfrom, lookat));
+	u = normalize_point(cross_points(vup, w));
+	v = cross_points(w, u);
+
+	horizontal = multiply_point_float(u, viewport_width);
+	vertical = multiply_point_float(v, viewport_height);
+
+	ray.origin = lookfrom;
 	ray.dir.x = 0.0; // this should be removed
 	ray.dir.y = 0.0; // this should be removed
 	ray.dir.z = 0.0; // this should be removed
 	// ray.origin = map_info.cam->origin; // create the ray
-	lower_left_corner.x = ray.origin.x - (float)viewport_width / 2.0;
-	lower_left_corner.y = ray.origin.y - (float)viewport_height / 2.0;
-	lower_left_corner.z = ray.origin.z - (float)FOCAL_LENGTH;
-	u = i / (float)(WIDTH - 1);
-	v = j / (float)(HEIGHT - 1);
-	ray.dir.x = lower_left_corner.x + u * (float)viewport_width - ray.origin.x;
-	ray.dir.y = lower_left_corner.y + v * (float)viewport_height - ray.origin.y;
-	ray.dir.z = lower_left_corner.z - ray.origin.z;
+	lower_left_corner = substract_points(ray.origin, multiply_point_float(horizontal, 0.5));
+	lower_left_corner = substract_points(lower_left_corner, multiply_point_float(vertical, 0.5));
+	lower_left_corner = substract_points(lower_left_corner, w);
+	// lower_left_corner.x = ray.origin.x - (float)viewport_width / 2.0;
+	// lower_left_corner.y = ray.origin.y - (float)viewport_height / 2.0;
+	// lower_left_corner.z = ray.origin.z - (float)FOCAL_LENGTH;
+	s = i / (float)(WIDTH - 1);
+	t = j / (float)(HEIGHT - 1);
+	ray.dir = add_points(lower_left_corner, multiply_point_float(horizontal, s));
+	ray.dir = add_points(ray.dir, multiply_point_float(vertical, t));
+	ray.dir = substract_points(ray.dir, ray.origin);
+	// ray.dir.x = lower_left_corner.x + multiply_point_float(horizontal, s) - ray.origin.x;
+	// ray.dir.y = lower_left_corner.y + t * (float)viewport_height - ray.origin.y;
+	// ray.dir.z = lower_left_corner.z - ray.origin.z;
 	color = get_ray_color(map_info, ray);
 	return (color);
 }

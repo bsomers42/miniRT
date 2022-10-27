@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/26 15:09:22 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/26 15:15:39 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/27 10:21:53 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,16 @@ float	dot_points(t_point first, t_point second)
 	result = first.x * second.x;
 	result += first.y * second.y;
 	result += first.z * second.z;
+	return (result);
+}
+
+t_point	cross_points(t_point first, t_point second)
+{
+	t_point	result;
+
+	result.x = first.y * second.z - second.y * first.z;
+	result.y = first.z * second.x - second.z * first.x;
+	result.z = first.x * second.y - second.x * first.y;
 	return (result);
 }
 

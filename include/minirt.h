@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 15:11:47 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/26 15:17:07 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/27 09:47:12 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # define FOCAL_LENGTH 1.0
 
 # define AA 1 //anti-aliasing
-# define THREADS 7
+# define THREADS 1
 # include "libft.h"
 # include "MLX42.h"
 # include "color.h"
@@ -169,7 +169,7 @@ int		hit_anything(t_parse map_info, t_ray ray, t_besthit *hit_rec, float t_min, 
 
 t_color	antialias_color(t_parse map_info, int x, int y);
 t_color	point_ray_get_color(t_parse map_info, float i, float j);
-t_color	calculate_ambient_color(t_color color, t_amb amb);
+t_color	calculate_ambient_color(t_color color, t_amb *amb);
 t_point	ray_at(t_ray ray, float t);
 
 void	error_exit(char *message, int exit_code);

@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 16:47:20 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/10/26 15:15:19 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/27 09:38:39 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,11 +155,11 @@ t_parse	*parse_map(char *argv[])//, t_parse *parse)
 	free(map_char);
 	assign_to_struct(map_split_newline, parse);
 	free_array(map_split_newline);
-	printf("origin camera:(%f,%f,%f)\n", parse->cam->x, parse->cam->y, parse->cam->z); //jma
-	printf("origin camera:(%f,%f,%f)\n", parse->cam->origin.x, parse->cam->origin.y, parse->cam->origin.z); //jma
-	printf("origin light:(%f,%f,%f)\n", parse->light->x, parse->light->y, parse->light->z); //jma
-	printf("origin light:(%f,%f,%f)\n", parse->light->origin.x, parse->light->origin.y, parse->light->origin.z); //jma
-	printf("brightness light:(%f)\n", parse->light->bright); //jma
-	printf("ambient light: (%u,%u,%u) at ratio %f\n", parse->amb->r, parse->amb->g, parse->amb->b, parse->amb->ratio);
+	// printf("origin camera:(%f,%f,%f)\n", parse->cam->x, parse->cam->y, parse->cam->z); //jma
+	// printf("origin camera:(%f,%f,%f)\n", parse->cam->origin.x, parse->cam->origin.y, parse->cam->origin.z); //jma
+	// printf("origin light:(%f,%f,%f)\n", parse->light->x, parse->light->y, parse->light->z); //jma
+	// printf("origin light:(%f,%f,%f)\n", parse->light->origin.x, parse->light->origin.y, parse->light->origin.z); //jma
+	// printf("brightness light:(%f)\n", parse->light->bright); //jma
+	// printf("ambient light: (%u,%u,%u) at ratio %f\n", parse->amb->r, parse->amb->g, parse->amb->b, parse->amb->ratio);
 	return (parse);
 }

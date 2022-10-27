@@ -6,7 +6,7 @@
 #    By: bsomers <bsomers@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/09/22 14:52:38 by bsomers       #+#    #+#                  #
-#    Updated: 2022/10/26 15:11:12 by jaberkro      ########   odam.nl          #
+#    Updated: 2022/10/27 09:37:03 by jaberkro      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,7 +49,7 @@ SRC := $(addprefix $(SRC_DIR)/, $(SRC))
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJ) $(LIBMLX42)
-	$(CC) $^ $(FLAGS) $(INCLUDE) -lglfw3 -framework Cocoa -framework OpenGL -framework IOKit -L. -o $(NAME)
+	$(CC) $^ $(FLAGS) $(INCLUDE) -lglfw -framework Cocoa -framework OpenGL -framework IOKit -L. -o $(NAME) # used to be -lglfw3 jma
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 	mkdir -p $(dir $@)
