@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 13:26:28 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/27 11:03:29 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/28 14:32:03 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,11 @@ t_color	calculate_shadow_shade(t_parse map_info, t_besthit record)
 	t_ray		light_ray;
 	t_besthit	not_needed;
 	t_color		color;
+	float		angle;
 	t_point		light; //temporary
 	float		brightness; //temporary
-	float		angle;
 
-	light.x = 1.0; //temporary
-	light.y = 1.0; //temporary
-	light.z = 0.0; //temporary
+	light = new_point(1, 2, 1); //temporary
 	brightness = 1.0; //temporary
 	light_ray.origin = record.hit_point;
 	light_ray.dir = substract_points(light, light_ray.origin); //temporary
@@ -52,14 +50,10 @@ t_color	calculate_shadow_shade(t_parse map_info, t_besthit record)
 	light_ray.dir = normalize_point(light_ray.dir);
 	if (hit_anything(map_info, light_ray, &not_needed, 0.001, sqrt(dot_points(light_ray.dir, light_ray.dir))) >= 0)
 		return (new_color(0, 0, 0));
-	light_ray.dir = substract_points(light_ray.origin, light); // temporary
-	// light_ray.dir = distract_points(light_ray.origin, map_info.light->origin); // above should become this, but not sure about this line yet
-	light_ray.dir = normalize_point(light_ray.dir);
-	light_ray.dir = multiply_point_float(light_ray.dir, -1.0);
 	angle = dot_points(record.normal, light_ray.dir);
 	if (angle < 0.0)
 		angle = 0.0;
-	color = multiply_color_float(record.color, angle * brightness); //test
+	color = multiply_color_float(record.color, angle * brightness); //test but seems to work
 	return (color);
 }
 
@@ -125,14 +119,14 @@ t_color	point_ray_get_color(t_parse map_info, float i, float j) // point_ray
 	t_point	horizontal;
 	t_point	vertical;
 
-	vfov = 90.0;
-	theta = vfov * (M_PI / 180.0);
-	h = tan(theta / 2); //atan?
+	vfov = 105.0;
+	theta = vfov * (float)(M_PI / 180.0);
+	h = tan((float)theta / 2); //atan?
 	viewport_height = 2.0 * h;
 	viewport_width = 16.0 / 9.0 * (float)viewport_height;
 
-	lookfrom = new_point(-2, 2, 1); // get this info from map_info
-	lookat = new_point(0, 0, -1); // 
+	lookfrom = new_point(-2, 2, 1); // temporary
+	lookat = new_point(0, 0, -1); // temporary
 	vup = new_point(0, 1, 0);
 
 	w = normalize_point(substract_points(lookfrom, lookat));
@@ -143,24 +137,18 @@ t_color	point_ray_get_color(t_parse map_info, float i, float j) // point_ray
 	vertical = multiply_point_float(v, viewport_height);
 
 	ray.origin = lookfrom;
-	ray.dir.x = 0.0; // this should be removed
-	ray.dir.y = 0.0; // this should be removed
-	ray.dir.z = 0.0; // this should be removed
+	ray.dir.x = 0.0; // temporary
+	ray.dir.y = 0.0; // temporary
+	ray.dir.z = 0.0; // temporary
 	// ray.origin = map_info.cam->origin; // create the ray
 	lower_left_corner = substract_points(ray.origin, multiply_point_float(horizontal, 0.5));
 	lower_left_corner = substract_points(lower_left_corner, multiply_point_float(vertical, 0.5));
 	lower_left_corner = substract_points(lower_left_corner, w);
-	// lower_left_corner.x = ray.origin.x - (float)viewport_width / 2.0;
-	// lower_left_corner.y = ray.origin.y - (float)viewport_height / 2.0;
-	// lower_left_corner.z = ray.origin.z - (float)FOCAL_LENGTH;
 	s = i / (float)(WIDTH - 1);
 	t = j / (float)(HEIGHT - 1);
 	ray.dir = add_points(lower_left_corner, multiply_point_float(horizontal, s));
 	ray.dir = add_points(ray.dir, multiply_point_float(vertical, t));
 	ray.dir = substract_points(ray.dir, ray.origin);
-	// ray.dir.x = lower_left_corner.x + multiply_point_float(horizontal, s) - ray.origin.x;
-	// ray.dir.y = lower_left_corner.y + t * (float)viewport_height - ray.origin.y;
-	// ray.dir.z = lower_left_corner.z - ray.origin.z;
 	color = get_ray_color(map_info, ray);
 	return (color);
 }

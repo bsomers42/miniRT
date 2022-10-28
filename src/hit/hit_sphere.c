@@ -6,12 +6,12 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 15:46:19 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/26 15:27:51 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/28 14:32:23 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-#include <stdio.h> //weghalen
+#include <stdio.h> // temporary
 #include <math.h>
 
 float	calculate_c(t_point change, float diam)
@@ -48,9 +48,9 @@ float	calculate_root(t_sphere *sphere, t_ray ray, float t_min, float t_max)
 
 int	hit_sphere(t_sphere *sphere, t_ray ray, float t_min, float t_max, t_besthit *hit_rec)
 {
-	float	root;
-	t_point	outward_normal;
-	float	radius;
+	float		root;
+	t_vector	outward_normal;
+	float		radius;
 
 	radius = sphere->diam / 2;
 	root = calculate_root(sphere, ray, t_min, t_max);

@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 15:11:47 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/27 09:47:12 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/27 17:51:10 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 # define HEIGHT (int)(400.0 / 16.0 * 9.0)
 # define FOCAL_LENGTH 1.0
 
-# define AA 1 //anti-aliasing
-# define THREADS 1
+# define AA 2 //anti-aliasing
+# define THREADS 7
 # include "libft.h"
 # include "MLX42.h"
 # include "color.h"
@@ -39,8 +39,8 @@ typedef struct s_mlx_str
 
 typedef struct s_ray
 {
-	t_point	origin;
-	t_point	dir;
+	t_point		origin;
+	t_vector	dir;
 }	t_ray;
 
 typedef struct s_besthit

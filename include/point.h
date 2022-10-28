@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/26 15:04:52 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/27 10:46:38 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/27 15:13:15 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ typedef struct s_point
 	float	y;
 	float	z;
 }	t_point;
+
+typedef t_point t_vector;
 
 t_point	add_points(t_point first, t_point second);
 t_point	substract_points(t_point first, t_point second);
