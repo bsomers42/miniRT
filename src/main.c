@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 14:54:42 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/10/19 18:58:37 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/11/02 09:31:37 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,8 +154,11 @@ int	main(int argc, char *argv[])
 	mlx_image_to_window(data.mlx_str.mlx, data.mlx_str.img, 0, 0);
 	t_sphere	*sphere;
 	sphere = (infos[0].data->parse->lst_sphere->content);
-	printf("incoming center: (%f, %f, %f)\n", sphere->center.x, sphere->center.y, sphere->center.z);
-	printf("incoming color: (%d, %d, %d)\n", sphere->color.r, sphere->color.g, sphere->color.b);
+	// printf("incoming center: (%f, %f, %f)\n", sphere->center.x, sphere->center.y, sphere->center.z);
+	// printf("incoming color: (%d, %d, %d)\n", sphere->color.r, sphere->color.g, sphere->color.b);
+	// printf("incoming camera: [fov: %d]\n [x, y, z: %f, %f, %f]\n [vect: %f, %f, %f]\n", data.parse->cam.fov, data.parse->cam.x, data.parse->cam.y, \
+	// data.parse->cam.z, data.parse->cam.vect_x,  data.parse->cam.vect_y,  data.parse->cam.vect_z);
+	printf("incoming ambient: ratio: %f, rgb: [%d, %d, %d]\n", data.parse->amb.ratio, data.parse->amb.r, data.parse->amb.g, data.parse->amb.b);
 	draw_loading_bar();
 	make_threads(&infos);
 	mlx_loop(data.mlx_str.mlx);

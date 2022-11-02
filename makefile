@@ -6,7 +6,7 @@
 #    By: bsomers <bsomers@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/09/22 14:52:38 by bsomers       #+#    #+#                  #
-#    Updated: 2022/10/20 10:37:05 by bsomers       ########   odam.nl          #
+#    Updated: 2022/10/21 14:41:19 by bsomers       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,8 @@ SRC = main.c \
 	utils.c \
 	parser/parse.c \
 	parser/list_add.c \
+	parser/get_next_line.c \
+	parser/get_map.c \
 	vector_math/add.c \
 	vector_math/distract.c \
 	vector_math/multiply.c \
