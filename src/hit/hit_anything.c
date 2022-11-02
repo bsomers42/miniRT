@@ -1,33 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   devide.c                                           :+:    :+:            */
+/*   hit_anything.c                                     :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/10/06 12:16:03 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/06 13:13:01 by jaberkro      ########   odam.nl         */
+/*   Created: 2022/10/24 14:57:48 by jaberkro      #+#    #+#                 */
+/*   Updated: 2022/10/24 15:01:20 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_coord	devide_point_with_float(t_coord point, float t)
+int	hit_anything(t_parse map_info, t_ray ray, t_besthit *hit_rec, float t_min, float t_max)
 {
-	t_coord	result;
-
-	result.x = point.x / t;
-	result.y = point.y / t;
-	result.z = point.z / t;
-	return (result);
-}
-
-t_color	devide_color_with_float(t_color color, float t)
-{
-	t_color	result;
-
-	result.r = color.r / t;
-	result.g = color.g / t;
-	result.b = color.b / t;
-	return (result);
+	return (hit_any_sphere(map_info, ray, hit_rec, t_min, t_max));
 }

@@ -6,13 +6,13 @@
 #    By: bsomers <bsomers@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/09/22 14:52:38 by bsomers       #+#    #+#                  #
-#    Updated: 2022/10/21 14:41:19 by bsomers       ########   odam.nl          #
+#    Updated: 2022/11/02 10:13:28 by bsomers       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minirt
 
-FLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
+FLAGS = -Wall -Wextra -Werror -g -fsanitize=address
 INCLUDE = -I include -I ./MLX42/include/MLX42 -I ./libft
 
 LIBFT_DIR = libft/
@@ -23,23 +23,25 @@ SRC_DIR = src
 BUILD_DIR = obj
 
 SRC = main.c \
+	init.c \
 	error.c \
 	utils.c \
 	parser/parse.c \
 	parser/list_add.c \
 	parser/get_next_line.c \
 	parser/get_map.c \
-	vector_math/add.c \
-	vector_math/distract.c \
-	vector_math/multiply.c \
-	vector_math/devide.c \
-	vector_math/dot.c \
-	vector_math/unit_vector.c \
 	color/new_color.c \
-	color/decide_color.c \
-	color/put_color.c \
 	color/antialias_color.c \
-	sphere/hit_sphere.c \
+	color/point_ray_get_color.c \
+	color/calculate_ambient_color.c \
+	color/put_color.c \
+	color/color_math_basics.c \
+	color/color_math_advanced.c \
+	point/new_point.c \
+	point/point_math_basics.c \
+	point/point_math_advanced.c \
+	hit/hit_sphere.c \
+	hit/hit_anything.c \
 	threads.c
 
 OBJ := $(addprefix $(BUILD_DIR)/, $(SRC:.c=.o))
@@ -48,7 +50,7 @@ SRC := $(addprefix $(SRC_DIR)/, $(SRC))
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJ) $(LIBMLX42)
-	$(CC) $(OBJ) $(FLAGS) $(INCLUDE) $(LIBMLX42) $(LIBFT) -lglfw3 -framework Cocoa -framework OpenGL -framework IOKit -L. -o $(NAME)
+	$(CC) $^ $(FLAGS) $(INCLUDE) -lglfw3 -framework Cocoa -framework OpenGL -framework IOKit -L. -o $(NAME) # used to be -lglfw3 jma
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 	mkdir -p $(dir $@)

@@ -1,26 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   dot.c                                              :+:    :+:            */
+/*   color_math_advanced.c                              :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/10/06 12:20:30 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/06 12:22:26 by jaberkro      ########   odam.nl         */
+/*   Created: 2022/10/26 14:52:45 by jaberkro      #+#    #+#                 */
+/*   Updated: 2022/10/26 14:53:43 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
-
-float	dot_points(t_coord first, t_coord second)
-{
-	float	result;
-
-	result = first.x * second.x;
-	result += first.y * second.y;
-	result += first.z * second.z;
-	return (result);
-}
+#include "color.h"
 
 float	dot_colors(t_color first, t_color second)
 {
@@ -31,3 +21,32 @@ float	dot_colors(t_color first, t_color second)
 	result += first.b * second.b;
 	return (result);
 }
+
+t_color	clamp_color(t_color color)
+{
+	t_color	new_color;
+
+	if (color.r < 0)
+		new_color.r = 0;
+	if (color.g < 0)
+		new_color.g = 0;
+	if (color.b < 0)
+		new_color.b = 0;
+	if (color.r > 255)
+		new_color.r = 255;
+	if (color.g > 255)
+		new_color.g = 255;
+	if (color.b > 255)
+		new_color.b = 255;
+	return (new_color);
+}
+
+// t_color	normalize_color(t_color dir)
+// {
+// 	t_color	result;
+
+// 	result.r = dir.r / 255;
+// 	result.g = dir.g / 255;
+// 	result.b = dir.b / 255;
+// 	return (result);
+// }

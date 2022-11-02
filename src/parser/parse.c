@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 16:47:20 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/10/21 14:40:23 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/11/02 10:53:48 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,15 @@ void	assign_camera(char *str, int *cam_ptr, t_parse *parse)
 	malloc_check_arr(split);
 	tmp = ft_split(split[1], ',');
 	malloc_check_arr(tmp);
-	parse->cam.x = ft_stofl(tmp[0]);
-	parse->cam.y = ft_stofl(tmp[1]);
-	parse->cam.z = ft_stofl(tmp[2]);
+	parse->cam.origin.x = ft_stofl(tmp[0]);
+	parse->cam.origin.y = ft_stofl(tmp[1]);
+	parse->cam.origin.z = ft_stofl(tmp[2]);
 	free_array(tmp);
 	tmp = ft_split(split[2], ',');
 	malloc_check_arr(tmp);
-	parse->cam.vect_x = ft_stofl(tmp[0]);
-	parse->cam.vect_y = ft_stofl(tmp[1]);
-	parse->cam.vect_z = ft_stofl(tmp[2]);
+	parse->cam.dir.x = ft_stofl(tmp[0]);
+	parse->cam.dir.y = ft_stofl(tmp[1]);
+	parse->cam.dir.z = ft_stofl(tmp[2]);
 	free_array(tmp);
 	parse->cam.fov = ft_atoi(split[3]);
 	free_array(split);
@@ -64,9 +64,9 @@ void	assign_light(char *str, int *light_ptr, t_parse *parse)
 	malloc_check_arr(split);
 	tmp = ft_split(split[1], ',');
 	malloc_check_arr(tmp);
-	parse->light.x = ft_stofl(tmp[0]);
-	parse->light.y = ft_stofl(tmp[1]);
-	parse->light.z = ft_stofl(tmp[2]);
+	parse->light.origin.x = ft_stofl(tmp[0]);
+	parse->light.origin.y = ft_stofl(tmp[1]);
+	parse->light.origin.z = ft_stofl(tmp[2]);
 	free_array(tmp);
 	parse->light.bright = ft_stofl(split[2]);
 	free_array(split);
@@ -133,5 +133,11 @@ t_parse	*parse_map(char *argv[])
 	free(map_char);
 	assign_to_struct(map_split_newline, parse);
 	free_array(map_split_newline);
+	// printf("origin camera:(%f,%f,%f)\n", parse->cam->x, parse->cam->y, parse->cam->z); //jma
+	// printf("origin camera:(%f,%f,%f)\n", parse->cam->origin.x, parse->cam->origin.y, parse->cam->origin.z); //jma
+	// printf("origin light:(%f,%f,%f)\n", parse->light->x, parse->light->y, parse->light->z); //jma
+	// printf("origin light:(%f,%f,%f)\n", parse->light->origin.x, parse->light->origin.y, parse->light->origin.z); //jma
+	// printf("brightness light:(%f)\n", parse->light->bright); //jma
+	// printf("ambient light: (%u,%u,%u) at ratio %f\n", parse->amb->r, parse->amb->g, parse->amb->b, parse->amb->ratio);
 	return (parse);
 }

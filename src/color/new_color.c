@@ -6,18 +6,18 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 13:16:52 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/19 13:37:59 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/10/26 15:12:47 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
+#include "color.h"
 
-t_color	new_color(float r, float g, float b)
+t_color	new_color(unsigned int r, unsigned int g, unsigned int b)
 {
-	t_color	new_color;
+	t_color	result_color;
 
-	new_color.r = r;
-	new_color.g = g;
-	new_color.b = b;
-	return (new_color);
+	result_color.r = r;
+	result_color.g = g;
+	result_color.b = b;
+	return (result_color);
 }

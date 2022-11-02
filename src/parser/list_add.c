@@ -6,11 +6,12 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/11 11:13:12 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/10/21 14:39:01 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/11/02 11:00:08 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+#include <stdio.h> //wegggg
 
 void	atoi_color(char *line, t_color *color)
 {
@@ -24,7 +25,7 @@ void	atoi_color(char *line, t_color *color)
 	free_array(tmp);
 }
 
-void	stofl_center(char *line, t_coord *center)
+void	stofl_center(char *line, t_point *center)
 {
 	char		**tmp;
 
@@ -61,9 +62,9 @@ void	ft_lstadd_pl(t_list **lst, char **line)
 	stofl_center(line[1], &pl.center);
 	tmp = ft_split(line[2], ',');
 	malloc_check_arr(tmp);
-	pl.vect_x = ft_stofl(tmp[0]);
-	pl.vect_y = ft_stofl(tmp[1]);
-	pl.vect_z = ft_stofl(tmp[2]);
+	pl.dir.x = ft_stofl(tmp[0]);
+	pl.dir.y = ft_stofl(tmp[1]);
+	pl.dir.z = ft_stofl(tmp[2]);
 	free_array(tmp);
 	atoi_color(line[3], &pl.color);
 	pl_void = malloc(sizeof(t_plane));
@@ -83,9 +84,9 @@ void	ft_lstadd_cy(t_list **lst, char **line)
 	stofl_center(line[1], &cy.center);
 	tmp = ft_split(line[2], ',');
 	malloc_check_arr(tmp);
-	cy.vect_x = ft_stofl(tmp[0]);
-	cy.vect_y = ft_stofl(tmp[1]);
-	cy.vect_z = ft_stofl(tmp[2]);
+	cy.dir.x = ft_stofl(tmp[0]);
+	cy.dir.y = ft_stofl(tmp[1]);
+	cy.dir.z = ft_stofl(tmp[2]);
 	free_array(tmp);
 	cy.diam = ft_stofl(line[3]);
 	cy.height = ft_stofl(line[4]);

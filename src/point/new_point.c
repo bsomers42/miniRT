@@ -1,33 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   add.c                                              :+:    :+:            */
+/*   new_point.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/10/06 12:03:00 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/06 12:17:04 by jaberkro      ########   odam.nl         */
+/*   Created: 2022/10/24 10:48:21 by jaberkro      #+#    #+#                 */
+/*   Updated: 2022/10/26 15:06:33 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
+// #include "minirt.h"
+#include "point.h"
 
-t_coord	add_points(t_coord first, t_coord second)
+t_point	new_point(float x, float y, float z)
 {
-	t_coord	result;
+	t_point	point;
 
-	result.x = first.x + second.x;
-	result.y = first.y + second.y;
-	result.z = first.z + second.z;
-	return (result);
-}
-
-t_color	add_colors(t_color first, t_color second)
-{
-	t_color	result;
-
-	result.r = first.r + second.r;
-	result.g = first.g + second.g;
-	result.b = first.b + second.b;
-	return (result);
+	point.x = x;
+	point.y = y;
+	point.z = z;
+	return (point);
 }

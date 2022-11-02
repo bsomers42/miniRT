@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 14:54:42 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/11/02 09:31:37 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/11/02 10:40:06 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "MLX42.h"
 #include "threads.h"
 #include <stdlib.h>
-#include <stdio.h>	//misschien weghalen
+#include <stdio.h>	//remove in end maybe
 #include <pthread.h>
 #include "libft.h"
 
@@ -23,6 +23,7 @@ void	minirt_keyhook(mlx_key_data_t keydata, void *ptr)
 	t_mlx_str	*mlx_str;
 
 	mlx_str = (t_mlx_str *)ptr;
+	(void)mlx_str; //variable set but not used // jma
 	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
 		exit(EXIT_SUCCESS);
 }
@@ -88,37 +89,37 @@ t_ray	init_ray(void)
 	return (ray);
 }
 
-void	init_infos(t_data *data, t_threadinfo **infos)
-{
-	int	i;
+// void	init_infos(t_data *data, t_threadinfo **infos)
+// {
+// 	int	i;
 
-	i = 0;
-	*infos = malloc(THREADS * sizeof(t_threadinfo));
-	if (infos == NULL)
-		error_exit("malloc", 1);
-	while (i < THREADS)
-	{
-		(*infos)[i].data = data;
-		(*infos)[i].i = i;
-		i++;
-	}
-}
+// 	i = 0;
+// 	*infos = malloc(THREADS * sizeof(t_threadinfo));
+// 	if (infos == NULL)
+// 		error_exit("malloc", 1);
+// 	while (i < THREADS)
+// 	{
+// 		(*infos)[i].data = data;
+// 		(*infos)[i].i = i;
+// 		i++;
+// 	}
+// }
 
-void	init_data(t_data *data, char **argv)
-{
-	data->parse = parse_map(argv);
-	data->mlx_str.mlx = mlx_init(WIDTH, HEIGHT, "MickeyRT", true);
-	if (data->mlx_str.mlx == NULL)
-		error_exit("mlx_init failed!\n", 1);
-	data->mlx_str.img = mlx_new_image(data->mlx_str.mlx, WIDTH, HEIGHT);
-	if (data->mlx_str.img == NULL)
-		error_exit("mlx_new_image failed!\n", 1);
-	data->pixels_done = 0;
-	//data->spheres = init_spheres();
-	data->ray = init_ray();
-	pthread_mutex_init(&(data->pixel_lock), NULL);
-	pthread_mutex_init(&(data->mlx_lock), NULL);
-}
+// void	init_data(t_data *data, char **argv)
+// {
+// 	data->parse = parse_map(argv);
+// 	data->mlx_str.mlx = mlx_init(WIDTH, HEIGHT, "MickeyRT", true);
+// 	if (data->mlx_str.mlx == NULL)
+// 		error_exit("mlx_init failed!\n", 1);
+// 	data->mlx_str.img = mlx_new_image(data->mlx_str.mlx, WIDTH, HEIGHT);
+// 	if (data->mlx_str.img == NULL)
+// 		error_exit("mlx_new_image failed!\n", 1);
+// 	data->pixels_done = 0;
+// 	//data->spheres = init_spheres();
+// 	//data->ray = init_ray();
+// 	pthread_mutex_init(&(data->pixel_lock), NULL);
+// 	pthread_mutex_init(&(data->mlx_lock), NULL);
+// }
 
 void	draw_loading_bar(void)
 {
@@ -149,16 +150,12 @@ int	main(int argc, char *argv[])
 	(void)argc;
 	init_data(&data, argv);
 	init_infos(&data, &infos);
+	printf("incoming ambient: ratio: %f, rgb: [%u, %u, %u]\n", data.parse->amb.ratio, data.parse->amb.r, data.parse->amb.g, data.parse->amb.b);
+	printf("incoming cam: ratio: %f, rgb: [%u, %u, %u]\n", data.parse->amb.ratio, data.parse->amb.r, data.parse->amb.g, data.parse->amb.b);
+
 	mlx_key_hook(data.mlx_str.mlx, &minirt_keyhook, &data.mlx_str);
 	mlx_close_hook(data.mlx_str.mlx, &minirt_close, NULL);
 	mlx_image_to_window(data.mlx_str.mlx, data.mlx_str.img, 0, 0);
-	t_sphere	*sphere;
-	sphere = (infos[0].data->parse->lst_sphere->content);
-	// printf("incoming center: (%f, %f, %f)\n", sphere->center.x, sphere->center.y, sphere->center.z);
-	// printf("incoming color: (%d, %d, %d)\n", sphere->color.r, sphere->color.g, sphere->color.b);
-	// printf("incoming camera: [fov: %d]\n [x, y, z: %f, %f, %f]\n [vect: %f, %f, %f]\n", data.parse->cam.fov, data.parse->cam.x, data.parse->cam.y, \
-	// data.parse->cam.z, data.parse->cam.vect_x,  data.parse->cam.vect_y,  data.parse->cam.vect_z);
-	printf("incoming ambient: ratio: %f, rgb: [%d, %d, %d]\n", data.parse->amb.ratio, data.parse->amb.r, data.parse->amb.g, data.parse->amb.b);
 	draw_loading_bar();
 	make_threads(&infos);
 	mlx_loop(data.mlx_str.mlx);
@@ -167,27 +164,3 @@ int	main(int argc, char *argv[])
 	free_minirt(data.parse);
 	return (0);
 }
-
-// int	main(int argc, char *argv[])
-// {
-// 	t_mlx_str	mlx_str;
-// 	t_parse		*parse;
-
-// 	if (argc != 2)
-// 		write_exit("wrong input. Usage: ./minirt <mapname>.rt\n", 1);
-// 	parse = (t_parse *)malloc(sizeof(t_parse));
-// 	//malloc check!
-// 	parse_map(argv);
-// 	mlx_str.mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true);
-// 	// if (!mlx_str.mlx)
-// 		//hier error exitten
-// 	mlx_str.img = mlx_new_image(mlx_str.mlx, WIDTH, HEIGHT);
-// 	mlx_key_hook(mlx_str.mlx, &minirt_keyhook, &mlx_str);
-// 	mlx_close_hook(mlx_str.mlx, &minirt_close, NULL);
-// 	//HIER ANDERE DINGEN DOEN EN OA PIXELS PUTTEN met mlx_put_pixel(img, x value, y value, color) waarbij img in mlx.img zit
-// 	mlx_image_to_window(mlx_str.mlx, mlx_str.img, 0, 0);
-// 	mlx_loop(mlx_str.mlx);
-// 	mlx_delete_image(mlx_str.mlx, mlx_str.img);
-// 	mlx_terminate(mlx_str.mlx);
-// 	free_minirt(parse);
-// }
