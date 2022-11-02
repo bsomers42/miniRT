@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 13:26:28 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/11/02 11:03:53 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/11/02 13:51:45 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ t_color	calculate_shadow_shade(t_parse map_info, t_besthit record)
 	t_point		light; //temporary
 	float		brightness; //temporary
 
-	light = new_point(1, 2, 1); //temporary
-	brightness = 1.0; //temporary
+	light = map_info.light.origin;//new_point(1, 2, 1); //temporary
+	brightness = map_info.light.bright; //1.0; //temporary
 	light_ray.origin = record.hit_point;
 	light_ray.dir = substract_points(light, light_ray.origin); //temporary
 	// light_ray.dir = distract_points(map_info.light->origin, light_ray.origin); above should become this
@@ -104,7 +104,7 @@ t_color	point_ray_get_color(t_parse map_info, float i, float j) // point_ray
 	float	t;
 	t_point	lower_left_corner;
 	t_ray	ray;
-	float 	vfov; // VERTICAL field-of-view -> should become horiontal at some point
+	float 	hfov;
 	float	theta;
 	float	h;
 	t_point	lookfrom;
@@ -119,17 +119,17 @@ t_color	point_ray_get_color(t_parse map_info, float i, float j) // point_ray
 	t_point	horizontal;
 	t_point	vertical;
 
-	vfov = 105.0;
-	theta = vfov * (float)(M_PI / 180.0);
+	hfov = map_info.cam.fov;//105.0;
+	theta = hfov * (float)(M_PI / 180.0);
 	h = tan((float)theta / 2); //atan?
-	viewport_height = 2.0 * h;
-	viewport_width = 16.0 / 9.0 * (float)viewport_height;
+	viewport_height = 2.0;// * h;
+	viewport_width = 16.0 / 9.0 * (float)viewport_height * h;
 
-	lookfrom = new_point(-2, 2, 1);//map_info.cam.origin;//new_point(map_info.cam.x, map_info.cam.y, map_info.cam.z);//new_point(-2, 2, 1); // temporary
-	lookat = new_point(0, 0, -1); // temporary
+	lookfrom = map_info.cam.origin;//new_point(-2, 2, 1);//map_info.cam.origin;//new_point(map_info.cam.x, map_info.cam.y, map_info.cam.z);//new_point(-2, 2, 1); // temporary
+	lookat = map_info.cam.dir;//new_point(0, 0, 1);//ray_at(map_info.cam.dir, FOCAL_LENGTH); //map_info.cam.dir;// temporary
 	vup = new_point(0, 1, 0);
 
-	w = normalize_point(substract_points(lookfrom, lookat));
+	w = normalize_point(substract_points(lookfrom, lookat));// map_info.cam.dir; //
 	u = normalize_point(cross_points(vup, w));
 	v = cross_points(w, u);
 
@@ -137,9 +137,9 @@ t_color	point_ray_get_color(t_parse map_info, float i, float j) // point_ray
 	vertical = multiply_point_float(v, viewport_height);
 
 	ray.origin = lookfrom;
-	ray.dir.x = 0.0; // temporary
-	ray.dir.y = 0.0; // temporary
-	ray.dir.z = 0.0; // temporary
+	// ray.dir.x = 0.0; // temporary
+	// ray.dir.y = 0.0; // temporary
+	// ray.dir.z = 0.0; // temporary
 	// ray.origin = map_info.cam->origin; // create the ray
 	lower_left_corner = substract_points(ray.origin, multiply_point_float(horizontal, 0.5));
 	lower_left_corner = substract_points(lower_left_corner, multiply_point_float(vertical, 0.5));

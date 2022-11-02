@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 14:54:42 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/11/02 10:40:06 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/11/02 11:13:16 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ int	main(int argc, char *argv[])
 
 	(void)argc;
 	init_data(&data, argv);
-	init_infos(&data, &infos);
+	init_infos(&infos, &data);
 	printf("incoming ambient: ratio: %f, rgb: [%u, %u, %u]\n", data.parse->amb.ratio, data.parse->amb.r, data.parse->amb.g, data.parse->amb.b);
 	printf("incoming cam: ratio: %f, rgb: [%u, %u, %u]\n", data.parse->amb.ratio, data.parse->amb.r, data.parse->amb.g, data.parse->amb.b);
 
