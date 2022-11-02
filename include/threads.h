@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/12 14:07:57 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/26 11:28:50 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/11/02 09:53:17 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,6 @@ typedef struct s_threadinfo
 void	make_threads(t_threadinfo **infos);
 void	put_color(t_threadinfo *info, int i, int j, t_color color);
 void	init_data(t_data *data, char *argv[]);
-void	init_infos(t_threadinfo **infos, t_data *data);
+void	init_infos(t_data *data, t_threadinfo **infos);
 
 #endif
