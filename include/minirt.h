@@ -6,18 +6,19 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 15:11:47 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/11/02 13:54:42 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/11/02 15:24:00 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 # define MINIRT_H
 
-# define WIDTH 800
-# define HEIGHT (int)(800.0 / 16.0 * 9.0)
+# define ASPECT_RATIO (float)(16.0 / 9.0) //2e 16 was 9
+# define WIDTH 1200
+# define HEIGHT (int)(1200.0 / 16.0 * 9.0) // 2e 16 was 9
 # define FOCAL_LENGTH 1.0
 
-# define AA 8 //anti-aliasing
+# define AA 1 //anti-aliasing
 # define THREADS 7
 # include "libft.h"
 # include "MLX42.h"

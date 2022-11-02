@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 14:54:42 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/11/02 11:13:16 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/11/02 15:11:50 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,18 +76,18 @@ void	minirt_close(void *ptr)
 // 	return (spheres);
 // }
 
-t_ray	init_ray(void)
-{
-	t_ray	ray;
+// t_ray	init_ray(void)
+// {
+// 	t_ray	ray;
 
-	ray.origin.x = 0.0;
-	ray.origin.y = -0.1;
-	ray.origin.z = 0.0;
-	ray.dir.x = 0.0;
-	ray.dir.y = 0.0;
-	ray.dir.z = 0.0;
-	return (ray);
-}
+// 	ray.origin.x = 0.0;
+// 	ray.origin.y = -0.1;
+// 	ray.origin.z = 0.0;
+// 	ray.dir.x = 0.0;
+// 	ray.dir.y = 0.0;
+// 	ray.dir.z = 0.0;
+// 	return (ray);
+// }
 
 // void	init_infos(t_data *data, t_threadinfo **infos)
 // {

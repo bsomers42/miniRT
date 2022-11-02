@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 13:26:28 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/11/02 13:51:45 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/11/02 15:22:10 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ t_color	calculate_shadow_shade(t_parse map_info, t_besthit record)
 		return (new_color(0, 0, 0));
 	angle = dot_points(record.normal, light_ray.dir);
 	if (angle < 0.0)
-		angle = 0.0;
+		angle = 0.0;//*= -1.0;
 	color = multiply_color_float(record.color, angle * brightness); //test but seems to work
 	return (color);
 }
@@ -121,9 +121,9 @@ t_color	point_ray_get_color(t_parse map_info, float i, float j) // point_ray
 
 	hfov = map_info.cam.fov;//105.0;
 	theta = hfov * (float)(M_PI / 180.0);
-	h = tan((float)theta / 2); //atan?
-	viewport_height = 2.0;// * h;
-	viewport_width = 16.0 / 9.0 * (float)viewport_height * h;
+	h = tan((float)theta / 2.0); //atan? //degrees added
+	viewport_height = 2.0; //* h / ASPECT_RATIO;// * h * ASPECT_RATIO; // haal * h weg
+	viewport_width = ASPECT_RATIO * (float)viewport_height * h;
 
 	lookfrom = map_info.cam.origin;//new_point(-2, 2, 1);//map_info.cam.origin;//new_point(map_info.cam.x, map_info.cam.y, map_info.cam.z);//new_point(-2, 2, 1); // temporary
 	lookat = map_info.cam.dir;//new_point(0, 0, 1);//ray_at(map_info.cam.dir, FOCAL_LENGTH); //map_info.cam.dir;// temporary
