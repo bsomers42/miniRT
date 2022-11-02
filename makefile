@@ -6,7 +6,7 @@
 #    By: bsomers <bsomers@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/09/22 14:52:38 by bsomers       #+#    #+#                  #
-#    Updated: 2022/11/02 10:13:28 by bsomers       ########   odam.nl          #
+#    Updated: 2022/11/02 17:08:48 by bsomers       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,7 @@ SRC = main.c \
 	point/point_math_advanced.c \
 	hit/hit_sphere.c \
 	hit/hit_anything.c \
+	hit/hit_plane.c \
 	threads.c
 
 OBJ := $(addprefix $(BUILD_DIR)/, $(SRC:.c=.o))

@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 13:26:28 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/11/02 13:51:45 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/11/02 17:53:44 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ t_color	calculate_shadow_shade(t_parse map_info, t_besthit record)
 	light_ray.dir = substract_points(light, light_ray.origin); //temporary
 	// light_ray.dir = distract_points(map_info.light->origin, light_ray.origin); above should become this
 	light_ray.dir = normalize_point(light_ray.dir);
-	if (hit_anything(map_info, light_ray, &not_needed, 0.001, sqrt(dot_points(light_ray.dir, light_ray.dir))) >= 0)
+	if (hit_anything(map_info, light_ray, &not_needed, 0.001, sqrt(dot_points(light_ray.dir, light_ray.dir))) > 0)
 		return (new_color(0, 0, 0));
 	angle = dot_points(record.normal, light_ray.dir);
 	if (angle < 0.0)
@@ -72,13 +72,13 @@ static t_color	get_ray_color(t_parse map_info, t_ray ray)
 	t_besthit	record;
 	int			closest_index;
 
-	closest_index = hit_anything(map_info, ray, &record, 0, INFINITY);
-	if (closest_index >= 0)
+	closest_index = hit_anything(map_info, ray, &record, 0.001, INFINITY);
+	if (closest_index > 0)
 	{
-		color = calculate_shadow_shade(map_info, record);
+		// color = calculate_shadow_shade(map_info, record);
 
 		//real color without shading
-		// color = record.color;
+		color = record.color;
 
 		//colored spheres
 		// normal = normalize_point(distract_points(ray_at(ray, record.t), record.center));

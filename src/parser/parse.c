@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 16:47:20 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/11/02 10:53:48 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/11/02 17:29:12 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ int	assign_to_struct(char **map_split_n, t_parse *parse)
 	cam = 0;
 	light = 0;
 	parse->lst_sphere = NULL;
+	parse->lst_plane = NULL;
+	parse->lst_cyl = NULL;
 	while (map_split_n[i] != NULL)
 	{
 		if (ft_strncmp(map_split_n[i], "A ", 2) == 0)
