@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 15:46:19 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/28 14:32:23 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/11/02 17:39:53 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,5 +99,5 @@ int	hit_any_sphere(t_parse map_info, t_ray ray, t_besthit *hit_rec, float t_min,
 		tmp = tmp->next;
 		i++;
 	}
-	return (hit_anything);
+	return (hit_anything >= 0);
 }

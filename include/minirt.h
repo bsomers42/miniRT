@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 15:11:47 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/11/02 15:24:00 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/11/02 17:59:34 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # define HEIGHT (int)(1200.0 / 16.0 * 9.0) // 2e 16 was 9
 # define FOCAL_LENGTH 1.0
 
-# define AA 1 //anti-aliasing
+# define AA 2 //anti-aliasing
 # define THREADS 7
 # include "libft.h"
 # include "MLX42.h"
@@ -161,6 +161,7 @@ void	malloc_check_str(char *str);
 // void	write_exit(char *message, int exit_code);
 
 int		hit_any_sphere(t_parse map_info, t_ray ray, t_besthit *hit_rec, float t_min, float t_max);
+int	hit_any_plane(t_parse map_info, t_ray ray, t_besthit *hit_rec, float t_min, float t_max);
 int		hit_anything(t_parse map_info, t_ray ray, t_besthit *hit_rec, float t_min, float t_max);
 
 t_color	antialias_color(t_parse map_info, int x, int y);
