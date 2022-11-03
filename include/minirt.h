@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 15:11:47 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/11/02 17:59:34 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/11/03 22:57:15 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef struct s_besthit
 {
 	t_point	hit_point;
 	t_point	normal;
-	float	t;
+	double	t;
 	int		front_face;
 	t_color	color;
 	t_point	center;
@@ -82,7 +82,7 @@ typedef struct s_sphere
 	// float	x;
 	// float	y;
 	// float	z;
-	t_point	center; //jma
+	t_point	center;
 	float	diam;
 }	t_sphere;
 
@@ -115,9 +115,9 @@ void	ft_lstadd_cy(t_list **lst, char **line);
 typedef struct s_amb
 {
 	float			ratio;
-	unsigned int	r; //unsigned int instead of int jma
-	unsigned int	g; //unsigned int instead of int jma
-	unsigned int	b; //unsigned int instead of int jma
+	unsigned int	r;
+	unsigned int	g;
+	unsigned int	b;
 }	t_amb;
 
 typedef struct s_cam
@@ -125,11 +125,11 @@ typedef struct s_cam
 	// float	x;
 	// float	y;
 	// float	z;
-	t_point	origin; //jma
+	t_point	origin;
 	// float	vect_x;
 	// float	vect_y;
 	// float	vect_z;
-	t_point	dir; //jma
+	t_point	dir;
 	int		fov;	
 }	t_cam;
 
@@ -138,7 +138,7 @@ typedef struct s_light
 	// float	x;
 	// float	y;
 	// float	z;
-	t_point	origin; //jma
+	t_point	origin;
 	float	bright;	
 }	t_light;
 
