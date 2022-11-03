@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/26 14:47:08 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/26 14:59:37 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/11/03 22:00:46 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,13 @@ typedef struct s_color
 	unsigned int	g;
 	unsigned int	b;
 }	t_color;
+
+typedef struct s_unit_color
+{
+	double	r;
+	double	g;
+	double	b;
+}	t_unit_color;
 
 t_color	add_colors(t_color first, t_color second);
 t_color	substract_colors(t_color first, t_color second);
