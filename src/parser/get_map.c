@@ -6,11 +6,20 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/21 14:40:13 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/10/21 14:41:08 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/11/04 17:42:38 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+
+void	check_extension_permission(char *str)
+{
+	char *tmp;
+
+	tmp = ft_strrev(str);
+	if (ft_strncmp(tmp, "tr.", 3) != 0)
+		write_exit("Incorrect map extension\n", 1);
+}
 
 char	*get_map(char *argv[])
 {
@@ -19,9 +28,10 @@ char	*get_map(char *argv[])
 	char	*strdef;
 
 	strdef = NULL;
+	check_extension_permission(argv[1]);
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 0)
-		write_exit("Error when opening map\n", 1);
+		write_exit("Could not find/open map\n", 1);
 	while (1)
 	{
 		str = get_next_line_e(fd);

@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/17 13:15:51 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/11/02 17:53:55 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/11/03 22:51:36 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	fill_pixel(t_threadinfo *info, int x, int y)
 
 	map_info = (info->data->parse);
 	color = antialias_color(*map_info, x, y);
-	color = calculate_ambient_color(color, &map_info->amb);
+	// color = calculate_ambient_color(color, &map_info->amb); // not needed anymore
 	put_color(info, x, y, color);
 	if (pthread_mutex_lock(&(info->data->pixel_lock)) != 0)
 		error_exit("pthread_mutex_lock", 1);

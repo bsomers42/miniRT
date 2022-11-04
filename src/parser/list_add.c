@@ -6,12 +6,19 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/11 11:13:12 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/11/03 15:24:54 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/11/04 17:52:35 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include <stdio.h> //wegggg
+
+void	check_vec_value(t_point dir)
+{
+	if (dir.x < 0 || dir.x > 1 || dir.y < 0 || dir.y > 1 || \
+	dir.z < 0 || dir.z > 1)
+		write_exit("Wrong vector value\n", 1);
+}
 
 void	atoi_color(char *line, t_color *color)
 {
@@ -22,6 +29,7 @@ void	atoi_color(char *line, t_color *color)
 	color->r = ft_atoi(tmp[0]);
 	color->g = ft_atoi(tmp[1]);
 	color->b = ft_atoi(tmp[2]);
+	check_color_value(color);
 	free_array(tmp);
 }
 
@@ -65,6 +73,7 @@ void	ft_lstadd_pl(t_list **lst, char **line)
 	pl.dir.x = ft_stofl(tmp[0]);
 	pl.dir.y = ft_stofl(tmp[1]);
 	pl.dir.z = ft_stofl(tmp[2]);
+	check_vec_value(pl.dir);
 	free_array(tmp);
 	atoi_color(line[3], &pl.color);
 	pl_void = malloc(sizeof(t_plane));
@@ -87,6 +96,7 @@ void	ft_lstadd_cy(t_list **lst, char **line)
 	cy.dir.x = ft_stofl(tmp[0]);
 	cy.dir.y = ft_stofl(tmp[1]);
 	cy.dir.z = ft_stofl(tmp[2]);
+	check_vec_value(cy.dir);
 	free_array(tmp);
 	cy.diam = ft_stofl(line[3]);
 	cy.height = ft_stofl(line[4]);

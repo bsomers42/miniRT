@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 13:26:28 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/11/03 17:53:30 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/11/04 16:00:38 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,22 +38,33 @@ t_color	calculate_shadow_shade(t_parse map_info, t_besthit record)
 	t_ray		light_ray;
 	t_besthit	not_needed;
 	t_color		color;
-	float		angle;
+	double		cosangle;
 	t_point		light; //temporary
-	float		brightness; //temporary
+	double		brightness; //temporary
+	t_unit_color	dcolor;
 
-	light = map_info.light.origin;//new_point(1, 2, 1); //temporary
-	brightness = map_info.light.bright; //1.0; //temporary
+	light = map_info.light.origin; //temporary
+	brightness = (double)map_info.light.bright; //temporary
 	light_ray.origin = record.hit_point;
 	light_ray.dir = substract_points(light, light_ray.origin); //temporary
-	// light_ray.dir = distract_points(map_info.light->origin, light_ray.origin); above should become this
 	light_ray.dir = normalize_point(light_ray.dir);
 	if (hit_anything(map_info, light_ray, &not_needed, 0.001, sqrt(dot_points(light_ray.dir, light_ray.dir))) > 0)
-		return (new_color(64, 64, 64));
-	angle = cos(dot_points(record.normal, light_ray.dir));
-	if (angle < 0.0)
-		angle = 0.0;
-	color = multiply_color_float(record.color, angle * brightness); //test but seems to work
+	{
+		// calculate shadow color
+		color.r = ((double)record.color.r / 255.0) / (double)M_PI * ((double)map_info.amb.r * map_info.amb.ratio / 255.0) * 255;
+		color.g = ((double)record.color.g / 255.0) / (double)M_PI * ((double)map_info.amb.g * map_info.amb.ratio / 255.0) * 255;
+		color.b = ((double)record.color.b / 255.0) / (double)M_PI * ((double)map_info.amb.b * map_info.amb.ratio / 255.0) * 255;
+		return (color);
+	}	
+	cosangle = (double)dot_points(record.normal, light_ray.dir);
+	if (cosangle < 0.0)
+		cosangle = 0.0;
+	//calculate: normalized record.color / pi * light brightness * (cosangle + ambiant)
+	dcolor.r = (((double)record.color.r / 255.0) / (double)M_PI * (double)brightness * ((double)cosangle + map_info.amb.r * map_info.amb.ratio / 255.0));
+	dcolor.g = (((double)record.color.g / 255.0) / (double)M_PI * (double)brightness * ((double)cosangle + map_info.amb.g * map_info.amb.ratio / 255.0));
+	dcolor.b = (((double)record.color.b / 255.0) / (double)M_PI * (double)brightness * ((double)cosangle + map_info.amb.b * map_info.amb.ratio / 255.0));
+	//normalized color to color with value 0-255
+	color = new_color((unsigned int)((double)dcolor.r * 255.0), (unsigned int)((double)dcolor.g * 255.0), (unsigned int)((double)dcolor.b * 255.0));
 	return (color);
 }
 
@@ -75,10 +86,10 @@ static t_color	get_ray_color(t_parse map_info, t_ray ray)
 	closest_index = hit_anything(map_info, ray, &record, 0.001, INFINITY);
 	if (closest_index > 0)
 	{
-		// color = calculate_shadow_shade(map_info, record);
+		color = calculate_shadow_shade(map_info, record);
 
 		//real color without shading
-		color = record.color;
+		// color = record.color;
 
 		//colored spheres
 		// normal = normalize_point(distract_points(ray_at(ray, record.t), record.center));
@@ -119,14 +130,14 @@ t_color	point_ray_get_color(t_parse map_info, float i, float j) // point_ray
 	t_point	horizontal;
 	t_point	vertical;
 
-	hfov = map_info.cam.fov;//105.0;
+	hfov = map_info.cam.fov;
 	theta = hfov * (float)(M_PI / 180.0);
-	h = tan((float)theta / 2); //atan?
-	viewport_height = 2.0;// * h;
-	viewport_width = 16.0 / 9.0 * (float)viewport_height * h;
+	h = tan((float)theta / 2.0); //atan? //degrees added
+	viewport_height = 2.0;
+	viewport_width = ASPECT_RATIO * (float)viewport_height * h;
 
-	lookfrom = map_info.cam.origin;//new_point(-2, 2, 1);//map_info.cam.origin;//new_point(map_info.cam.x, map_info.cam.y, map_info.cam.z);//new_point(-2, 2, 1); // temporary
-	lookat = map_info.cam.dir;//new_point(0, 0, 1);//ray_at(map_info.cam.dir, FOCAL_LENGTH); //map_info.cam.dir;// temporary
+	lookfrom = map_info.cam.origin;
+	lookat = map_info.cam.dir;
 	vup = new_point(0, 1, 0);
 
 	w = normalize_point(substract_points(lookfrom, lookat));// map_info.cam.dir; //
@@ -137,10 +148,6 @@ t_color	point_ray_get_color(t_parse map_info, float i, float j) // point_ray
 	vertical = multiply_point_float(v, viewport_height);
 
 	ray.origin = lookfrom;
-	// ray.dir.x = 0.0; // temporary
-	// ray.dir.y = 0.0; // temporary
-	// ray.dir.z = 0.0; // temporary
-	// ray.origin = map_info.cam->origin; // create the ray
 	lower_left_corner = substract_points(ray.origin, multiply_point_float(horizontal, 0.5));
 	lower_left_corner = substract_points(lower_left_corner, multiply_point_float(vertical, 0.5));
 	lower_left_corner = substract_points(lower_left_corner, w);
