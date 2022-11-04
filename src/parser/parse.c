@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 16:47:20 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/11/03 15:15:14 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/11/04 14:28:25 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ int	assign_to_struct(char **map_split_n, t_parse *parse)
 			ft_lstadd_cy(&(parse->lst_cyl), ft_split(map_split_n[i], ' '));
 		i++;
 	}
-	test_lists(&(parse->lst_sphere));
+	// test_lists(&(parse->lst_sphere));
 	if (cam > 1 || cam == 0 || amb > 1 || amb == 0 || light == 0 || light > 1)
 		write_exit("Incorrect ambient/light/camera!\n", 1);
 	return (0);
