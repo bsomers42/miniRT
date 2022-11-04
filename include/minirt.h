@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 15:11:47 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/11/03 22:57:15 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/11/04 14:51:49 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # define HEIGHT (int)(1200.0 / 16.0 * 9.0) // 2e 16 was 9
 # define FOCAL_LENGTH 1.0
 
-# define AA 2 //anti-aliasing
+# define AA 1 //anti-aliasing
 # define THREADS 7
 # include "libft.h"
 # include "MLX42.h"

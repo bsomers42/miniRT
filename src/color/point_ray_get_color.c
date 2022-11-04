@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 13:26:28 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/11/03 22:55:25 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/11/04 14:49:47 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ t_color	calculate_shadow_shade(t_parse map_info, t_besthit record)
 	dcolor.g = (((double)record.color.g / 255.0) / (double)M_PI * (double)brightness * ((double)cosangle + map_info.amb.g * map_info.amb.ratio / 255.0));
 	dcolor.b = (((double)record.color.b / 255.0) / (double)M_PI * (double)brightness * ((double)cosangle + map_info.amb.b * map_info.amb.ratio / 255.0));
 	//normalized color to color with value 0-255
-	color = new_color((unsigned int)((double)dcolor.r * 255.0), (unsigned int)((double)dcolor.g * 255.0), (unsigned int)((double)dcolor.b *255));
+	color = new_color((unsigned int)((double)dcolor.r * 255.0), (unsigned int)((double)dcolor.g * 255.0), (unsigned int)((double)dcolor.b * 255.0));
 	return (color);
 }
 
