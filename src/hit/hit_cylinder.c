@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/03 11:37:15 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/11/04 13:45:43 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/11/04 16:12:49 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	intersect_circle(t_cyl *cyl, t_ray ray, float t, t_point cap_center)
 	t_point	v;
 	float	d;
 
-	radius = cyl->diam / 2;
+	radius = (float)cyl->diam / 2.0;
 	p = add_points(ray.origin, normalize_point(ray.dir));
 	p = multiply_point_float(p, t);
 	// p = ray_at(ray, t);
