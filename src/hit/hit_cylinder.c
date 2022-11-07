@@ -6,11 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/03 11:37:15 by bsomers       #+#    #+#                 */
-<<<<<<< HEAD
-/*   Updated: 2022/11/04 16:12:49 by jaberkro      ########   odam.nl         */
-=======
-/*   Updated: 2022/11/04 16:17:53 by bsomers       ########   odam.nl         */
->>>>>>> db8bc010869b64fbef3eca49b5f9d609677511b7
+/*   Updated: 2022/11/07 10:57:06 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
