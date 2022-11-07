@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 13:26:28 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/11/04 14:49:47 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/11/07 10:30:52 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,18 +51,18 @@ t_color	calculate_shadow_shade(t_parse map_info, t_besthit record)
 	if (hit_anything(map_info, light_ray, &not_needed, 0.001, sqrt(dot_points(light_ray.dir, light_ray.dir))) > 0)
 	{
 		// calculate shadow color
-		color.r = ((double)record.color.r / 255.0) / (double)M_PI * ((double)map_info.amb.r * map_info.amb.ratio / 255.0) * 255;
-		color.g = ((double)record.color.g / 255.0) / (double)M_PI * ((double)map_info.amb.g * map_info.amb.ratio / 255.0) * 255;
-		color.b = ((double)record.color.b / 255.0) / (double)M_PI * ((double)map_info.amb.b * map_info.amb.ratio / 255.0) * 255;
+		color.r = ((double)record.color.r / 255.0) / (double)M_PI * ((double)map_info.amb.color.r * map_info.amb.ratio / 255.0) * 255;
+		color.g = ((double)record.color.g / 255.0) / (double)M_PI * ((double)map_info.amb.color.g * map_info.amb.ratio / 255.0) * 255;
+		color.b = ((double)record.color.b / 255.0) / (double)M_PI * ((double)map_info.amb.color.b * map_info.amb.ratio / 255.0) * 255;
 		return (color);
 	}	
 	cosangle = (double)dot_points(record.normal, light_ray.dir);
 	if (cosangle < 0.0)
 		cosangle = 0.0;
 	//calculate: normalized record.color / pi * light brightness * (cosangle + ambiant)
-	dcolor.r = (((double)record.color.r / 255.0) / (double)M_PI * (double)brightness * ((double)cosangle + map_info.amb.r * map_info.amb.ratio / 255.0));
-	dcolor.g = (((double)record.color.g / 255.0) / (double)M_PI * (double)brightness * ((double)cosangle + map_info.amb.g * map_info.amb.ratio / 255.0));
-	dcolor.b = (((double)record.color.b / 255.0) / (double)M_PI * (double)brightness * ((double)cosangle + map_info.amb.b * map_info.amb.ratio / 255.0));
+	dcolor.r = (((double)record.color.r / 255.0) / (double)M_PI * (double)brightness * ((double)cosangle + map_info.amb.color.r * map_info.amb.ratio / 255.0));
+	dcolor.g = (((double)record.color.g / 255.0) / (double)M_PI * (double)brightness * ((double)cosangle + map_info.amb.color.g * map_info.amb.ratio / 255.0));
+	dcolor.b = (((double)record.color.b / 255.0) / (double)M_PI * (double)brightness * ((double)cosangle + map_info.amb.color.b * map_info.amb.ratio / 255.0));
 	//normalized color to color with value 0-255
 	color = new_color((unsigned int)((double)dcolor.r * 255.0), (unsigned int)((double)dcolor.g * 255.0), (unsigned int)((double)dcolor.b * 255.0));
 	return (color);

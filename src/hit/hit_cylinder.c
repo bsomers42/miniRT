@@ -6,7 +6,11 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/03 11:37:15 by bsomers       #+#    #+#                 */
+<<<<<<< HEAD
 /*   Updated: 2022/11/04 16:12:49 by jaberkro      ########   odam.nl         */
+=======
+/*   Updated: 2022/11/04 16:17:53 by bsomers       ########   odam.nl         */
+>>>>>>> db8bc010869b64fbef3eca49b5f9d609677511b7
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +95,10 @@ int	hit_cap(t_cyl *cyl, t_ray ray, float t_min, float t_max, t_besthit *hit_rec,
 			if (intersect_circle(cyl, ray, t, cap_center))
 			{
 				hit_rec->t = t;
-				hit_rec->hit_point = ray_at(ray, hit_rec->t);
+				// hit_rec->hit_point = ray_at(ray, hit_rec->t);
+				hit_rec->hit_point = add_points(ray.origin, normalize_point(ray.dir));
+				hit_rec->hit_point = multiply_point_float(hit_rec->hit_point, t);
+
 				hit_rec->color = cyl->color;
 				hit_rec->center = cyl->center; //deze ook aanpassen naar cap center?
 				hit_rec->normal = n;
