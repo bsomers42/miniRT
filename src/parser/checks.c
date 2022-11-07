@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/04 17:51:50 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/11/04 17:54:14 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/11/07 10:28:45 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	check_vec_value(t_point vec)
 		write_exit("Wrong vector value\n", 1);
 }
 
-void	check_color_value(t_color color)
+void	check_color_value(t_color *color)
 {
 	if (color->r > 255 || color->r < 0 || color->g > 255 || \
 	color->g < 0 || color->b > 255 || color->b < 0)

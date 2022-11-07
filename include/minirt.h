@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 15:11:47 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/11/04 18:00:05 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/11/07 10:28:56 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,9 +115,10 @@ void	ft_lstadd_cy(t_list **lst, char **line);
 typedef struct s_amb
 {
 	float			ratio;
-	unsigned int	r;
-	unsigned int	g;
-	unsigned int	b;
+	t_color			color;
+	// unsigned int	r;
+	// unsigned int	g;
+	// unsigned int	b;
 }	t_amb;
 
 typedef struct s_cam
@@ -161,7 +162,7 @@ void	free_minirt(t_parse *parse);
 void	malloc_check_arr(char **str);
 void	malloc_check_str(char *str);
 void	check_vec_value(t_point vec);
-void	check_color_value(t_color color);
+void	check_color_value(t_color *color);
 // void	write_exit(char *message, int exit_code);
 
 int		hit_any_sphere(t_parse map_info, t_ray ray, t_besthit *hit_rec, float t_min, float t_max);

@@ -6,19 +6,12 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/11 11:13:12 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/11/04 17:52:35 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/11/07 10:32:53 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include <stdio.h> //wegggg
-
-void	check_vec_value(t_point dir)
-{
-	if (dir.x < 0 || dir.x > 1 || dir.y < 0 || dir.y > 1 || \
-	dir.z < 0 || dir.z > 1)
-		write_exit("Wrong vector value\n", 1);
-}
 
 void	atoi_color(char *line, t_color *color)
 {
