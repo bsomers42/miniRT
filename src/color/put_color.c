@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 12:45:02 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/11/02 15:23:23 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/11/07 11:07:58 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	put_color(t_threadinfo *info, int i, int j, t_color color)
 	color_hex = red + green + blue + alpha;
 	if (pthread_mutex_lock(&(info->data->mlx_lock)) != 0)
 		error_exit("pthread_mutex_lock", 1);
-	mlx_put_pixel(info->data->mlx_str.img, i, HEIGHT - j - 1, color_hex);
+	mlx_put_pixel(info->data->mlx_str.img, WIDTH - i - 1, HEIGHT - j - 1, color_hex);
 	if (pthread_mutex_unlock(&(info->data->mlx_lock)) != 0)
 		error_exit("pthread_mutex_unlock", 1);
 }
