@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/04 17:51:50 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/11/07 10:28:45 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/11/07 11:35:29 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	check_vec_value(t_point vec)
 {
-	if (vec.x < 0 || vec.x > 1 || vec.y < 0 || vec.y > 1 || \
-	vec.z < 0 || vec.z > 1)
+	if (vec.x < -1 || vec.x > 1 || vec.y < -1 || vec.y > 1 || \
+	vec.z < -1 || vec.z > 1)
 		write_exit("Wrong vector value\n", 1);
 }
 
