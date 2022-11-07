@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/02 16:07:31 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/11/04 15:46:02 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/11/07 12:09:46 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ int	hit_plane(t_plane *plane, t_ray ray, float t_min, float t_max, t_besthit *hi
 	if (fabs(denom) > t_min)
 	{
 		polo = substract_points(plane->center, ray.origin);
+ 		// polo = multiply_points(polo, n);
+
 		t = (float)dot_points(polo, n) / (float)denom;
 		if (t >= t_min && t < t_max)
 		{
@@ -48,32 +50,34 @@ int	hit_plane(t_plane *plane, t_ray ray, float t_min, float t_max, t_besthit *hi
 			return (1);
 		}
 	}
-	n = normalize_point(multiply_point_float(plane->dir, -1.0));
-	denom = dot_points(n, normalize_point(ray.dir));
-	if (fabs(denom) > t_min)
-	{
-		polo = substract_points(plane->center, ray.origin);
-		t = (float)dot_points(polo, n) / (float)denom;
-		if (t >= t_min && t < t_max)
-		{
-			hit_rec->t = t;
-			hit_rec->hit_point = ray_at(ray, hit_rec->t);
-			hit_rec->color = plane->color;
-			hit_rec->center = plane->center;
-			// hit_rec->normal = n;
-			if (dot_points(ray.dir, n) < 0)
-			{
-				hit_rec->front_face = 1;
-				hit_rec->normal = n;
-			}
-			else
-			{
-				hit_rec->front_face = 0;
-				hit_rec->normal = multiply_point_float(n, -1.0);
-			}
-			return (1);
-		}
-	}
+	// n = normalize_point(multiply_point_float(plane->dir, -1.0));
+	// denom = dot_points(n, normalize_point(ray.dir));
+	// if (fabs(denom) > t_min)
+	// {
+	// 	polo = substract_points(plane->center, ray.origin);
+	// 			// polo = multiply_points(polo, n);
+
+	// 	t = (float)dot_points(polo, n) / (float)denom;
+	// 	if (t >= t_min && t < t_max)
+	// 	{
+	// 		hit_rec->t = t;
+	// 		hit_rec->hit_point = ray_at(ray, hit_rec->t);
+	// 		hit_rec->color = plane->color;
+	// 		hit_rec->center = plane->center;
+	// 		// hit_rec->normal = n;
+	// 		if (dot_points(ray.dir, n) < 0)
+	// 		{
+	// 			hit_rec->front_face = 1;
+	// 			hit_rec->normal = n;
+	// 		}
+	// 		else
+	// 		{
+	// 			hit_rec->front_face = 0;
+	// 			hit_rec->normal = multiply_point_float(n, -1.0);
+	// 		}
+	// 		return (1);
+	// 	}
+	// }
 	return (0);
 }
 
