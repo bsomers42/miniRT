@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 14:54:42 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/11/07 10:26:12 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/11/09 12:45:10 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,18 @@
 
 void	minirt_keyhook(mlx_key_data_t keydata, void *ptr)
 {
-	t_mlx_str	*mlx_str;
+	t_threadinfo	*info;
 
-	mlx_str = (t_mlx_str *)ptr;
-	(void)mlx_str; //variable set but not used // jma
-	//free things
+	info = (t_threadinfo *)ptr;
+	// (void)mlx_str; //variable set but not used // jma
+	//free things before exiting
 	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
 		exit(EXIT_SUCCESS);
+	// if (keydata.key == MLX_KEY_UP && keydata.action == MLX_PRESS)
+	// {
+	// 	printf("hoi\n");
+	// 	info->data->parse->cam.fov -= 10; //creates crash
+	// }
 }
 
 void	minirt_close(void *ptr)
@@ -68,7 +73,7 @@ int	main(int argc, char *argv[])
 	// printf("incoming ambient: ratio: %f, rgb: [%u, %u, %u]\n", data.parse->amb.ratio, data.parse->amb.r, data.parse->amb.g, data.parse->amb.b);
 	// printf("incoming cam: ratio: %f, rgb: [%u, %u, %u]\n", data.parse->amb.ratio, data.parse->amb.r, data.parse->amb.g, data.parse->amb.b);
 
-	mlx_key_hook(data.mlx_str.mlx, &minirt_keyhook, &data.mlx_str);
+	mlx_key_hook(data.mlx_str.mlx, &minirt_keyhook, &infos);
 	mlx_close_hook(data.mlx_str.mlx, &minirt_close, NULL);
 	mlx_image_to_window(data.mlx_str.mlx, data.mlx_str.img, 0, 0);
 	draw_loading_bar();
