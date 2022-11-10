@@ -6,19 +6,19 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 15:11:47 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/11/09 10:30:07 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/11/10 14:18:26 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 # define MINIRT_H
 
-# define ASPECT_RATIO (float)(16.0 / 9.0) //2e 16 was 9
-# define WIDTH 1200
-# define HEIGHT (int)(1200.0 / 16.0 * 9.0) // 2e 16 was 9
+// # define ASPECT_RATIO (float)(16.0 / 9.0)
+# define WIDTH 1600
+# define HEIGHT 900
 # define FOCAL_LENGTH 1.0
 
-# define AA 1 //anti-aliasing
+# define AA 5 //anti-aliasing
 # define THREADS 7
 # include "libft.h"
 # include "MLX42.h"
@@ -31,12 +31,6 @@ typedef struct s_mlx_str
 	void			*mlx;
 	void			*img;
 }	t_mlx_str;
-
-// typedef struct s_pixel
-// {
-// 	unsigned int	x;
-// 	unsigned int	y;
-// }	t_pixel;
 
 typedef struct s_ray
 {
@@ -54,58 +48,27 @@ typedef struct s_besthit
 	t_point	center;
 }	t_besthit;
 
-// typedef struct s_intersect
-// {
-// 	t_point	coord;
-// 	t_color	color;
-// }	t_intersect;
-
-//radius is diameter devided by 2
-// typedef struct s_sphere
-// {
-// 	t_point		center;
-// 	t_color	color;
-// 	float		radius;
-// }	t_sphere;
-
-// typedef struct s_plane
-// {
-// 	t_point		center;
-// 	t_color	color;
-// 	float		radius;
-// }	t_plane;
-
 typedef struct s_sphere
 {
-	//t_point	center;
 	t_color	color;
-	// float	x;
-	// float	y;
-	// float	z;
 	t_point	center;
 	float	diam;
 }	t_sphere;
 
 typedef struct s_plane
 {
-	t_point	center;
-	t_color	color;
+	t_point		center;
+	t_color		color;
 	t_vector	dir;
-	// float	vect_x;
-	// float	vect_y;
-	// float	vect_z;
 }	t_plane;
 
 typedef struct s_cyl
 {
-	t_point center;
-	t_color	color;
+	t_point		center;
+	t_color		color;
 	t_vector	dir;
-	// float	vect_x;
-	// float	vect_y;
-	// float	vect_z;
-	float	diam;
-	float	height;
+	float		diam;
+	float		height;
 }	t_cyl;
 
 void	ft_lstadd_sp(t_list **lst, char **line);
@@ -116,29 +79,17 @@ typedef struct s_amb
 {
 	float			ratio;
 	t_color			color;
-	// unsigned int	r;
-	// unsigned int	g;
-	// unsigned int	b;
 }	t_amb;
 
 typedef struct s_cam
 {
-	// float	x;
-	// float	y;
-	// float	z;
 	t_point	origin;
-	// float	vect_x;
-	// float	vect_y;
-	// float	vect_z;
 	t_point	dir;
 	int		fov;	
 }	t_cam;
 
 typedef struct s_light
 {
-	// float	x;
-	// float	y;
-	// float	z;
 	t_point	origin;
 	float	bright;	
 }	t_light;
@@ -163,7 +114,6 @@ void	malloc_check_arr(char **str);
 void	malloc_check_str(char *str);
 void	check_vec_value(t_point vec);
 void	check_color_value(t_color *color);
-// void	write_exit(char *message, int exit_code);
 
 int		hit_any_sphere(t_parse map_info, t_ray ray, t_besthit *hit_rec, float t_min, float t_max);
 int		hit_any_plane(t_parse map_info, t_ray ray, t_besthit *hit_rec, float t_min, float t_max);
