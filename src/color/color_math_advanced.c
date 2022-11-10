@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/26 14:52:45 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/26 14:53:43 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/11/10 11:03:05 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ t_color	clamp_color(t_color color)
 {
 	t_color	new_color;
 
-	if (color.r < 0)
-		new_color.r = 0;
-	if (color.g < 0)
-		new_color.g = 0;
-	if (color.b < 0)
-		new_color.b = 0;
+	// if (color.r < 0)
+	// 	new_color.r = 0;
+	// if (color.g < 0)
+	// 	new_color.g = 0;
+	// if (color.b < 0)
+	// 	new_color.b = 0; //want unsigned int
 	if (color.r > 255)
 		new_color.r = 255;
 	if (color.g > 255)

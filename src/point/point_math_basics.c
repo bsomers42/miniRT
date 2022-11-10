@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/26 15:03:26 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/11/03 14:47:51 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/11/10 11:06:25 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,15 @@ t_point	divide_point_with_float(t_point point, float t)
 	result.x = point.x / t;
 	result.y = point.y / t;
 	result.z = point.z / t;
+	return (result);
+}
+
+float	divide_float_with_point(float t, t_point point)
+{
+	float	result;
+
+	result = t / point.x;
+	result += t / point.y;
+	result += t / point.z;
 	return (result);
 }
