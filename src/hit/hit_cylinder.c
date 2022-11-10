@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/03 11:37:15 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/11/10 12:09:02 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/11/10 16:37:07 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,42 @@ int	hit_cap(t_cyl *cyl, t_ray ray, float t_min, float t_max, t_besthit *hit_rec,
 	return (0);
 }
 
+float	norm(t_point vec)
+{
+	float	res = 0;
+	res += pow(vec.x, 2);
+	res += pow(vec.y, 2);
+	res += pow(vec.z, 2);
+	return (sqrt(res));
+
+
+}
+
+float	calc_angle(t_point vec, t_cyl *cyl)
+{
+	float	angle;
+	float	multip;
+	float	gedot;
+
+	multip = fabs((norm(vec) * norm(cyl->dir)));
+	printf("multip: %f\n", multip);
+
+	gedot = dot_points(vec, cyl->dir);
+	printf("gedot: %f\n", gedot);
+
+	gedot = acos(gedot/multip);
+	printf("gedot acos: %f\n", gedot);
+	// float v[3] = {multip.x, multip.y, multip.z};
+
+	// angle = gedot / multip;
+	// printf("angle: %f\n", angle);
+
+	// angle = acosf(dot_points(vec, cyl->dir)) / multiply_points(normalize_point(vec), normalize_point(cyl->dir));
+
+	angle = gedot * 180 / M_PI;
+	return (angle);
+}
+
 t_point	rotate_axis_angle(t_point vec, t_cyl *cyl)
 {
 	float	angle;
@@ -153,8 +189,9 @@ t_point	rotate_axis_angle(t_point vec, t_cyl *cyl)
 	// t_point	p_vec;
 
 	axis = normalize_point(cyl->dir);
-	angle = acos( divide_float_with_point( dot_points(axis, new_point(0.0,1.0,0.0)) , multiply_points(axis, new_point(0.0, 1.0, 0.0))));
+	angle = calc_angle(new_point(0.0,1.0,0.0), cyl);// acos( divide_float_with_point( dot_points(axis, new_point(0.0,1.0,0.0)) , multiply_points(axis, new_point(0.0, 1.0, 0.0))));
 	// angle = acos(divide_float_with_point(dot_points(axis, new_point(0.0,1.0,0.0)) , (multiply_points(cyl->dir, new_point(0.0,1.0,0.0)))));
+	// angle = angle * 180 / M_PI;
 	printf("Angle: %f\n", angle);
 	if (angle == 0)
 		return (vec);
@@ -179,7 +216,7 @@ int	hit_tube(t_cyl *cyl, t_ray ray, float t_min, float t_max, t_besthit *hit_rec
 	float	d;
 	float	t0;
 	float	t1;
-	// t_ray	ray;
+	t_ray	rot_ray;
 	// float	t;
 	// float	p;
 	// t_ray	cyl_ray;
@@ -188,8 +225,8 @@ int	hit_tube(t_cyl *cyl, t_ray ray, float t_min, float t_max, t_besthit *hit_rec
 	t_point	n;
 	t_point	p;
 	// float height;
-	(void)t_min;
-	(void)t_max;
+	// (void)t_min;
+	// (void)t_max;
 
 	// a = ray.origin.x * ray.origin.x + ray.origin.z * ray.origin.z;
 	// if (a <= (cyl->diam / 2) * (cyl->diam / 2));
@@ -202,12 +239,12 @@ int	hit_tube(t_cyl *cyl, t_ray ray, float t_min, float t_max, t_besthit *hit_rec
 	// 	}
 	// }
 	//////cyl_ray.origin = substract_points(ray.origin, cyl->center);
-	// rot_ray.origin = substract_points(ray.origin, cyl->center);
-	// rot_ray.origin = rotate_axis_angle(rot_ray.origin, cyl);
-	// rot_ray.dir = rotate_axis_angle(ray.dir, cyl);
-	a = ray.dir.x * ray.dir.x + ray.dir.z * ray.dir.z;
-	b = 2*(ray.origin.x * ray.dir.x + ray.origin.z * ray.dir.z);
-	c = ray.origin.x * ray.origin.x + ray.origin.z * ray.origin.z - pow(cyl->diam/2, 2);//((cyl->diam / 2) * (cyl->diam / 2));
+	rot_ray.origin = substract_points(ray.origin, cyl->center);
+	rot_ray.origin = rotate_axis_angle(rot_ray.origin, cyl);
+	rot_ray.dir = rotate_axis_angle(ray.dir, cyl);
+	a = rot_ray.dir.x * rot_ray.dir.x + rot_ray.dir.z * rot_ray.dir.z;
+	b = 2*(rot_ray.origin.x * rot_ray.dir.x + rot_ray.origin.z * rot_ray.dir.z);
+	c = rot_ray.origin.x * rot_ray.origin.x + rot_ray.origin.z * rot_ray.origin.z - pow(cyl->diam/2.0, 2);//((cyl->diam / 2) * (cyl->diam / 2));
 	d = b*b - 4*a*c;
 	// printf("A");
 	if (d < 0)
@@ -218,8 +255,8 @@ int	hit_tube(t_cyl *cyl, t_ray ray, float t_min, float t_max, t_besthit *hit_rec
 	if ((t0 < t1 && t0 >= 0) || t1 < 0)
 		t1 = t0;
 	//return(x2);
-	// if ((x1 < t_min && x2 < t_min) || (x1 > t_max && x2 > t_max))
-	// 	return (0);
+	if ((t0 < t_min && t1 < t_min) || (t0 > t_max && t1 > t_max))
+		return (0);
 	if (t1 < 0)
 		return (0);
 	// printf("B");
@@ -286,7 +323,7 @@ int	hit_tube(t_cyl *cyl, t_ray ray, float t_min, float t_max, t_besthit *hit_rec
 		hit_rec->t = t1;
 		hit_rec->hit_point = p;//ray_at(ray, hit_rec->t);
 		hit_rec->center = add_points(cm, multiply_point_float(cyl->dir, x));//cyl->center;//Of moet dit x zijn?
-		if (dot_points(ray.dir, normalize_point(n)) < 0)
+		if (dot_points(rot_ray.dir, normalize_point(n)) < 0)
 		{
 			hit_rec->front_face = 1;
 			hit_rec->normal = normalize_point(n);
