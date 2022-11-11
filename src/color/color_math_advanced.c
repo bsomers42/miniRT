@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/26 14:52:45 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/11/10 11:03:05 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/11/11 15:34:36 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,6 @@ t_color	clamp_color(t_color color)
 {
 	t_color	new_color;
 
-	// if (color.r < 0)
-	// 	new_color.r = 0;
-	// if (color.g < 0)
-	// 	new_color.g = 0;
-	// if (color.b < 0)
-	// 	new_color.b = 0; //want unsigned int
 	if (color.r > 255)
 		new_color.r = 255;
 	if (color.g > 255)
@@ -41,12 +35,12 @@ t_color	clamp_color(t_color color)
 	return (new_color);
 }
 
-// t_color	normalize_color(t_color dir)
-// {
-// 	t_color	result;
+t_color	normalize_color(t_color dir)
+{
+	t_color	result;
 
-// 	result.r = dir.r / 255;
-// 	result.g = dir.g / 255;
-// 	result.b = dir.b / 255;
-// 	return (result);
-// }
+	result.r = dir.r / 255;
+	result.g = dir.g / 255;
+	result.b = dir.b / 255;
+	return (result);
+}
