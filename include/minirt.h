@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 15:11:47 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/11/10 14:18:26 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/11/11 13:16:03 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 # define MINIRT_H
 
 // # define ASPECT_RATIO (float)(16.0 / 9.0)
-# define WIDTH 1600
-# define HEIGHT 900
+# define WIDTH 400
+# define HEIGHT 225
 # define FOCAL_LENGTH 1.0
 
-# define AA 5 //anti-aliasing
+# define AA 1 //anti-aliasing
 # define THREADS 7
 # include "libft.h"
 # include "MLX42.h"
@@ -122,8 +122,14 @@ int		hit_anything(t_parse map_info, t_ray ray, t_besthit *hit_rec, float t_min, 
 
 t_color	antialias_color(t_parse map_info, int x, int y);
 t_color	point_ray_get_color(t_parse map_info, float i, float j);
-t_color	calculate_ambient_color(t_color color, t_amb *amb);
 t_point	ray_at(t_ray ray, float t);
+// t_color	point_ray_get_color(t_parse map_info, t_ray ray);
+
+t_point	calc_vertical(t_parse map_info, t_point backward);
+t_point	calc_horizontal(t_parse map_info, t_point backward);
+t_point	add_vertical_position(t_point dir, t_parse map_info, float j);
+t_point	add_horizontal_position(t_point dir, t_parse map_info, float i);
+t_point	calc_lower_left_corner(t_parse map_info);
 
 void	error_exit(char *message, int exit_code);
 void	write_exit(char *message, int exit_code);
