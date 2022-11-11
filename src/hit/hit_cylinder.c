@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/03 11:37:15 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/11/10 12:09:02 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/11/11 15:30:35 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,31 +143,31 @@ int	hit_cap(t_cyl *cyl, t_ray ray, float t_min, float t_max, t_besthit *hit_rec,
 	return (0);
 }
 
-t_point	rotate_axis_angle(t_point vec, t_cyl *cyl)
-{
-	float	angle;
-	// t_vector	d;
-	t_point	axis;
-	// t_point	r_vec;
-	// t_point	r1_vec;
-	// t_point	p_vec;
+// t_point	rotate_axis_angle(t_point vec, t_cyl *cyl)
+// {
+// 	float	angle;
+// 	// t_vector	d;
+// 	t_point	axis;
+// 	// t_point	r_vec;
+// 	// t_point	r1_vec;
+// 	// t_point	p_vec;
 
-	axis = normalize_point(cyl->dir);
-	angle = acos( divide_float_with_point( dot_points(axis, new_point(0.0,1.0,0.0)) , multiply_points(axis, new_point(0.0, 1.0, 0.0))));
-	// angle = acos(divide_float_with_point(dot_points(axis, new_point(0.0,1.0,0.0)) , (multiply_points(cyl->dir, new_point(0.0,1.0,0.0)))));
-	printf("Angle: %f\n", angle);
-	if (angle == 0)
-		return (vec);
-	// d = cross_points(axis, new_point(0.0,1.0,0.0));
-	// d = multiply_points(d, axis);
-	// r_vec = substract_points(new_point(0.0,1.0,0.0), d);
-	// r1_vec = add_points(multiply_point_float(r_vec, cosf(angle)), multiply_point_float(cross_points(axis, r_vec), sinf(angle)));
-	// p_vec = add_points(d, r1_vec);
-	vec = add_points( add_points( multiply_point_float(vec, cosf(angle)) , multiply_point_float(cross_points(axis, vec), sinf(angle))) , \
-	multiply_point_float( multiply_point_float(axis, dot_points(axis, vec)) , (1 - cosf(angle))));
+// 	axis = normalize_point(cyl->dir);
+// 	angle = acos( divide_float_with_point( dot_points(axis, new_point(0.0,1.0,0.0)) , multiply_points(axis, new_point(0.0, 1.0, 0.0))));
+// 	// angle = acos(divide_float_with_point(dot_points(axis, new_point(0.0,1.0,0.0)) , (multiply_points(cyl->dir, new_point(0.0,1.0,0.0)))));
+// 	printf("Angle: %f\n", angle);
+// 	if (angle == 0)
+// 		return (vec);
+// 	// d = cross_points(axis, new_point(0.0,1.0,0.0));
+// 	// d = multiply_points(d, axis);
+// 	// r_vec = substract_points(new_point(0.0,1.0,0.0), d);
+// 	// r1_vec = add_points(multiply_point_float(r_vec, cosf(angle)), multiply_point_float(cross_points(axis, r_vec), sinf(angle)));
+// 	// p_vec = add_points(d, r1_vec);
+// 	vec = add_points( add_points( multiply_point_float(vec, cosf(angle)) , multiply_point_float(cross_points(axis, vec), sinf(angle))) , \
+// 	multiply_point_float( multiply_point_float(axis, dot_points(axis, vec)) , (1 - cosf(angle))));
 
-	return (vec);
-}
+// 	return (vec);
+// }
 
 int	hit_tube(t_cyl *cyl, t_ray ray, float t_min, float t_max, t_besthit *hit_rec)
 {
