@@ -1,18 +1,18 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         ::::::::             #
-#    makefile                                           :+:    :+:             #
+#    Makefile                                           :+:    :+:             #
 #                                                      +:+                     #
 #    By: bsomers <bsomers@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/09/22 14:52:38 by bsomers       #+#    #+#                  #
-#    Updated: 2022/11/09 10:21:25 by bsomers       ########   odam.nl          #
+#    Updated: 2022/11/11 15:03:43 by bsomers       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minirt
 
-FLAGS = -Wall -Wextra -Werror -g -fsanitize=address
+FLAGS = -Wall -Wextra -Werror -g3# -fsanitize=address
 INCLUDE = -I include -I ./MLX42/include/MLX42 -I ./libft
 
 LIBFT_DIR = libft/

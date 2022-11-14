@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 14:54:42 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/11/09 12:45:10 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/11/14 11:32:27 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ int	main(int argc, char *argv[])
 
 	// atexit(func_atexit);
 
-	(void)argc;
+	if (argc != 2)
+		write_exit("Incorrect number of args! Usage: ./minirt <mapname>.rt\n", 1);
 	init_data(&data, argv);
 	init_infos(&infos, &data);
 	// printf("incoming ambient: ratio: %f, rgb: [%u, %u, %u]\n", data.parse->amb.ratio, data.parse->amb.r, data.parse->amb.g, data.parse->amb.b);

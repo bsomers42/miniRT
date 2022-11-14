@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 16:47:20 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/11/10 14:16:20 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/11/14 12:15:28 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,12 @@
 void	assign_ambient(char *str, int *amb_ptr, t_parse *parse)
 {
 	char	**split;
-	// char	**tmp;
 
 	split = ft_split(str, ' ');
 	malloc_check_arr(split);
+	if (check_num_of_elems(split, 3) != 0)
+		write_exit("Wrong information for ambient (A)\n", 1);
 	parse->amb.ratio = ft_stofl(split[1]);
-	// tmp = ft_split(split[2], ',');
-	// malloc_check_arr(tmp);
-	// parse->amb.r = ft_atoi(tmp[0]);
-	// parse->amb.g = ft_atoi(tmp[1]);
-	// parse->amb.b = ft_atoi(tmp[2]);
-	// check_color_value(parse->amb);
-	// free_array(tmp);
 	atoi_color(split[2], &parse->amb.color);
 	free_array(split);
 	*amb_ptr = *amb_ptr + 1;
@@ -40,12 +34,8 @@ void	assign_camera(char *str, int *cam_ptr, t_parse *parse)
 
 	split = ft_split(str, ' ');
 	malloc_check_arr(split);
-	// tmp = ft_split(split[1], ',');
-	// malloc_check_arr(tmp);
-	// parse->cam.origin.x = ft_stofl(tmp[0]);
-	// parse->cam.origin.y = ft_stofl(tmp[1]);
-	// parse->cam.origin.z = ft_stofl(tmp[2]);
-	// free_array(tmp);
+	if (check_num_of_elems(split, 4) != 0)
+		write_exit("Wrong information for camera (C)\n", 1);
 	stofl_center(split[1], &parse->cam.origin);
 	tmp = ft_split(split[2], ',');
 	malloc_check_arr(tmp);
@@ -64,16 +54,11 @@ void	assign_camera(char *str, int *cam_ptr, t_parse *parse)
 void	assign_light(char *str, int *light_ptr, t_parse *parse)
 {
 	char	**split;
-	// char	**tmp;
 
 	split = ft_split(str, ' ');
 	malloc_check_arr(split);
-	// tmp = ft_split(split[1], ',');
-	// malloc_check_arr(tmp);
-	// parse->light.origin.x = ft_stofl(tmp[0]);
-	// parse->light.origin.y = ft_stofl(tmp[1]);
-	// parse->light.origin.z = ft_stofl(tmp[2]);
-	// free_array(tmp);
+	if (check_num_of_elems(split, 3) != 0)
+		write_exit("Wrong information for light (L)\n", 1);
 	stofl_center(split[1], &parse->light.origin);
 	parse->light.bright = ft_stofl(split[2]);
 	free_array(split);
@@ -107,14 +92,11 @@ int	assign_to_struct(char **map_split_n, t_parse *parse)
 	parse->lst_cyl = NULL;
 	while (map_split_n[i] != NULL)
 	{
-		if (ft_strncmp(map_split_n[i], "A ", 2) == 0 || \
-		ft_strncmp(map_split_n[i], "a ", 2) == 0)
+		if (ft_strncmp(map_split_n[i], "A ", 2) == 0)
 			assign_ambient(map_split_n[i], &amb, parse);
-		else if (ft_strncmp(map_split_n[i], "C ", 2) == 0 || \
-		ft_strncmp(map_split_n[i], "c ", 2) == 0)
+		else if (ft_strncmp(map_split_n[i], "C ", 2) == 0)
 			assign_camera(map_split_n[i], &cam, parse);
-		else if (ft_strncmp(map_split_n[i], "L ", 2) == 0 || \
-		ft_strncmp(map_split_n[i], "l ", 2) == 0)
+		else if (ft_strncmp(map_split_n[i], "L ", 2) == 0)
 			assign_light(map_split_n[i], &light, parse);
 		else if (ft_strncmp(map_split_n[i], "sp ", 3) == 0)
 			ft_lstadd_sp(&(parse->lst_sphere), ft_split(map_split_n[i], ' '));
@@ -122,6 +104,8 @@ int	assign_to_struct(char **map_split_n, t_parse *parse)
 			ft_lstadd_pl(&(parse->lst_plane), ft_split(map_split_n[i], ' '));
 		else if (ft_strncmp(map_split_n[i], "cy ", 3) == 0)
 			ft_lstadd_cy(&(parse->lst_cyl), ft_split(map_split_n[i], ' '));
+		else if (ft_strncmp(map_split_n[i], "# ", 2) != 0)
+			write_exit("Incorrect map usage: unnecessary characters included\n", 1);
 		i++;
 	}
 	// test_lists(&(parse->lst_sphere));

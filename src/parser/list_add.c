@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/11 11:13:12 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/11/07 10:32:53 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/11/14 12:28:58 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@ void	atoi_color(char *line, t_color *color)
 
 	tmp = ft_split(line, ',');
 	malloc_check_arr(tmp);
+	if (check_num_of_elems(tmp, 3) != 0)
+		write_exit("Wrong information for color\n", 1);
+	if (ft_isnumber(tmp[0]) == 0 || ft_isnumber(tmp[1]) == 0 \
+	|| ft_isnumber(tmp[2]) == 0)
+		write_exit("Wrong information for color\n", 1);
 	color->r = ft_atoi(tmp[0]);
 	color->g = ft_atoi(tmp[1]);
 	color->b = ft_atoi(tmp[2]);
@@ -32,6 +37,8 @@ void	stofl_center(char *line, t_point *center)
 
 	tmp = ft_split(line, ',');
 	malloc_check_arr(tmp);
+	if (check_num_of_elems(tmp, 3) != 0)
+		write_exit("Wrong information for coordinates or vector\n", 1);
 	center->x = ft_stofl(tmp[0]);
 	center->y = ft_stofl(tmp[1]);
 	center->z = ft_stofl(tmp[2]);
@@ -43,6 +50,8 @@ void	ft_lstadd_sp(t_list **lst, char **line)
 	t_sphere	sp;
 	t_sphere	*sp_void;
 
+	if (check_num_of_elems(line, 4) != 0)
+		write_exit("Wrong information for sphere\n", 1);
 	stofl_center(line[1], &sp.center);
 	sp.diam = ft_stofl(line[2]);
 	atoi_color(line[3], &sp.color);
@@ -60,6 +69,8 @@ void	ft_lstadd_pl(t_list **lst, char **line)
 	t_plane	*pl_void;
 	char	**tmp;
 
+	if (check_num_of_elems(line, 4) != 0)
+		write_exit("Wrong information for plane\n", 1);
 	stofl_center(line[1], &pl.center);
 	tmp = ft_split(line[2], ',');
 	malloc_check_arr(tmp);
@@ -83,6 +94,8 @@ void	ft_lstadd_cy(t_list **lst, char **line)
 	t_cyl	*cy_void;
 	char	**tmp;
 
+	if (check_num_of_elems(line, 6) != 0)
+		write_exit("Wrong information for cylinder\n", 1);
 	stofl_center(line[1], &cy.center);
 	tmp = ft_split(line[2], ',');
 	malloc_check_arr(tmp);

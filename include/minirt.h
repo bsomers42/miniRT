@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 15:11:47 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/11/10 14:18:26 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/11/14 13:59:36 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # define HEIGHT 900
 # define FOCAL_LENGTH 1.0
 
-# define AA 5 //anti-aliasing
+# define AA 1 //anti-aliasing
 # define THREADS 7
 # include "libft.h"
 # include "MLX42.h"
@@ -114,6 +114,7 @@ void	malloc_check_arr(char **str);
 void	malloc_check_str(char *str);
 void	check_vec_value(t_point vec);
 void	check_color_value(t_color *color);
+int		check_num_of_elems(char **array, int num);
 
 int		hit_any_sphere(t_parse map_info, t_ray ray, t_besthit *hit_rec, float t_min, float t_max);
 int		hit_any_plane(t_parse map_info, t_ray ray, t_besthit *hit_rec, float t_min, float t_max);
