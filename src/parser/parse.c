@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 16:47:20 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/11/15 11:13:24 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/11/15 15:34:30 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	assign_ambient(char *str, int *amb_ptr, t_parse *parse)
 	malloc_check_arr(split);
 	if (check_num_of_elems(split, 3) != 0)
 		write_exit("Wrong information for ambient (A)\n", 1);
+	// check_float_value(split[1]);
 	parse->amb.ratio = ft_stofl(split[1]);
 	if (parse->amb.ratio < 0 || parse->amb.ratio > 1)
 		write_exit("Wrong ambient lighting ratio. [0.0,1.0]\n", 1);
@@ -43,6 +44,9 @@ void	assign_camera(char *str, int *cam_ptr, t_parse *parse)
 	malloc_check_arr(tmp);
 	if (check_num_of_elems(tmp, 3) != 0)
 		write_exit("Wrong vector for camera\n", 1);
+	// check_float_value(tmp[0]);
+	// check_float_value(tmp[1]);
+	// check_float_value(tmp[2]);
 	parse->cam.dir.x = ft_stofl(tmp[0]);
 	parse->cam.dir.y = ft_stofl(tmp[1]);
 	parse->cam.dir.z = ft_stofl(tmp[2]);
@@ -64,6 +68,7 @@ void	assign_light(char *str, int *light_ptr, t_parse *parse)
 	if (check_num_of_elems(split, 3) != 0)
 		write_exit("Wrong information for light (L)\n", 1);
 	stofl_center(split[1], &parse->light.origin);
+	// check_float_value(split[2]);
 	parse->light.bright = ft_stofl(split[2]);
 	if (parse->light.bright < 0 || parse->light.bright > 1)
 		write_exit("Wrong light brightness ratio. [0.0,1.0]\n", 1);

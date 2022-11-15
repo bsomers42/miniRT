@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/21 14:40:13 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/11/14 14:53:04 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/11/15 16:21:34 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	check_extension_permission(char *str)
 	char *tmp;
 
 	tmp = ft_strrev(str);
+	if (tmp == NULL)
+		error_exit("malloc", 1);
 	if (ft_strncmp(tmp, "tr.", 3) != 0)
 		write_exit("Incorrect map extension\n", 1);
 	ft_strrev(str);
