@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/21 14:40:13 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/11/07 10:40:36 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/11/14 14:53:04 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,10 @@ char	*get_map(char *argv[])
 	int		fd;
 	char	*str;
 	char	*strdef;
+	int		count;
 
 	strdef = NULL;
+	count = 0;
 	check_extension_permission(argv[1]);
 	fd = open(argv[1], O_RDONLY);
 	if (fd < 0)
@@ -45,6 +47,9 @@ char	*get_map(char *argv[])
 			strdef = ft_strjoin_fr(strdef, str);
 		malloc_check_str(strdef);
 		free(str);
+		count++;
 	}
+	if (count == 0)
+		write_exit("Empty map\n", 1);
 	return (strdef);
 }

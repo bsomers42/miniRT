@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/11 11:13:12 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/11/14 12:28:58 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/11/14 14:44:23 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ void	ft_lstadd_pl(t_list **lst, char **line)
 	stofl_center(line[1], &pl.center);
 	tmp = ft_split(line[2], ',');
 	malloc_check_arr(tmp);
+	if (check_num_of_elems(tmp, 3) != 0)
+		write_exit("Wrong vector for plane\n", 1);
 	pl.dir.x = ft_stofl(tmp[0]);
 	pl.dir.y = ft_stofl(tmp[1]);
 	pl.dir.z = ft_stofl(tmp[2]);
@@ -99,6 +101,8 @@ void	ft_lstadd_cy(t_list **lst, char **line)
 	stofl_center(line[1], &cy.center);
 	tmp = ft_split(line[2], ',');
 	malloc_check_arr(tmp);
+	if (check_num_of_elems(tmp, 3) != 0)
+		write_exit("Wrong vector for cylinder\n", 1);
 	cy.dir.x = ft_stofl(tmp[0]);
 	cy.dir.y = ft_stofl(tmp[1]);
 	cy.dir.z = ft_stofl(tmp[2]);

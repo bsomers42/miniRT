@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 16:47:20 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/11/14 12:15:28 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/11/15 11:13:24 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void	assign_ambient(char *str, int *amb_ptr, t_parse *parse)
 	if (check_num_of_elems(split, 3) != 0)
 		write_exit("Wrong information for ambient (A)\n", 1);
 	parse->amb.ratio = ft_stofl(split[1]);
+	if (parse->amb.ratio < 0 || parse->amb.ratio > 1)
+		write_exit("Wrong ambient lighting ratio. [0.0,1.0]\n", 1);
 	atoi_color(split[2], &parse->amb.color);
 	free_array(split);
 	*amb_ptr = *amb_ptr + 1;
@@ -39,6 +41,8 @@ void	assign_camera(char *str, int *cam_ptr, t_parse *parse)
 	stofl_center(split[1], &parse->cam.origin);
 	tmp = ft_split(split[2], ',');
 	malloc_check_arr(tmp);
+	if (check_num_of_elems(tmp, 3) != 0)
+		write_exit("Wrong vector for camera\n", 1);
 	parse->cam.dir.x = ft_stofl(tmp[0]);
 	parse->cam.dir.y = ft_stofl(tmp[1]);
 	parse->cam.dir.z = ft_stofl(tmp[2]);
@@ -61,6 +65,8 @@ void	assign_light(char *str, int *light_ptr, t_parse *parse)
 		write_exit("Wrong information for light (L)\n", 1);
 	stofl_center(split[1], &parse->light.origin);
 	parse->light.bright = ft_stofl(split[2]);
+	if (parse->light.bright < 0 || parse->light.bright > 1)
+		write_exit("Wrong light brightness ratio. [0.0,1.0]\n", 1);
 	free_array(split);
 	*light_ptr = *light_ptr + 1;
 }
@@ -105,12 +111,14 @@ int	assign_to_struct(char **map_split_n, t_parse *parse)
 		else if (ft_strncmp(map_split_n[i], "cy ", 3) == 0)
 			ft_lstadd_cy(&(parse->lst_cyl), ft_split(map_split_n[i], ' '));
 		else if (ft_strncmp(map_split_n[i], "# ", 2) != 0)
-			write_exit("Incorrect map usage: unnecessary characters included\n", 1);
+			write_exit("Unnecessary characters included or information missing\n", 1);
 		i++;
 	}
 	// test_lists(&(parse->lst_sphere));
-	if (cam > 1 || cam == 0 || amb > 1 || amb == 0 || light == 0 || light > 1)
-		write_exit("Incorrect ambient/light/camera!\n", 1);
+	if (cam == 0 || amb == 0 || light == 0)
+		write_exit("Missing ambient/light/camera!\n", 1);
+	if (cam > 1 || amb > 1 || light > 1)
+		write_exit("Use only one ambient, one light and one camera!\n", 1);
 	return (0);
 }
 
