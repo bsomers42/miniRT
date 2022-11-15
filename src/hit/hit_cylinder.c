@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/03 11:37:15 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/11/14 14:06:17 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/11/15 16:58:13 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,8 +112,8 @@ float	calc_angle(t_point upaxis, t_cyl *cyl)
 
 	multip = fabs((norm(upaxis) * norm(cyl->dir)));
 	dotproduct = dot_points(upaxis, cyl->dir);
-	dotproduct = acos(dotproduct/multip);
-	angle = dotproduct * 180 / M_PI;
+	angle = acos(dotproduct/multip);
+	// angle = dotproduct * 180 / M_PI;
 	return (angle);
 }
 
@@ -126,6 +126,22 @@ t_point	rotate_axis_angle(t_point vec, t_point axis, float angle)
 	vec = add_points(vec, multiply_point_float( multiply_point_float(axis, dot_points(axis, vec)), (1 - cos(angle))));
 	return (vec);
 }
+
+// float	length(t_point v)
+// {
+// 	return (sqrt(v.x * v.x + v.y * v.y + v.z * v.z));
+// }
+
+// t_point	get_normal(t_cyl *cyl, t_point p)
+// {
+// 	float	x;
+// 	t_point	ret;
+
+// 	x = dot_points(substract_points(p, cyl->center), cyl->dir);
+// 	ret = substract_points(p, add_points(multiply_point_float(cyl->dir, x) , cyl->center));
+// 	ret = divide_point_with_float(ret, length(ret));
+// 	return (ret);
+// }
 
 int	hit_tube(t_cyl *cyl, t_ray ray, float t_min, float t_max, t_besthit *hit_rec)
 {
@@ -141,8 +157,8 @@ int	hit_tube(t_cyl *cyl, t_ray ray, float t_min, float t_max, t_besthit *hit_rec
 	t_point	p;
 	t_point	axis;
 	float	angle;
-	t_point	dir_a;
-	t_point	bottom_center;
+	// t_point	dir_a;
+	// t_point	bottom_center;
 	t_ray	tmp;
 
 
@@ -150,8 +166,10 @@ int	hit_tube(t_cyl *cyl, t_ray ray, float t_min, float t_max, t_besthit *hit_rec
 	angle = calc_angle(new_point(0,1,0), cyl);
 	axis = cross_points(cyl->dir, new_point(0,1,0));
 	//rotate_axis_angle executes rodrigues calculation
+
 	rot_ray.origin = rotate_axis_angle(substract_points(ray.origin, cyl->center), axis, angle);
 	rot_ray.dir = rotate_axis_angle(ray.dir, axis, angle);
+	rot_ray.dir = normalize_point(rot_ray.dir);
 	//Start calculating intersection with cyl
 	a = rot_ray.dir.x * rot_ray.dir.x + rot_ray.dir.z * rot_ray.dir.z;
 	b = 2*(rot_ray.origin.x * rot_ray.dir.x + rot_ray.origin.z * rot_ray.dir.z);
@@ -170,24 +188,23 @@ int	hit_tube(t_cyl *cyl, t_ray ray, float t_min, float t_max, t_besthit *hit_rec
 
 	tmp.dir = cyl->dir;
 	tmp.origin = cyl->center;
-	// if (cyl->dir.x == 0 && cyl->dir.y == 1 && cyl->dir.z == 0)
-	// 	p = ray_at(ray, t1);
-	// else
-	p = ray_at(rot_ray, t1);
-	bottom_center = ray_at(tmp, (cyl->height / 2* -1 ));
-	dir_a = substract_points(p, bottom_center);
-	float	x;
-	x = dot_points(normalize_point(dir_a), normalize_point(cyl->dir));
-	n = substract_points(p, add_points((multiply_point_float(normalize_point(cyl->dir), x)), bottom_center));
-	if (p.y < bottom_center.y  || p.y > (bottom_center.y + cyl->height))
+	if (cyl->dir.x == 0 && cyl->dir.y == 1 && cyl->dir.z == 0)
+		p = ray_at(ray, t0);
+	else
+		p = ray_at(rot_ray, t1);
+	// bottom_center = ray_at(tmp, (cyl->height / 2* -1 ));
+	// dir_a = substract_points(p, bottom_center);
+	// float	x;
+	// x = dot_points(normalize_point(dir_a), normalize_point(cyl->dir));
+	// n = substract_points(p, add_points((multiply_point_float(normalize_point(cyl->dir), x)), bottom_center));
+	//Het aan en uitzetten van bovenstaande heeft invloed op de shading/belichting!
+	n = cyl->dir;
+	if (p.y < (cyl->center.y - (cyl->height /2))  || p.y > (cyl->center.y + cyl->height / 2))
 		return (0);
-	// if (p.y < (cyl->center.y - cyl->height)  || p.y > (cyl->center.y + cyl->height))
-	// 	return (0);
-	printf("HIT!\n");
 	hit_rec->color = cyl->color;
 		hit_rec->t = t1;
 		hit_rec->hit_point = p;
-		hit_rec->center = add_points(bottom_center, multiply_point_float(cyl->dir, x));
+		hit_rec->center = cyl->center;
 		if (dot_points(rot_ray.dir, normalize_point(n)) < 0)
 		{
 			hit_rec->front_face = 1;
