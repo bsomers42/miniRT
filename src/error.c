@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/12 15:10:32 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/19 18:50:43 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/11/14 11:33:07 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	write_exit(char *message, int exit_code)
 	if (exit_num == NULL)
 		error_exit("malloc", 1);
 	free(exit_num);
-	ft_putstr_fd("miniRT: ", STDERR_FILENO);
+	ft_putstr_fd("Error\nminiRT: ", STDERR_FILENO);
 	ft_putstr_fd(message, STDERR_FILENO);
 	exit(exit_code);
 }

@@ -6,7 +6,11 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 15:11:47 by jaberkro      #+#    #+#                 */
+<<<<<<< HEAD
 /*   Updated: 2022/11/11 13:16:03 by jaberkro      ########   odam.nl         */
+=======
+/*   Updated: 2022/11/14 13:59:36 by bsomers       ########   odam.nl         */
+>>>>>>> 43768372ddd78afd68af176263b6f76d9bf7b36c
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +118,7 @@ void	malloc_check_arr(char **str);
 void	malloc_check_str(char *str);
 void	check_vec_value(t_point vec);
 void	check_color_value(t_color *color);
+int		check_num_of_elems(char **array, int num);
 
 int		hit_any_sphere(t_parse map_info, t_ray ray, t_besthit *hit_rec, float t_min, float t_max);
 int		hit_any_plane(t_parse map_info, t_ray ray, t_besthit *hit_rec, float t_min, float t_max);
