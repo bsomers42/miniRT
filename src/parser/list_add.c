@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/11 11:13:12 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/11/15 15:34:52 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/11/17 14:50:48 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ void	ft_lstadd_pl(t_list **lst, char **line)
 	pl.dir.y = ft_stofl(tmp[1]);
 	pl.dir.z = ft_stofl(tmp[2]);
 	check_vec_value(pl.dir);
+	pl.dir = normalize_point(pl.dir);
 	free_array(tmp);
 	atoi_color(line[3], &pl.color);
 	pl_void = malloc(sizeof(t_plane));
@@ -110,6 +111,7 @@ void	ft_lstadd_cy(t_list **lst, char **line)
 	cy.dir.y = ft_stofl(tmp[1]);
 	cy.dir.z = ft_stofl(tmp[2]);
 	check_vec_value(cy.dir);
+	cy.dir = normalize_point(cy.dir);
 	free_array(tmp);
 	cy.diam = ft_stofl(line[3]);
 	cy.height = ft_stofl(line[4]);

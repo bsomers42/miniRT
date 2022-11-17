@@ -6,7 +6,7 @@
 #    By: bsomers <bsomers@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/09/22 14:52:38 by bsomers       #+#    #+#                  #
-#    Updated: 2022/11/11 15:03:43 by bsomers       ########   odam.nl          #
+#    Updated: 2022/11/16 12:56:59 by jaberkro      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,11 +31,11 @@ SRC = main.c \
 	parser/get_next_line.c \
 	parser/get_map.c \
 	parser/checks.c \
+	tracer/antialias_color.c \
+	tracer/point_ray_get_color.c \
+	tracer/point_ray_utils.c \
+	tracer/put_color.c \
 	color/new_color.c \
-	color/antialias_color.c \
-	color/point_ray_get_color.c \
-	color/calculate_ambient_color.c \
-	color/put_color.c \
 	color/color_math_basics.c \
 	color/color_math_advanced.c \
 	point/new_point.c \
