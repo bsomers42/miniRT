@@ -6,47 +6,11 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/11 11:13:12 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/11/17 14:50:48 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/11/17 17:14:35 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-#include <stdio.h> //wegggg
-
-void	atoi_color(char *line, t_color *color)
-{
-	char	**tmp;
-
-	tmp = ft_split(line, ',');
-	malloc_check_arr(tmp);
-	if (check_num_of_elems(tmp, 3) != 0)
-		write_exit("Wrong information for color\n", 1);
-	if (ft_isnumber(tmp[0]) == 0 || ft_isnumber(tmp[1]) == 0 \
-	|| ft_isnumber(tmp[2]) == 0)
-		write_exit("Wrong information for color\n", 1);
-	color->r = ft_atoi(tmp[0]);
-	color->g = ft_atoi(tmp[1]);
-	color->b = ft_atoi(tmp[2]);
-	check_color_value(color);
-	free_array(tmp);
-}
-
-void	stofl_center(char *line, t_point *center)
-{
-	char		**tmp;
-
-	tmp = ft_split(line, ',');
-	malloc_check_arr(tmp);
-	if (check_num_of_elems(tmp, 3) != 0)
-		write_exit("Wrong information for coordinates or vector\n", 1);
-	// check_float_value(tmp[0]);
-	// check_float_value(tmp[1]);
-	// check_float_value(tmp[2]);
-	center->x = ft_stofl(tmp[0]);
-	center->y = ft_stofl(tmp[1]);
-	center->z = ft_stofl(tmp[2]);
-	free_array(tmp);
-}
 
 void	ft_lstadd_sp(t_list **lst, char **line)
 {
@@ -70,21 +34,11 @@ void	ft_lstadd_pl(t_list **lst, char **line)
 {
 	t_plane	pl;
 	t_plane	*pl_void;
-	char	**tmp;
 
 	if (check_num_of_elems(line, 4) != 0)
 		write_exit("Wrong information for plane\n", 1);
 	stofl_center(line[1], &pl.center);
-	tmp = ft_split(line[2], ',');
-	malloc_check_arr(tmp);
-	if (check_num_of_elems(tmp, 3) != 0)
-		write_exit("Wrong vector for plane\n", 1);
-	pl.dir.x = ft_stofl(tmp[0]);
-	pl.dir.y = ft_stofl(tmp[1]);
-	pl.dir.z = ft_stofl(tmp[2]);
-	check_vec_value(pl.dir);
-	pl.dir = normalize_point(pl.dir);
-	free_array(tmp);
+	stofl_vec(line[2], &pl.dir);
 	atoi_color(line[3], &pl.color);
 	pl_void = malloc(sizeof(t_plane));
 	if (pl_void == NULL)
@@ -98,22 +52,14 @@ void	ft_lstadd_cy(t_list **lst, char **line)
 {
 	t_cyl	cy;
 	t_cyl	*cy_void;
-	char	**tmp;
 
 	if (check_num_of_elems(line, 6) != 0)
 		write_exit("Wrong information for cylinder\n", 1);
 	stofl_center(line[1], &cy.center);
-	tmp = ft_split(line[2], ',');
-	malloc_check_arr(tmp);
-	if (check_num_of_elems(tmp, 3) != 0)
-		write_exit("Wrong vector for cylinder\n", 1);
-	cy.dir.x = ft_stofl(tmp[0]);
-	cy.dir.y = ft_stofl(tmp[1]);
-	cy.dir.z = ft_stofl(tmp[2]);
-	check_vec_value(cy.dir);
-	cy.dir = normalize_point(cy.dir);
-	free_array(tmp);
-	cy.diam = ft_stofl(line[3]);
+	stofl_vec(line[2], &cy.dir);
+	check_float_value(line[3]);
+	cy.radius = ft_stofl(line[3]) * 0.5;
+	check_float_value(line[4]);
 	cy.height = ft_stofl(line[4]);
 	atoi_color(line[5], &cy.color);
 	cy_void = malloc(sizeof(t_cyl));

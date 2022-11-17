@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/08/12 15:10:32 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/11/14 11:33:07 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/11/17 16:33:30 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,18 +50,4 @@ void	error_exit(char *message, int exit_code)
 	ft_putstr_fd("miniRT: ", STDOUT_FILENO);
 	perror(message);
 	exit(exit_code);
-}
-
-/**
- * @brief prints error message and returns the exit code to use with exit later
- * 
- * @param message 	the message to print about the errno
- * @param return_code the return_code to return
- * @return int 		the return_code to return
- */
-int	error_return(char *message, int return_code)
-{
-	ft_putstr_fd("miniRT: ", STDOUT_FILENO);
-	perror(message);
-	return (return_code);
 }
