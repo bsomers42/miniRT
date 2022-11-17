@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 13:26:28 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/11/11 14:32:06 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/11/17 14:34:09 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_color	calculate_shadow_shade(t_parse map_info, t_besthit record)
 	float		light_len;
 	t_besthit	not_needed;
 	t_color		color;
-	double		cosangle;
+	double		costheta;
 
 	light_ray.origin = record.hit_point;
 	light_ray.dir = substract_points(map_info.light.origin, light_ray.origin); //temporary this is actually lightray length
@@ -51,12 +51,12 @@ t_color	calculate_shadow_shade(t_parse map_info, t_besthit record)
 		color.b = ((float)record.color.b / 255.0) / (float)M_PI * ((float)(float)map_info.light.bright + ((float)map_info.amb.color.b * map_info.amb.ratio / 255.0)) * 255.0;
 		return (color);
 	}	
-	cosangle = (float)dot_points(record.normal, light_ray.dir);
-	if (cosangle < 0.0)
-		cosangle = 0.0;
-	color.r = (((float)record.color.r / 255.0) / (float)M_PI * ((float)(float)map_info.light.bright + ((float)cosangle + (float)map_info.amb.color.r * map_info.amb.ratio / 255.0))) * 255.0;
-	color.g = (((float)record.color.g / 255.0) / (float)M_PI * ((float)(float)map_info.light.bright + ((float)cosangle + (float)map_info.amb.color.g * map_info.amb.ratio / 255.0))) * 255.0;
-	color.b = (((float)record.color.b / 255.0) / (float)M_PI * ((float)(float)map_info.light.bright + ((double)cosangle + (double)map_info.amb.color.b * map_info.amb.ratio / 255.0))) * 255.0;
+	costheta = (float)dot_points(record.normal, light_ray.dir);
+	if (costheta < 0.0)
+		costheta = 0.0;
+	color.r = (((float)record.color.r / 255.0) / (float)M_PI * ((float)(float)map_info.light.bright + ((float)costheta + (float)map_info.amb.color.r * map_info.amb.ratio / 255.0))) * 255.0;
+	color.g = (((float)record.color.g / 255.0) / (float)M_PI * ((float)(float)map_info.light.bright + ((float)costheta + (float)map_info.amb.color.g * map_info.amb.ratio / 255.0))) * 255.0;
+	color.b = (((float)record.color.b / 255.0) / (float)M_PI * ((float)(float)map_info.light.bright + ((double)costheta + (double)map_info.amb.color.b * map_info.amb.ratio / 255.0))) * 255.0;
 	return (color);
 }
 
@@ -104,6 +104,7 @@ t_color	point_ray_get_color(t_parse map_info, float i, float j)
 	ray.dir = add_horizontal_position(ray.dir, map_info, i);
 	ray.dir = add_vertical_position(ray.dir, map_info, j);
 	ray.dir = substract_points(ray.dir, ray.origin);
+	ray.dir = normalize_point(ray.dir);
 	color = get_ray_color(map_info, ray);
 	return (color);
 }
