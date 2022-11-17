@@ -6,11 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 15:11:47 by jaberkro      #+#    #+#                 */
-<<<<<<< HEAD
-/*   Updated: 2022/11/11 13:16:03 by jaberkro      ########   odam.nl         */
-=======
-/*   Updated: 2022/11/14 13:59:36 by bsomers       ########   odam.nl         */
->>>>>>> 43768372ddd78afd68af176263b6f76d9bf7b36c
+/*   Updated: 2022/11/16 15:57:25 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +14,8 @@
 # define MINIRT_H
 
 // # define ASPECT_RATIO (float)(16.0 / 9.0)
-# define WIDTH 400
-# define HEIGHT 225
+# define WIDTH 800
+# define HEIGHT 450
 # define FOCAL_LENGTH 1.0
 
 # define AA 1 //anti-aliasing
