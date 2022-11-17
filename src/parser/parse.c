@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 16:47:20 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/11/15 15:34:30 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/11/17 14:51:05 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	assign_camera(char *str, int *cam_ptr, t_parse *parse)
 	parse->cam.dir.y = ft_stofl(tmp[1]);
 	parse->cam.dir.z = ft_stofl(tmp[2]);
 	check_vec_value(parse->cam.dir);
+	parse->cam.dir = normalize_point(parse->cam.dir);
 	free_array(tmp);
 	parse->cam.fov = ft_atoi(split[3]);
 	if (parse->cam.fov <= 0 || parse->cam.fov > 180)
