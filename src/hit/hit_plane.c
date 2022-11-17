@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/02 16:07:31 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/11/07 12:46:38 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/11/17 11:20:43 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	hit_plane(t_plane *plane, t_ray ray, float t_min, float t_max, t_besthit *hi
 	// denom = dot_points(n, normalize_point(ray.dir));
 	denom = dot_points(n, ray.dir);
 
-	if (fabs(denom) > t_min)
+	if (fabs(denom) > 0)
 	{
 		polo = substract_points(plane->center, ray.origin);
  		// polo = multiply_points(polo, n);

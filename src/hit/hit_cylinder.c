@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/03 11:37:15 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/11/15 16:58:13 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/11/17 11:20:42 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	hit_cap(t_cyl *cyl, t_ray ray, float t_min, float t_max, t_besthit *hit_rec,
 
 	n = normalize_point(cyl->dir);
 	denom = dot_points(n, ray.dir);
-	if (fabs(denom) > t_min) //Jorien wilt hier suuuuuuupergraag een 0 
+	if (fabs(denom) > 0) //Jorien wilt hier suuuuuuupergraag een 0 
 	{
 		polo = substract_points(cap_center, ray.origin);
 		t = (float)dot_points(polo, n) / (float)denom;
@@ -121,27 +121,13 @@ t_point	rotate_axis_angle(t_point vec, t_point axis, float angle)
 {
 	if (angle == 0)
 		return (vec);
+	t_point vec_orig;
+	vec_orig = vec;
 	vec = multiply_point_float(vec, cos(angle));
-	vec = add_points(vec, multiply_point_float(cross_points(axis, vec), sin(angle)));
-	vec = add_points(vec, multiply_point_float( multiply_point_float(axis, dot_points(axis, vec)), (1 - cos(angle))));
+	vec = add_points(vec, multiply_point_float(cross_points(axis, vec_orig), sin(angle)));
+	vec = add_points(vec, multiply_point_float( multiply_point_float(axis, dot_points(axis, vec_orig)), (1 - cos(angle))));
 	return (vec);
 }
-
-// float	length(t_point v)
-// {
-// 	return (sqrt(v.x * v.x + v.y * v.y + v.z * v.z));
-// }
-
-// t_point	get_normal(t_cyl *cyl, t_point p)
-// {
-// 	float	x;
-// 	t_point	ret;
-
-// 	x = dot_points(substract_points(p, cyl->center), cyl->dir);
-// 	ret = substract_points(p, add_points(multiply_point_float(cyl->dir, x) , cyl->center));
-// 	ret = divide_point_with_float(ret, length(ret));
-// 	return (ret);
-// }
 
 int	hit_tube(t_cyl *cyl, t_ray ray, float t_min, float t_max, t_besthit *hit_rec)
 {
@@ -157,8 +143,8 @@ int	hit_tube(t_cyl *cyl, t_ray ray, float t_min, float t_max, t_besthit *hit_rec
 	t_point	p;
 	t_point	axis;
 	float	angle;
-	// t_point	dir_a;
-	// t_point	bottom_center;
+	t_point	dir_a;
+	t_point	bottom_center;
 	t_ray	tmp;
 
 
@@ -173,48 +159,48 @@ int	hit_tube(t_cyl *cyl, t_ray ray, float t_min, float t_max, t_besthit *hit_rec
 	//Start calculating intersection with cyl
 	a = rot_ray.dir.x * rot_ray.dir.x + rot_ray.dir.z * rot_ray.dir.z;
 	b = 2*(rot_ray.origin.x * rot_ray.dir.x + rot_ray.origin.z * rot_ray.dir.z);
-	c = rot_ray.origin.x * rot_ray.origin.x + rot_ray.origin.z * rot_ray.origin.z - pow(cyl->diam/2.0, 2);
+	c = rot_ray.origin.x * rot_ray.origin.x + rot_ray.origin.z * rot_ray.origin.z - pow(cyl->diam/2.0, 2); //dit laatste is bij ons niet 1 omdat we zowel hoogte + diam hebben
 	d = b*b - 4*a*c;
 	if (d < 0)
 		return (0);
 	t0 = (-b+sqrt(d))/(2*a);
 	t1 = (-b-sqrt(d))/(2*a);
-	if ((t0 < t1 && t0 >= 0) || t1 < 0)
-		t1 = t0;
 	if ((t0 < t_min && t1 < t_min) || (t0 > t_max && t1 > t_max))
 		return (0);
-	if (t1 < 0)
-		return (0);
+	if ((t0 < t1 && t0 > t_min) || t1 < t_min)
+		t1 = t0;
+	// if (t1 < 0)
+	// 	return (0);
 
 	tmp.dir = cyl->dir;
 	tmp.origin = cyl->center;
-	if (cyl->dir.x == 0 && cyl->dir.y == 1 && cyl->dir.z == 0)
-		p = ray_at(ray, t0);
-	else
+	// if (cyl->dir.x == 0 && cyl->dir.y == 1 && cyl->dir.z == 0)
+	// 	p = ray_at(ray, t1);
+	// else
 		p = ray_at(rot_ray, t1);
-	// bottom_center = ray_at(tmp, (cyl->height / 2* -1 ));
-	// dir_a = substract_points(p, bottom_center);
-	// float	x;
-	// x = dot_points(normalize_point(dir_a), normalize_point(cyl->dir));
-	// n = substract_points(p, add_points((multiply_point_float(normalize_point(cyl->dir), x)), bottom_center));
+	bottom_center = ray_at(tmp, (cyl->height / 2* -1 ));
+	dir_a = substract_points(p, bottom_center);
+	float	x;
+	x = dot_points(/*normalize_point*/(dir_a), normalize_point(cyl->dir));
+	n = substract_points(p, add_points((multiply_point_float(normalize_point(cyl->dir), x)), bottom_center));
 	//Het aan en uitzetten van bovenstaande heeft invloed op de shading/belichting!
-	n = cyl->dir;
+	// n = cyl->dir;
 	if (p.y < (cyl->center.y - (cyl->height /2))  || p.y > (cyl->center.y + cyl->height / 2))
 		return (0);
 	hit_rec->color = cyl->color;
-		hit_rec->t = t1;
-		hit_rec->hit_point = p;
-		hit_rec->center = cyl->center;
-		if (dot_points(rot_ray.dir, normalize_point(n)) < 0)
-		{
-			hit_rec->front_face = 1;
-			hit_rec->normal = rotate_axis_angle(normalize_point(n), axis, angle * -1);
-		}
-		else
-		{
-			hit_rec->front_face = 0;
-			hit_rec->normal = rotate_axis_angle(normalize_point(multiply_point_float(normalize_point(n), -1.0)), axis, angle * -1);
-		}
+	hit_rec->t = t1;
+	hit_rec->hit_point = p;
+	hit_rec->center = cyl->center;
+	if (dot_points(rot_ray.dir, normalize_point(n)) < 0) //rot_ray of ray maakt niet uit
+	{
+		hit_rec->front_face = 1;
+		hit_rec->normal = rotate_axis_angle(normalize_point(n), axis, angle * -1);
+	}
+	else
+	{
+		hit_rec->front_face = 0;
+		hit_rec->normal = rotate_axis_angle(normalize_point(multiply_point_float(normalize_point(n), -1.0)), axis, angle * -1);
+	}
 	return (1);
 }
 
