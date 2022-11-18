@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 14:54:42 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/11/17 17:19:45 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/11/18 16:45:51 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "MLX42.h"
 #include "threads.h"
 #include <stdlib.h>
-#include <stdio.h>	//remove in end maybe
+// #include <stdio.h>	//remove in end maybe
 #include <pthread.h>
 #include "libft.h"
 
@@ -23,22 +23,14 @@ void	minirt_keyhook(mlx_key_data_t keydata, void *ptr)
 	t_threadinfo	*info;
 
 	info = (t_threadinfo *)ptr;
-	// (void)mlx_str; //variable set but not used // jma
-	//free things before exiting
 	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
 		exit(EXIT_SUCCESS);
-	// if (keydata.key == MLX_KEY_UP && keydata.action == MLX_PRESS)
-	// {
-	// 	printf("hoi\n");
-	// 	info->data->parse->cam.fov -= 10; //creates crash
-	// }
 }
 
 void	minirt_close(void *ptr)
 {
 	(void)ptr;
-	//free things
-	exit(EXIT_SUCCESS); //Bespreken met Jorien!! 
+	exit(EXIT_SUCCESS);
 }
 
 void	draw_loading_bar(void)
@@ -66,7 +58,6 @@ int	main(int argc, char *argv[])
 	t_threadinfo	*infos;
 
 	// atexit(func_atexit);
-
 	if (argc != 2)
 		write_exit("Incorrect args! Usage: ./minirt <mapname>.rt\n", 1);
 	init_data(&data, argv);
