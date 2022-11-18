@@ -6,14 +6,14 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/02 16:07:31 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/11/17 16:37:05 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/11/18 14:36:58 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include <math.h>
 
-int	hit_plane(t_plane *plane, t_ray ray, float t_min, float t_max, t_besthit *hit_rec)
+int	hit_plane(t_plane *plane, t_ray ray, float t_max, t_besthit *hit_rec)
 {
 	float	denom;
 	float	t;
@@ -26,29 +26,20 @@ int	hit_plane(t_plane *plane, t_ray ray, float t_min, float t_max, t_besthit *hi
 	{
 		polo = substract_points(plane->center, ray.origin);
 		t = (float)dot_points(polo, n) / (float)denom;
-		if (t >= t_min && t < t_max)
+		if (t >= T_MIN && t < t_max)
 		{
 			hit_rec->t = t;
 			hit_rec->hit_point = ray_at(ray, hit_rec->t);
 			hit_rec->color = plane->color;
 			hit_rec->center = plane->center;
-			if (dot_points(ray.dir, n) < 0)
-			{
-				hit_rec->front_face = 1;
-				hit_rec->normal = n;
-			}
-			else
-			{
-				hit_rec->front_face = 0;
-				hit_rec->normal = multiply_point_float(n, -1.0);
-			}
+			set_front_face_and_normal(ray, hit_rec, n);
 			return (1);
 		}
 	}
 	return (0);
 }
 
-int	hit_any_plane(t_parse map_info, t_ray ray, t_besthit *hit_rec, float t_min, float t_max)
+int	hit_any_plane(t_parse map_info, t_ray ray, t_besthit *hit_rec, float t_max)
 {
 	int			hit_anything;
 	t_besthit	tmp_rec;
@@ -62,7 +53,7 @@ int	hit_any_plane(t_parse map_info, t_ray ray, t_besthit *hit_rec, float t_min, 
 	while (tmp)
 	{
 		plane = (t_plane *)tmp->content;
-		if (hit_plane(plane, ray, t_min, t_max, &tmp_rec))
+		if (hit_plane(plane, ray, t_max, &tmp_rec))
 		{
 			hit_anything = i;
 			t_max = tmp_rec.t;
