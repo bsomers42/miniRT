@@ -6,14 +6,13 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 15:11:47 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/11/17 17:01:10 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/11/18 17:22:34 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 # define MINIRT_H
 
-// # define ASPECT_RATIO (float)(16.0 / 9.0)
 # define WIDTH 800
 # define HEIGHT 450
 # define FOCAL_LENGTH 1.0
@@ -24,7 +23,6 @@
 # include "MLX42.h"
 # include "color.h"
 # include "point.h"
-// # include "nodes.h"
 
 typedef struct s_mlx_str
 {
@@ -38,7 +36,7 @@ typedef struct s_ray
 	t_vector	dir;
 }	t_ray;
 
-typedef struct s_besthit
+typedef struct s_hit
 {
 	t_point	hit_point;
 	t_point	normal;
@@ -46,13 +44,13 @@ typedef struct s_besthit
 	int		front_face;
 	t_color	color;
 	t_point	center;
-}	t_besthit;
+}	t_hit;
 
 typedef struct s_sphere
 {
 	t_color	color;
 	t_point	center;
-	float	diam;
+	float	radius;
 }	t_sphere;
 
 typedef struct s_plane
@@ -123,10 +121,12 @@ void	check_float_value(char *str);
 void	free_minirt(t_parse *parse);
 
 //tracer
-int		hit_any_sphere(t_parse map_info, t_ray ray, t_besthit *hit_rec, float t_min, float t_max);
-int		hit_any_plane(t_parse map_info, t_ray ray, t_besthit *hit_rec, float t_min, float t_max);
-int		hit_any_cylinder(t_parse map_info, t_ray ray, t_besthit *hit_rec, float t_min, float t_max);
-int		hit_anything(t_parse map_info, t_ray ray, t_besthit *hit_rec, float t_min, float t_max);
+int		hit_any_sp(t_parse map_info, t_ray ray, t_hit *hit_rec, float t_max);
+int		hit_any_pl(t_parse map_info, t_ray ray, t_hit *hit_rec, float t_max);
+int		hit_any_cyl(t_parse map_info, t_ray ray, t_hit *hit_rec, float t_max);
+int		hit_anything(t_parse map_info, t_ray ray, t_hit *hit_rec);
+
+float	norm(t_point vec);
 
 t_color	antialias_color(t_parse map_info, int x, int y);
 t_color	point_ray_get_color(t_parse map_info, float i, float j);
