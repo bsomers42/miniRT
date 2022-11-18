@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 13:26:28 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/11/18 17:38:49 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/11/18 20:13:40 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,68 +25,55 @@ t_point	ray_at(t_ray ray, float t)
 
 t_color	calculate_shadow(t_parse map_info, t_hit record)
 {
-	t_color	color;
 	float	r;
 	float	g;
 	float	b;
-(void)record;
-	// color.r = ((float)record.color.r / 255.0) / M_PI * (map_info.light.bright + \
-	// 	((float)map_info.amb.color.r * map_info.amb.ratio / 255.0)) * 255.0;
-	// color.g = ((float)record.color.g / 255.0) / M_PI * (map_info.light.bright + \
-	// 	((float)map_info.amb.color.g * map_info.amb.ratio / 255.0)) * 255.0;
-	// color.b = ((float)record.color.b / 255.0) / M_PI * (map_info.light.bright + \
-	// 	((float)map_info.amb.color.b * map_info.amb.ratio / 255.0)) * 255.0;
-	
-	// r = (float)record.color.r * map_info.light.bright / 255.0 ;
-	// g = (float)record.color.g * map_info.light.bright / 255.0;
-	// b = (float)record.color.b * map_info.light.bright / 255.0;
 
-	r = (((float)map_info.amb.color.r / 255.0) * map_info.amb.ratio * (float)record.color.r / 255.0);
-	g = (((float)map_info.amb.color.g / 255.0) * map_info.amb.ratio * (float)record.color.g / 255.0);
-	b = (((float)map_info.amb.color.b / 255.0) * map_info.amb.ratio * (float)record.color.b / 255.0);
+	r = (((float)map_info.amb.color.r / 255.0) * map_info.amb.ratio * \
+		(float)record.color.r / 255.0);
+	g = (((float)map_info.amb.color.g / 255.0) * map_info.amb.ratio * \
+		(float)record.color.g / 255.0);
+	b = (((float)map_info.amb.color.b / 255.0) * map_info.amb.ratio * \
+		(float)record.color.b / 255.0);
 	if (r > 1.0)
 		r = 1.0;
 	if (g > 1.0)
 		g = 1.0;
 	if (b > 1.0)
 		b = 1.0;
-	color = new_color(r * 255.0, g * 255.0, b * 255.0);
-	return (color);
+	return (new_color(r * 255.0, g * 255.0, b * 255.0));
 }
 
-//kleur licht * kleur object * costheta + ambient ratio * ambient kleur * kleur object
+/**
+ * @brief calculates the shade of the pixel: 
+ * 
+ * @param map_info 
+ * @param record 
+ * @param costheta 
+ * @return t_color 
+ */
 t_color	calculate_shade(t_parse map_info, t_hit record, float costheta)
 {
-	t_color	color;
 	float	r;
 	float	g;
 	float	b;
 
-	// color.r = (((float)record.color.r / 255.0) / M_PI * \
-	// 	(map_info.light.bright + (costheta + (float)map_info.amb.color.r * \
-	// 	map_info.amb.ratio / 255.0))) * 255.0;
-	// color.g = (((float)record.color.g / 255.0) / M_PI * \
-	// 	(map_info.light.bright + (costheta + (float)map_info.amb.color.g * \
-	// 	map_info.amb.ratio / 255.0))) * 255.0;
-	// color.b = (((float)record.color.b / 255.0) / M_PI * \
-	// 	(map_info.light.bright + (costheta + (float)map_info.amb.color.b * \
-	// 	map_info.amb.ratio / 255.0))) * 255.0;
-
-	r = (float)record.color.r * map_info.light.bright * costheta / 255.0;
-	g = (float)record.color.g * map_info.light.bright * costheta / 255.0;
-	b = (float)record.color.b * map_info.light.bright * costheta / 255.0;
-
-	r = r + ((float)map_info.amb.color.r / 255.0 * map_info.amb.ratio * (float)record.color.r / 255.0);
-	g = g + ((float)map_info.amb.color.g / 255.0 * map_info.amb.ratio * (float)record.color.g / 255.0);
-	b = b + ((float)map_info.amb.color.b / 255.0 * map_info.amb.ratio * (float)record.color.b / 255.0);
+	r = (float)record.color.r * map_info.light.bright * costheta / 255.0 + \
+		((float)map_info.amb.color.r / 255.0 * map_info.amb.ratio * \
+		(float)record.color.r / 255.0);
+	g = (float)record.color.g * map_info.light.bright * costheta / 255.0 + \
+		((float)map_info.amb.color.g / 255.0 * map_info.amb.ratio * \
+		(float)record.color.g / 255.0);
+	b = (float)record.color.b * map_info.light.bright * costheta / 255.0 + \
+		((float)map_info.amb.color.b / 255.0 * map_info.amb.ratio * \
+		(float)record.color.b / 255.0);
 	if (r > 1.0)
 		r = 1.0;
 	if (g > 1.0)
 		g = 1.0;
 	if (b > 1.0)
 		b = 1.0;
-	color = new_color(r * 255.0, g * 255.0, b * 255.0);
-	return (color);
+	return (new_color(r * 255.0, g * 255.0, b * 255.0));
 }
 
 /**
