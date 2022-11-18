@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 15:11:47 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/11/18 20:02:05 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/11/18 20:03:28 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,6 @@ float	calc_angle(t_point upaxis, t_cyl *cyl);
 t_color	antialias_color(t_parse map_info, int x, int y);
 t_color	point_ray_get_color(t_parse map_info, float i, float j);
 t_point	ray_at(t_ray ray, float t);
-// t_color	point_ray_get_color(t_parse map_info, t_ray ray);
 
 t_point	calc_vertical(t_parse map_info, t_point backward);
 t_point	calc_horizontal(t_parse map_info, t_point backward);
