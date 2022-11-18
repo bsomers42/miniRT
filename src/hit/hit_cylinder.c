@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/03 11:37:15 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/11/18 17:45:14 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/11/18 18:07:48 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,11 +98,11 @@ int	hit_tube(t_cyl *cyl, t_ray ray, float t_max, t_hit *hit_rec)
 	bottom_center = ray_at(tmp, (cyl->height / 2 * -1));
 	dir_a = substract_points(p, bottom_center);
 	x = dot_points((dir_a), normalize_point(cyl->dir));
-	n = substract_points(p, add_points((multiply_point_float \
-		(normalize_point(cyl->dir), x)), bottom_center));
+	n = normalize_point(substract_points(p, add_points((multiply_point_float \
+		(normalize_point(cyl->dir), x)), bottom_center)));
 	hit_rec->color = cyl->color;
 	hit_rec->t = t;
-	hit_rec->hit_point = p;//ray_at(ray, t);
+	hit_rec->hit_point = p;
 	hit_rec->center = cyl->center;
 	if (dot_points(rot_ray.dir, normalize_point(n)) < 0)
 	{
@@ -126,7 +126,6 @@ int	hit_any_cyl(t_parse map_info, t_ray ray, t_hit *hit_rec, \
 	t_hit		tmp_rec;
 	int			i;
 	t_list		*tmp;
-	float	t_min = 0.01;
 
 	tmp = map_info.lst_cyl;
 	i = 0;

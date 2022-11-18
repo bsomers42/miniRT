@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/18 16:38:10 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/11/18 17:44:52 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/11/18 17:46:55 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	hit_cap(t_cyl *cyl, t_ray ray, float t_max, t_hit *hit_rec, \
 	return (0);
 }
 
-int	hit_both_caps(t_cyl *cyl, t_ray ray, float t_max, t_besthit *tmp_rec)
+int	hit_both_caps(t_cyl *cyl, t_ray ray, float t_max, t_hit *tmp_rec)
 {
 	t_point		tmp_center;
 

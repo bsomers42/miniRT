@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/02 16:07:31 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/11/18 17:45:43 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/11/18 17:46:28 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int	hit_any_pl(t_parse map_info, t_ray ray, t_hit *hit_rec, float t_max)
 	int			i;
 	t_list		*tmp;
 	t_plane		*plane;
-	float t_min = 0.01;
 
 	tmp = map_info.lst_plane;
 	i = 0;

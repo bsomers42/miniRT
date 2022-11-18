@@ -6,14 +6,14 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/18 14:32:01 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/11/18 16:37:46 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/11/18 17:47:06 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include <math.h>
 
-void	set_front_face_and_normal(t_ray ray, t_besthit *hit_rec, t_point n)
+void	set_front_face_and_normal(t_ray ray, t_hit *hit_rec, t_point n)
 {
 	if (dot_points(ray.dir, n) < 0)
 	{
