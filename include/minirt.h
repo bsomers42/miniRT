@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 15:11:47 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/11/18 19:32:30 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/11/18 20:02:05 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # define WIDTH 1600
 # define HEIGHT 900
-# define FOCAL_LENGTH 1.0
 
 # define T_MIN 0.01
 
