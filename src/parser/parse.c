@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 16:47:20 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/11/17 17:15:09 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/11/18 16:11:41 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,43 +64,31 @@ void	assign_light(char *str, int *light_ptr, t_parse *parse)
 	*light_ptr = *light_ptr + 1;
 }
 
-int	assign_to_struct(char **map_split_n, t_parse *parse)
+void	assign_to_struct(char **map_split_n, t_parse *parse)
 {
-	int	i;
-	int	amb;
-	int	cam;
-	int	light;
+	int	*cla;
 
-	i = 0;
-	amb = 0;
-	cam = 0;
-	light = 0;
-	parse->lst_sphere = NULL;
-	parse->lst_plane = NULL;
-	parse->lst_cyl = NULL;
-	while (map_split_n[i] != NULL)
+	cla = ft_calloc(3, sizeof(int));
+	while (*map_split_n != NULL)
 	{
-		if (ft_strncmp(map_split_n[i], "A ", 2) == 0)
-			assign_ambient(map_split_n[i], &amb, parse);
-		else if (ft_strncmp(map_split_n[i], "C ", 2) == 0)
-			assign_camera(map_split_n[i], &cam, parse);
-		else if (ft_strncmp(map_split_n[i], "L ", 2) == 0)
-			assign_light(map_split_n[i], &light, parse);
-		else if (ft_strncmp(map_split_n[i], "sp ", 3) == 0)
-			ft_lstadd_sp(&(parse->lst_sphere), ft_split(map_split_n[i], ' '));
-		else if (ft_strncmp(map_split_n[i], "pl ", 3) == 0)
-			ft_lstadd_pl(&(parse->lst_plane), ft_split(map_split_n[i], ' '));
-		else if (ft_strncmp(map_split_n[i], "cy ", 3) == 0)
-			ft_lstadd_cy(&(parse->lst_cyl), ft_split(map_split_n[i], ' '));
-		else if (ft_strncmp(map_split_n[i], "# ", 2) != 0)
-			write_exit("Unnecessary characters included or information missing\n", 1);
-		i++;
+		if (ft_strncmp(*map_split_n, "A ", 2) == 0)
+			assign_ambient(*map_split_n, &cla[2], parse);
+		else if (ft_strncmp(*map_split_n, "C ", 2) == 0)
+			assign_camera(*map_split_n, &cla[0], parse);
+		else if (ft_strncmp(*map_split_n, "L ", 2) == 0)
+			assign_light(*map_split_n, &cla[1], parse);
+		else if (ft_strncmp(*map_split_n, "sp ", 3) == 0)
+			ft_lstadd_sp(&(parse->lst_sphere), ft_split(*map_split_n, ' '));
+		else if (ft_strncmp(*map_split_n, "pl ", 3) == 0)
+			ft_lstadd_pl(&(parse->lst_plane), ft_split(*map_split_n, ' '));
+		else if (ft_strncmp(*map_split_n, "cy ", 3) == 0)
+			ft_lstadd_cy(&(parse->lst_cyl), ft_split(*map_split_n, ' '));
+		else if (ft_strncmp(*map_split_n, "# ", 2) != 0)
+			write_exit("Excessive characters included/information missing\n", 1);
+		map_split_n++;
 	}
-	if (cam == 0 || amb == 0 || light == 0)
-		write_exit("Missing ambient/light/camera!\n", 1);
-	if (cam > 1 || amb > 1 || light > 1)
-		write_exit("Use only one ambient, one light and one camera!\n", 1);
-	return (0);
+	check_number_of_cla(cla[0], cla[2], cla[1]);
+	free (cla);
 }
 
 t_parse	*parse_map(char *argv[])
@@ -112,6 +100,9 @@ t_parse	*parse_map(char *argv[])
 	parse = (t_parse *)malloc(sizeof(t_parse));
 	if (parse == NULL)
 		error_exit("malloc", 1);
+	parse->lst_sphere = NULL;
+	parse->lst_plane = NULL;
+	parse->lst_cyl = NULL;
 	map_char = get_map(argv);
 	map_split_newline = ft_split(map_char, '\n');
 	malloc_check_arr(map_split_newline);

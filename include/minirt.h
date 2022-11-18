@@ -6,18 +6,20 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 15:11:47 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/11/18 17:22:34 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/11/18 17:43:24 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 # define MINIRT_H
 
-# define WIDTH 800
-# define HEIGHT 450
+# define WIDTH 1600
+# define HEIGHT 900
 # define FOCAL_LENGTH 1.0
 
-# define AA 1 //anti-aliasing
+# define T_MIN 0.01
+
+# define AA 3 //anti-aliasing
 # define THREADS 7
 # include "libft.h"
 # include "MLX42.h"
@@ -116,6 +118,7 @@ void	check_vec_value(t_point vec);
 void	check_color_value(t_color *color);
 int		check_num_of_elems(char **array, int num);
 void	check_float_value(char *str);
+void	check_number_of_cla(int cam, int amb, int light);
 
 //utils
 void	free_minirt(t_parse *parse);
@@ -127,6 +130,12 @@ int		hit_any_cyl(t_parse map_info, t_ray ray, t_hit *hit_rec, float t_max);
 int		hit_anything(t_parse map_info, t_ray ray, t_hit *hit_rec);
 
 float	norm(t_point vec);
+int		hit_both_caps(t_cyl *cyl, t_ray ray, float t_max, t_hit *tmp_rec);
+
+//tracer utils
+void	set_front_face_and_normal(t_ray ray, t_hit *hit_rec, t_point n);
+float	norm(t_point vec);
+float	calc_angle(t_point upaxis, t_cyl *cyl);
 
 t_color	antialias_color(t_parse map_info, int x, int y);
 t_color	point_ray_get_color(t_parse map_info, float i, float j);

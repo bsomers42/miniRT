@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/04 17:51:50 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/11/17 17:10:47 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/11/18 16:17:16 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,12 @@ int	check_num_of_elems(char **array, int num)
 	if (i != num)
 		return (1);
 	return (0);
+}
+
+void	check_number_of_cla(int cam, int amb, int light)
+{
+	if (cam == 0 || amb == 0 || light == 0)
+		write_exit("Missing ambient/light/camera!\n", 1);
+	if (cam > 1 || amb > 1 || light > 1)
+		write_exit("Use only one ambient, one light and one camera!\n", 1);
 }

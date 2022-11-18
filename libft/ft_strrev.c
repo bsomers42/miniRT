@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.42.fr>              +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/01/25 18:39:23 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/11/17 16:14:00 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/11/18 16:41:43 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ char	*ft_strrev(char *rev)
 {
 	int		len;
 	char	*tmp;
-
 	int		i;
 
 	len = ft_strlen(rev);
