@@ -6,11 +6,10 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/24 10:48:21 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/10/26 15:06:33 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/11/18 14:33:32 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "minirt.h"
 #include "point.h"
 
 t_point	new_point(float x, float y, float z)
