@@ -6,14 +6,14 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/02 16:07:31 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/11/17 16:37:05 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/11/18 16:40:15 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include <math.h>
 
-int	hit_plane(t_plane *plane, t_ray ray, float t_min, float t_max, t_besthit *hit_rec)
+int	hit_plane(t_plane *plane, t_ray ray, float t_min, float t_max, t_hit *hit_rec)
 {
 	float	denom;
 	float	t;
@@ -48,13 +48,14 @@ int	hit_plane(t_plane *plane, t_ray ray, float t_min, float t_max, t_besthit *hi
 	return (0);
 }
 
-int	hit_any_plane(t_parse map_info, t_ray ray, t_besthit *hit_rec, float t_min, float t_max)
+int	hit_any_pl(t_parse map_info, t_ray ray, t_hit *hit_rec, float t_max)
 {
 	int			hit_anything;
-	t_besthit	tmp_rec;
+	t_hit		tmp_rec;
 	int			i;
 	t_list		*tmp;
 	t_plane		*plane;
+	float t_min = 0.01;
 
 	tmp = map_info.lst_plane;
 	i = 0;

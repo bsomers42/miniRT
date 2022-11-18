@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/03 11:37:15 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/11/18 13:55:27 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/11/18 16:40:23 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	intersect_circle(t_cyl *cyl, t_ray ray, float t, t_point cap_center)
 	return (sqrtf(d) <= cyl->radius);
 }
 
-int	hit_cap(t_cyl *cyl, t_ray ray, float t_min, float t_max, t_besthit *hit_rec, t_point cap_center)
+int	hit_cap(t_cyl *cyl, t_ray ray, float t_min, float t_max, t_hit *hit_rec, t_point cap_center)
 {
 	float	t;
 	float	denom;
@@ -150,7 +150,7 @@ t_point	rotate_axis_angle(t_point vec, t_point axis, float angle)
 // 	return (t[2]);
 // }
 
-int	hit_tube(t_cyl *cyl, t_ray ray, /*float t_min,*/ float t_max, t_besthit *hit_rec)
+int	hit_tube(t_cyl *cyl, t_ray ray, /*float t_min,*/ float t_max, t_hit *hit_rec)
 {
 	//Note to self: don't forget to check if inside cyl!!
 	float	a;
@@ -159,7 +159,7 @@ int	hit_tube(t_cyl *cyl, t_ray ray, /*float t_min,*/ float t_max, t_besthit *hit
 	float	d;
 	float	t0;
 	float	t1;
-	float	h;
+	// float	h;
 	t_ray	rot_ray;
 	t_point	n;
 	t_point	p;
@@ -217,17 +217,17 @@ int	hit_tube(t_cyl *cyl, t_ray ray, /*float t_min,*/ float t_max, t_besthit *hit
 	if (dot_points(rot_ray.dir, normalize_point(n)) < 0)
 	{
 		hit_rec->front_face = 1;
-		hit_rec->normal = rotate_axis_angle(normalize_point(n), axis, angle);
+		hit_rec->normal = rotate_axis_angle(normalize_point(n), axis, angle * -1.0);
 	}
 	else
 	{
 		hit_rec->front_face = 0;
-		hit_rec->normal = rotate_axis_angle(normalize_point(multiply_point_float(normalize_point(n), -1.0)), axis, angle);
+		hit_rec->normal = rotate_axis_angle(normalize_point(multiply_point_float(normalize_point(n), -1.0)), axis, angle * -1.0);
 	}
 	return (1);
 }
 
-int	hit_both_caps(t_cyl *cyl, t_ray ray, float t_min, float t_max, t_besthit *tmp_rec)
+int	hit_both_caps(t_cyl *cyl, t_ray ray, float t_min, float t_max, t_hit *tmp_rec)
 {
 	t_point		tmp_center;
 
@@ -240,12 +240,13 @@ int	hit_both_caps(t_cyl *cyl, t_ray ray, float t_min, float t_max, t_besthit *tm
 	return (0);
 }
 
-int	hit_any_cylinder(t_parse map_info, t_ray ray, t_besthit *hit_rec, float t_min, float t_max)
+int	hit_any_cyl(t_parse map_info, t_ray ray, t_hit *hit_rec, float t_max)
 {
 	int			hit_anything;
-	t_besthit	tmp_rec;
+	t_hit		tmp_rec;
 	int			i;
 	t_list		*tmp;
+	float	t_min = 0.01;
 
 	tmp = map_info.lst_cyl;
 	i = 0;
