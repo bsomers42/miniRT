@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 16:47:20 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/11/17 14:51:05 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/11/17 17:15:09 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	assign_ambient(char *str, int *amb_ptr, t_parse *parse)
 	malloc_check_arr(split);
 	if (check_num_of_elems(split, 3) != 0)
 		write_exit("Wrong information for ambient (A)\n", 1);
-	// check_float_value(split[1]);
+	check_float_value(split[1]);
 	parse->amb.ratio = ft_stofl(split[1]);
 	if (parse->amb.ratio < 0 || parse->amb.ratio > 1)
 		write_exit("Wrong ambient lighting ratio. [0.0,1.0]\n", 1);
@@ -33,26 +33,13 @@ void	assign_ambient(char *str, int *amb_ptr, t_parse *parse)
 void	assign_camera(char *str, int *cam_ptr, t_parse *parse)
 {
 	char	**split;
-	char	**tmp;
 
 	split = ft_split(str, ' ');
 	malloc_check_arr(split);
 	if (check_num_of_elems(split, 4) != 0)
 		write_exit("Wrong information for camera (C)\n", 1);
 	stofl_center(split[1], &parse->cam.origin);
-	tmp = ft_split(split[2], ',');
-	malloc_check_arr(tmp);
-	if (check_num_of_elems(tmp, 3) != 0)
-		write_exit("Wrong vector for camera\n", 1);
-	// check_float_value(tmp[0]);
-	// check_float_value(tmp[1]);
-	// check_float_value(tmp[2]);
-	parse->cam.dir.x = ft_stofl(tmp[0]);
-	parse->cam.dir.y = ft_stofl(tmp[1]);
-	parse->cam.dir.z = ft_stofl(tmp[2]);
-	check_vec_value(parse->cam.dir);
-	parse->cam.dir = normalize_point(parse->cam.dir);
-	free_array(tmp);
+	stofl_vec(split[2], &parse->cam.dir);
 	parse->cam.fov = ft_atoi(split[3]);
 	if (parse->cam.fov <= 0 || parse->cam.fov > 180)
 		write_exit("Wrong FOV value\n", 1);
@@ -69,23 +56,12 @@ void	assign_light(char *str, int *light_ptr, t_parse *parse)
 	if (check_num_of_elems(split, 3) != 0)
 		write_exit("Wrong information for light (L)\n", 1);
 	stofl_center(split[1], &parse->light.origin);
-	// check_float_value(split[2]);
+	check_float_value(split[2]);
 	parse->light.bright = ft_stofl(split[2]);
 	if (parse->light.bright < 0 || parse->light.bright > 1)
 		write_exit("Wrong light brightness ratio. [0.0,1.0]\n", 1);
 	free_array(split);
 	*light_ptr = *light_ptr + 1;
-}
-
-void	test_lists(t_list **lst_sphere)
-{
-	t_list		*last;
-	t_sphere	*sphere;
-
-	last = ft_lstlast(*lst_sphere);
-	sphere = (t_sphere *)last->content;
-	printf("[TESTr: %d, g: %d, b: %d]\n", sphere->color.r, \
-	sphere->color.g, sphere->color.b);
 }
 
 int	assign_to_struct(char **map_split_n, t_parse *parse)
@@ -120,7 +96,6 @@ int	assign_to_struct(char **map_split_n, t_parse *parse)
 			write_exit("Unnecessary characters included or information missing\n", 1);
 		i++;
 	}
-	// test_lists(&(parse->lst_sphere));
 	if (cam == 0 || amb == 0 || light == 0)
 		write_exit("Missing ambient/light/camera!\n", 1);
 	if (cam > 1 || amb > 1 || light > 1)
@@ -143,11 +118,5 @@ t_parse	*parse_map(char *argv[])
 	free(map_char);
 	assign_to_struct(map_split_newline, parse);
 	free_array(map_split_newline);
-	// printf("origin camera:(%f,%f,%f)\n", parse->cam->x, parse->cam->y, parse->cam->z); //jma
-	// printf("origin camera:(%f,%f,%f)\n", parse->cam->origin.x, parse->cam->origin.y, parse->cam->origin.z); //jma
-	// printf("origin light:(%f,%f,%f)\n", parse->light->x, parse->light->y, parse->light->z); //jma
-	// printf("origin light:(%f,%f,%f)\n", parse->light->origin.x, parse->light->origin.y, parse->light->origin.z); //jma
-	// printf("brightness light:(%f)\n", parse->light->bright); //jma
-	// printf("ambient light: (%u,%u,%u) at ratio %f\n", parse->amb->r, parse->amb->g, parse->amb->b, parse->amb->ratio);
 	return (parse);
 }

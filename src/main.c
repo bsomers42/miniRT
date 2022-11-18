@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 14:54:42 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/11/14 11:32:27 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/11/17 17:19:45 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	minirt_close(void *ptr)
 {
 	(void)ptr;
 	//free things
-	exit(EXIT_SUCCESS);
+	exit(EXIT_SUCCESS); //Bespreken met Jorien!! 
 }
 
 void	draw_loading_bar(void)
@@ -68,12 +68,9 @@ int	main(int argc, char *argv[])
 	// atexit(func_atexit);
 
 	if (argc != 2)
-		write_exit("Incorrect number of args! Usage: ./minirt <mapname>.rt\n", 1);
+		write_exit("Incorrect args! Usage: ./minirt <mapname>.rt\n", 1);
 	init_data(&data, argv);
 	init_infos(&infos, &data);
-	// printf("incoming ambient: ratio: %f, rgb: [%u, %u, %u]\n", data.parse->amb.ratio, data.parse->amb.r, data.parse->amb.g, data.parse->amb.b);
-	// printf("incoming cam: ratio: %f, rgb: [%u, %u, %u]\n", data.parse->amb.ratio, data.parse->amb.r, data.parse->amb.g, data.parse->amb.b);
-
 	mlx_key_hook(data.mlx_str.mlx, &minirt_keyhook, &infos);
 	mlx_close_hook(data.mlx_str.mlx, &minirt_close, NULL);
 	mlx_image_to_window(data.mlx_str.mlx, data.mlx_str.img, 0, 0);

@@ -6,13 +6,13 @@
 #    By: bsomers <bsomers@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/09/22 14:52:38 by bsomers       #+#    #+#                  #
-#    Updated: 2022/11/16 12:56:59 by jaberkro      ########   odam.nl          #
+#    Updated: 2022/11/17 17:20:56 by bsomers       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minirt
 
-FLAGS = -Wall -Wextra -Werror -g3# -fsanitize=address
+FLAGS = -Wall -Wextra -Werror -g3 #-fsanitize=address
 INCLUDE = -I include -I ./MLX42/include/MLX42 -I ./libft
 
 LIBFT_DIR = libft/
@@ -28,9 +28,11 @@ SRC = main.c \
 	utils.c \
 	parser/parse.c \
 	parser/list_add.c \
+	parser/stofl_atoi_map_elems.c \
 	parser/get_next_line.c \
 	parser/get_map.c \
-	parser/checks.c \
+	parser/parsing_checks.c \
+	parser/malloc_checks.c \
 	tracer/antialias_color.c \
 	tracer/point_ray_get_color.c \
 	tracer/point_ray_utils.c \

@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   checks.c                                           :+:    :+:            */
+/*   parsing_checks.c                                   :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/04 17:51:50 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/11/15 15:12:02 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/11/17 17:10:47 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+#include <stdio.h>
 
 void	check_float_value(char *str)
 {
@@ -23,14 +24,15 @@ void	check_float_value(char *str)
 	{
 		if (str[i] == '.')
 			dot++;
-		if (ft_isdigit(str[i]) == 0)
+		else if ((!ft_isdigit(str[i]) && i != 0) || \
+		(str[i] == '-' && i != 0) || (str[i] == '+' && i != 0))
 		{
 			dot = -1;
-			break;
+			break ;
 		}
 		i++;
 	}
-	if (dot > 1 || dot < 0)
+	if (!ft_isdigit(str[i - 1]) || dot > 2 || dot < 0)
 		write_exit("Invalid float value\n", 1);
 }
 
@@ -50,7 +52,7 @@ void	check_color_value(t_color *color)
 		write_exit("Invalid color value. [0-255]\n", 1);
 }
 
-int		check_num_of_elems(char **array, int num)
+int	check_num_of_elems(char **array, int num)
 {
 	int	i;
 

@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 15:11:47 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/11/16 15:57:25 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/11/17 17:01:10 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,9 @@ typedef struct s_cyl
 	t_point		center;
 	t_color		color;
 	t_vector	dir;
-	float		diam;
+	float		radius;
 	float		height;
 }	t_cyl;
-
-void	ft_lstadd_sp(t_list **lst, char **line);
-void	ft_lstadd_pl(t_list **lst, char **line);
-void	ft_lstadd_cy(t_list **lst, char **line);
 
 typedef struct s_amb
 {
@@ -104,18 +100,29 @@ typedef struct s_parse
 	t_list	*lst_plane;
 }	t_parse;
 
+//parsing
 t_parse	*parse_map(char *argv[]);
 char	*get_map(char *argv[]);
 char	*get_next_line_e(int fd);
+void	ft_lstadd_sp(t_list **lst, char **line);
+void	ft_lstadd_pl(t_list **lst, char **line);
+void	ft_lstadd_cy(t_list **lst, char **line);
 void	atoi_color(char *line, t_color *color);
 void	stofl_center(char *line, t_point *center);
-void	free_minirt(t_parse *parse);
+void	stofl_vec(char *line, t_point *vec);
+
+//parsing checks
 void	malloc_check_arr(char **str);
 void	malloc_check_str(char *str);
 void	check_vec_value(t_point vec);
 void	check_color_value(t_color *color);
 int		check_num_of_elems(char **array, int num);
+void	check_float_value(char *str);
 
+//utils
+void	free_minirt(t_parse *parse);
+
+//tracer
 int		hit_any_sphere(t_parse map_info, t_ray ray, t_besthit *hit_rec, float t_min, float t_max);
 int		hit_any_plane(t_parse map_info, t_ray ray, t_besthit *hit_rec, float t_min, float t_max);
 int		hit_any_cylinder(t_parse map_info, t_ray ray, t_besthit *hit_rec, float t_min, float t_max);
@@ -134,6 +141,5 @@ t_point	calc_lower_left_corner(t_parse map_info);
 
 void	error_exit(char *message, int exit_code);
 void	write_exit(char *message, int exit_code);
-int		error_return(char *message, int return_code);
 
 #endif
