@@ -1,12 +1,12 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         ::::::::             #
-#    Makefile                                           :+:    :+:             #
+#    makefile                                           :+:    :+:             #
 #                                                      +:+                     #
 #    By: bsomers <bsomers@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/09/22 14:52:38 by bsomers       #+#    #+#                  #
-#    Updated: 2022/11/18 16:38:32 by bsomers       ########   odam.nl          #
+#    Updated: 2022/11/28 17:39:57 by jaberkro      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,8 +57,7 @@ SRC := $(addprefix $(SRC_DIR)/, $(SRC))
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJ) $(LIBMLX42)
-	$(CC) $^ $(FLAGS) $(INCLUDE) -lglfw3 -framework Cocoa -framework OpenGL -framework IOKit -L. -o $(NAME) # used to be -lglfw3 jma
-
+	$(CC) $^ $(FLAGS) $(INCLUDE) -lglfw3 -framework Cocoa -framework OpenGL -framework IOKit -L. -o $(NAME)
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 	mkdir -p $(dir $@)
 	$(CC) -c $(INCLUDE) $(FLAGS) -o $@ $<
