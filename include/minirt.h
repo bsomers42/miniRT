@@ -6,15 +6,15 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 15:11:47 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/11/18 20:03:28 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/11/28 17:36:53 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 # define MINIRT_H
 
-# define WIDTH 1600
-# define HEIGHT 900
+# define WIDTH 400
+# define HEIGHT 225
 
 # define T_MIN 0.01
 
@@ -80,7 +80,8 @@ typedef struct s_cam
 {
 	t_point	origin;
 	t_point	dir;
-	int		fov;	
+	int		fov;
+	t_vector	llc;	
 }	t_cam;
 
 typedef struct s_light
@@ -144,7 +145,7 @@ t_point	calc_vertical(t_parse map_info, t_point backward);
 t_point	calc_horizontal(t_parse map_info, t_point backward);
 t_point	add_vertical_position(t_point dir, t_parse map_info, float j);
 t_point	add_horizontal_position(t_point dir, t_parse map_info, float i);
-t_point	calc_lower_left_corner(t_parse map_info);
+t_point	calculate_lower_left_corner(t_parse map_info);
 
 void	error_exit(char *message, int exit_code);
 void	write_exit(char *message, int exit_code);
