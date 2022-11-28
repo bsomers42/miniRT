@@ -6,12 +6,13 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 13:26:28 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/11/18 20:13:40 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/11/28 17:34:34 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include <math.h>
+#include <stdio.h> //remove at end
 
 t_point	ray_at(t_ray ray, float t)
 {
@@ -123,7 +124,7 @@ t_color	point_ray_get_color(t_parse map_info, float i, float j)
 	int			closest_index;
 
 	ray.origin = map_info.cam.origin;
-	ray.dir = calc_lower_left_corner(map_info);
+	ray.dir = map_info.cam.llc;
 	ray.dir = add_horizontal_position(ray.dir, map_info, i);
 	ray.dir = add_vertical_position(ray.dir, map_info, j);
 	ray.dir = substract_points(ray.dir, ray.origin);
