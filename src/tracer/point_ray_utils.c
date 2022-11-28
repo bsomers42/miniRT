@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/11 12:37:15 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/11/11 12:38:30 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/11/28 17:36:44 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ t_point	add_horizontal_position(t_point dir, t_parse map_info, float i)
 	return (new_dir);
 }
 
-t_point	calc_lower_left_corner(t_parse map_info)
+t_point	calculate_lower_left_corner(t_parse map_info)
 {
 	t_point	backward;
 	t_point	hor;
