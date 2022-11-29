@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/03 11:37:15 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/11/18 17:04:59 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/11/29 13:35:53 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,17 +104,23 @@ int	hit_tube(t_cyl *cyl, t_ray ray, float t_max, t_besthit *hit_rec)
 	hit_rec->t = t;
 	hit_rec->hit_point = p;
 	hit_rec->center = cyl->center;
-	if (dot_points(rot_ray.dir, normalize_point(n)) < 0)
-	{
-		hit_rec->front_face = 1;
-		hit_rec->normal = rotate_axis_angle(normalize_point(n), \
-			axis, angle * -1);
-	}
+	if (angle == 0)
+		set_front_face_and_normal(rot_ray, hit_rec, n);
 	else
+		// set_rot_front_face_and_normal(rot)
 	{
-		hit_rec->front_face = 0;
-		hit_rec->normal = rotate_axis_angle(normalize_point(multiply_point_float \
-			(normalize_point(n), -1.0)), axis, angle * -1);
+		if (dot_points(rot_ray.dir, normalize_point(n)) < 0)
+		{
+			hit_rec->front_face = 1;
+			hit_rec->normal = rotate_axis_angle(normalize_point(n), \
+				axis, angle * -1);
+		}
+		else
+		{
+			hit_rec->front_face = 0;
+			hit_rec->normal = rotate_axis_angle(normalize_point(multiply_point_float \
+				(normalize_point(n), -1.0)), axis, angle * -1);
+		}
 	}
 	return (1);
 }
