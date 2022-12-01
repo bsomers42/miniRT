@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 13:26:28 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/11/28 17:34:34 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/12/01 11:25:36 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ t_color	point_ray_get_color(t_parse map_info, float i, float j)
 	ray.dir = add_horizontal_position(ray.dir, map_info, i);
 	ray.dir = add_vertical_position(ray.dir, map_info, j);
 	ray.dir = substract_points(ray.dir, ray.origin);
-	ray.dir = normalize_point(ray.dir);
+	ray.dir = normalize_point(ray.dir); //!!!
 	record.t = INFINITY;
 	closest_index = hit_anything(map_info, ray, &record);
 	if (closest_index > 0)
