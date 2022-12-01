@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/03 11:37:15 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/12/01 10:26:36 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/12/01 12:56:24 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,12 @@ float	quadratic_form_cyl(t_cyl *cyl, t_ray rot_ray, float t_max)
 	b = 2 * (rot_ray.origin.x * rot_ray.dir.x + rot_ray.origin.z * \
 		rot_ray.dir.z);
 	c = rot_ray.origin.x * rot_ray.origin.x + rot_ray.origin.z * \
-		rot_ray.origin.z - pow(cyl->radius, 2);
+		rot_ray.origin.z - powf(cyl->radius, 2);
 	d = b * b - 4 * a * c;
 	if (d < 0)
 		return (-1);
-	t[0] = (-b + sqrt(d)) / (2 * a);
-	t[1] = (-b - sqrt(d)) / (2 * a);
+	t[0] = (-b + sqrtf(d)) / (2 * a);
+	t[1] = (-b - sqrtf(d)) / (2 * a);
 	if ((t[0] < (float)T_MIN && t[1] < (float)T_MIN) || \
 		(t[0] > t_max && t[1] > t_max))
 		return (-1);
@@ -77,11 +77,13 @@ int	hit_tube(t_cyl *cyl, t_ray ray, float t_max, t_hit *hit_rec)
 	t_point	p;
 	t_point	axis;
 	float	angle;
-	t_point	dir_a;
+	// t_point	dir_a;
 	t_point	bottom_center;
 	t_ray	tmp;
 	float	t;
 	float	x;
+	float	lena;
+	t_point pp;
 
 	angle = calc_angle(new_point(0, 1, 0), cyl);
 	axis = normalize_point(cross_points(normalize_point(cyl->dir), new_point(0, 1, 0)));
@@ -95,25 +97,30 @@ int	hit_tube(t_cyl *cyl, t_ray ray, float t_max, t_hit *hit_rec)
 	tmp.origin = cyl->center;
 	p = ray_at(ray, t);
 	bottom_center = ray_at(tmp, (cyl->height / 2 * -1));
-	dir_a = normalize_point(substract_points(p, bottom_center));
-	x = dot_points((dir_a), normalize_point(cyl->dir));
-	n = normalize_point(substract_points(p, add_points((multiply_point_float \
-		(normalize_point(cyl->dir), x)), bottom_center)));
+	lena = norm(substract_points(p, bottom_center));
+	x = sqrtf(powf(cyl->radius, 2) + powf(lena, 2));//sinf(cyl->radius / lena);
+	tmp.origin = bottom_center;
+	pp = ray_at(tmp, x);
+	n = normalize_point(substract_points(p, pp));
+	// dir_a = /*normalize_point(*/substract_points(p, bottom_center);
+	// x = dot_points((dir_a), normalize_point(cyl->dir));
+	// n = normalize_point(substract_points(p, add_points((multiply_point_float \
+	// 	(normalize_point(cyl->dir), x)), bottom_center)));
 	hit_rec->color = cyl->color;
 	hit_rec->t = t;
 	hit_rec->hit_point = p;
 	hit_rec->center = cyl->center;
-	if (dot_points(normalize_point(rot_ray.dir), normalize_point(n)) < 0)
+	if (dot_points(ray.dir/*normalize_point(rot_ray.dir)*/, normalize_point(n)) < 0)
 	{
 		hit_rec->front_face = 1;
-		hit_rec->normal = normalize_point(rotate_axis_angle(normalize_point(n), \
-			axis, angle * -1));
+		hit_rec->normal = n;//normalize_point(rotate_axis_angle(normalize_point(n), 
+			//axis, angle * -1));
 	}
 	else
 	{
 		hit_rec->front_face = 0;
-		hit_rec->normal = normalize_point(rotate_axis_angle(normalize_point(multiply_point_float \
-			(normalize_point(n), -1.0)), axis, angle * -1));
+		hit_rec->normal = multiply_point_float(normalize_point(n), -1.0);// normalize_point(rotate_axis_angle(normalize_point(multiply_point_float \
+			//(normalize_point(n), -1.0)), axis, angle * -1));
 	}
 	return (1);
 }
