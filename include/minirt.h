@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 15:11:47 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/11/28 17:36:53 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/12/01 09:43:08 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,9 @@ typedef struct s_amb
 
 typedef struct s_cam
 {
-	t_point	origin;
-	t_point	dir;
-	int		fov;
+	t_point		origin;
+	t_point		dir;
+	int			fov;
 	t_vector	llc;	
 }	t_cam;
 
