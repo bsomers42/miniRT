@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/03 11:37:15 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/11/18 19:58:36 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/12/01 10:26:36 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,7 @@ int	hit_tube(t_cyl *cyl, t_ray ray, float t_max, t_hit *hit_rec)
 	axis = normalize_point(cross_points(normalize_point(cyl->dir), new_point(0, 1, 0)));
 	rot_ray.origin = rotate_axis_angle(substract_points(ray.origin, \
 		cyl->center), axis, angle);
-	rot_ray.dir = rotate_axis_angle(ray.dir, axis, angle);
-	rot_ray.dir = normalize_point(rot_ray.dir);
+	rot_ray.dir = normalize_point(rotate_axis_angle(ray.dir, axis, angle));
 	t = quadratic_form_cyl(cyl, rot_ray, t_max);
 	if (t == -1)
 		return (0);
@@ -96,7 +95,7 @@ int	hit_tube(t_cyl *cyl, t_ray ray, float t_max, t_hit *hit_rec)
 	tmp.origin = cyl->center;
 	p = ray_at(ray, t);
 	bottom_center = ray_at(tmp, (cyl->height / 2 * -1));
-	dir_a = substract_points(p, bottom_center);
+	dir_a = normalize_point(substract_points(p, bottom_center));
 	x = dot_points((dir_a), normalize_point(cyl->dir));
 	n = normalize_point(substract_points(p, add_points((multiply_point_float \
 		(normalize_point(cyl->dir), x)), bottom_center)));
@@ -104,17 +103,17 @@ int	hit_tube(t_cyl *cyl, t_ray ray, float t_max, t_hit *hit_rec)
 	hit_rec->t = t;
 	hit_rec->hit_point = p;
 	hit_rec->center = cyl->center;
-	if (dot_points(rot_ray.dir, normalize_point(n)) < 0)
+	if (dot_points(normalize_point(rot_ray.dir), normalize_point(n)) < 0)
 	{
 		hit_rec->front_face = 1;
-		hit_rec->normal = rotate_axis_angle(normalize_point(n), \
-			axis, angle * -1);
+		hit_rec->normal = normalize_point(rotate_axis_angle(normalize_point(n), \
+			axis, angle * -1));
 	}
 	else
 	{
 		hit_rec->front_face = 0;
-		hit_rec->normal = rotate_axis_angle(normalize_point(multiply_point_float \
-			(normalize_point(n), -1.0)), axis, angle * -1);
+		hit_rec->normal = normalize_point(rotate_axis_angle(normalize_point(multiply_point_float \
+			(normalize_point(n), -1.0)), axis, angle * -1));
 	}
 	return (1);
 }
