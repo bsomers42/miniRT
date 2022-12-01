@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/18 14:32:01 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/11/18 17:47:06 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/12/01 12:46:02 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ float	norm(t_point vec)
 {
 	float	res;
 
-	res = (float)pow(vec.x, 2);
-	res += (float)pow(vec.y, 2);
-	res += (float)pow(vec.z, 2);
-	return ((float)sqrt(res));
+	res = (float)powf(vec.x, 2);
+	res += (float)powf(vec.y, 2);
+	res += (float)powf(vec.z, 2);
+	return ((float)sqrtf(res)); //jma sqrt of sqrtf?
 }
 
 float	calc_angle(t_point upaxis, t_cyl *cyl)
