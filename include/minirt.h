@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 15:11:47 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/12/01 09:43:08 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/12/01 11:27:31 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ int		hit_any_pl(t_parse map_info, t_ray ray, t_hit *hit_rec, float t_max);
 int		hit_any_cyl(t_parse map_info, t_ray ray, t_hit *hit_rec, float t_max);
 int		hit_anything(t_parse map_info, t_ray ray, t_hit *hit_rec);
 
-float	norm(t_point vec);
+// float	norm(t_point vec);
 int		hit_both_caps(t_cyl *cyl, t_ray ray, float t_max, t_hit *tmp_rec);
 
 //tracer utils
