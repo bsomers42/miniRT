@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 15:11:47 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/12/01 11:27:31 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/12/01 16:41:55 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,10 @@ typedef struct s_cam
 	t_point		origin;
 	t_point		dir;
 	int			fov;
-	t_vector	llc;	
+	t_vector	back;
+	t_vector	horizontal;
+	t_vector	vertical;		
+	t_vector	llc;
 }	t_cam;
 
 typedef struct s_light
@@ -141,11 +144,11 @@ t_color	antialias_color(t_parse map_info, int x, int y);
 t_color	point_ray_get_color(t_parse map_info, float i, float j);
 t_point	ray_at(t_ray ray, float t);
 
-t_point	calc_vertical(t_parse map_info, t_point backward);
-t_point	calc_horizontal(t_parse map_info, t_point backward);
+t_point	calc_horizontal(t_parse map_info);
+t_point	calc_vertical(t_parse map_info);
+t_point	calculate_lower_left_corner(t_parse map_info);
 t_point	add_vertical_position(t_point dir, t_parse map_info, float j);
 t_point	add_horizontal_position(t_point dir, t_parse map_info, float i);
-t_point	calculate_lower_left_corner(t_parse map_info);
 
 void	error_exit(char *message, int exit_code);
 void	write_exit(char *message, int exit_code);
