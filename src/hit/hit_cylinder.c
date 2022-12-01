@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/03 11:37:15 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/12/01 12:56:24 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/12/01 13:33:05 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int	hit_tube(t_cyl *cyl, t_ray ray, float t_max, t_hit *hit_rec)
 	p = ray_at(ray, t);
 	bottom_center = ray_at(tmp, (cyl->height / 2 * -1));
 	lena = norm(substract_points(p, bottom_center));
-	x = sqrtf(powf(cyl->radius, 2) + powf(lena, 2));//sinf(cyl->radius / lena);
+	x = sqrtf(powf(cyl->radius, 2.0) + powf(lena, 2.0));//sinf(cyl->radius / lena);
 	tmp.origin = bottom_center;
 	pp = ray_at(tmp, x);
 	n = normalize_point(substract_points(p, pp));
@@ -110,7 +110,7 @@ int	hit_tube(t_cyl *cyl, t_ray ray, float t_max, t_hit *hit_rec)
 	hit_rec->t = t;
 	hit_rec->hit_point = p;
 	hit_rec->center = cyl->center;
-	if (dot_points(ray.dir/*normalize_point(rot_ray.dir)*/, normalize_point(n)) < 0)
+	if (dot_points(ray.dir/*normalize_point(rot_ray.dir)*/, n) < 0)
 	{
 		hit_rec->front_face = 1;
 		hit_rec->normal = n;//normalize_point(rotate_axis_angle(normalize_point(n), 
@@ -119,7 +119,7 @@ int	hit_tube(t_cyl *cyl, t_ray ray, float t_max, t_hit *hit_rec)
 	else
 	{
 		hit_rec->front_face = 0;
-		hit_rec->normal = multiply_point_float(normalize_point(n), -1.0);// normalize_point(rotate_axis_angle(normalize_point(multiply_point_float \
+		hit_rec->normal = multiply_point_float(n, -1.0);// normalize_point(rotate_axis_angle(normalize_point(multiply_point_float \
 			//(normalize_point(n), -1.0)), axis, angle * -1));
 	}
 	return (1);
