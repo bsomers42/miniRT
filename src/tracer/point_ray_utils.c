@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/11 12:37:15 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/11/28 17:36:44 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/12/01 11:18:23 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ t_point	add_vertical_position(t_point dir, t_parse map_info, float j)
 	t_point	vertical;
 	float	y_orientation;
 
-	backward = normalize_point(multiply_point_float(map_info.cam.dir, -1.0));
+	backward = multiply_point_float(map_info.cam.dir, -1.0);
 	vertical = calc_vertical(map_info, backward);
 	y_orientation = j / (float)(HEIGHT - 1);
 	new_dir = add_points(dir, multiply_point_float(vertical, y_orientation));
@@ -64,7 +64,7 @@ t_point	add_horizontal_position(t_point dir, t_parse map_info, float i)
 	t_point	horizontal;
 	float	x_orientation;
 
-	backward = normalize_point(multiply_point_float(map_info.cam.dir, -1.0));
+	backward = multiply_point_float(map_info.cam.dir, -1.0);
 	horizontal = calc_horizontal(map_info, backward);
 	x_orientation = i / (float)(WIDTH - 1);
 	new_dir = add_points(dir, multiply_point_float(horizontal, x_orientation));
@@ -78,7 +78,7 @@ t_point	calculate_lower_left_corner(t_parse map_info)
 	t_point	ver;
 	t_point	lower_left;
 
-	backward = normalize_point(multiply_point_float(map_info.cam.dir, -1.0));
+	backward = multiply_point_float(map_info.cam.dir, -1.0);
 	hor = calc_horizontal(map_info, backward);
 	ver = calc_vertical(map_info, backward);
 	lower_left = map_info.cam.origin;
