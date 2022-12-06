@@ -6,13 +6,12 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 13:26:28 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/12/01 11:25:36 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/12/06 14:48:29 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include <math.h>
-#include <stdio.h> //remove at end
 
 t_point	ray_at(t_ray ray, float t)
 {

@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 15:46:19 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/12/01 12:49:40 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/12/06 11:21:29 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ float	calculate_c(t_point change, float radius)
 	return (result);
 }
 
-float	calculate_root(t_sphere *sphere, t_ray ray, float t_min, float t_max)
+float	calculate_root(t_sphere *sphere, t_ray ray, float t_max)
 {
 	t_point	change;
 	float	a;
@@ -36,10 +36,10 @@ float	calculate_root(t_sphere *sphere, t_ray ray, float t_min, float t_max)
 	if (d < 0.0)
 		return (-1.0);
 	root = (-half_b - sqrtf(d)) / a;
-	if (root < t_min || t_max < root)
+	if (root < T_MIN || t_max < root)
 	{
 		root = (-half_b + sqrtf(d)) / a;
-		if (root < t_min || t_max < root)
+		if (root < T_MIN || t_max < root)
 			return (-1.0);
 	}
 	return (root);
@@ -50,7 +50,7 @@ int	hit_sphere(t_sphere *sphere, t_ray ray, float t_max, t_hit *hit_rec)
 	float		root;
 	t_vector	normal;
 
-	root = calculate_root(sphere, ray, 0.01, t_max);
+	root = calculate_root(sphere, ray, t_max);
 	if (root == -1.0)
 		return (0);
 	hit_rec->t = root;

@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 14:54:42 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/12/01 09:49:52 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/12/06 13:29:10 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,25 @@
 
 void	minirt_keyhook(mlx_key_data_t keydata, void *ptr)
 {
+	// t_parse *parse;
+
+	// parse = ptr;
 	(void)ptr;
 	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
+	{
+		// free_minirt(parse); //Segfault!?
 		exit(EXIT_SUCCESS);
+	}
 }
 
 void	minirt_close(void *ptr)
 {
+	// t_parse *parse;
+
+	// parse = ptr;
+
 	(void)ptr;
+	// free_minirt(parse); //Segfault?!
 	exit(EXIT_SUCCESS);
 }
 
@@ -60,14 +71,14 @@ int	main(int argc, char *argv[])
 		write_exit("Incorrect args! Usage: ./minirt <mapname>.rt\n", 1);
 	init_data(&data, argv);
 	init_infos(&infos, &data);
-	mlx_key_hook(data.mlx_str.mlx, &minirt_keyhook, NULL);
-	mlx_close_hook(data.mlx_str.mlx, &minirt_close, NULL);
+	mlx_key_hook(data.mlx_str.mlx, &minirt_keyhook, NULL);//&data.parse);
+	mlx_close_hook(data.mlx_str.mlx, &minirt_close, NULL);//&data.parse);
 	mlx_image_to_window(data.mlx_str.mlx, data.mlx_str.img, 0, 0);
 	draw_loading_bar();
 	make_threads(&infos);
 	mlx_loop(data.mlx_str.mlx);
 	mlx_delete_image(data.mlx_str.mlx, data.mlx_str.img);
 	mlx_terminate(data.mlx_str.mlx);
-	free_minirt(data.parse);
+	// free_minirt(data.parse);
 	return (0);
 }

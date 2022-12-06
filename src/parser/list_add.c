@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/11 11:13:12 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/12/01 13:10:37 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/12/06 11:19:32 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ void	ft_lstadd_cy(t_list **lst, char **line)
 		write_exit("Wrong information for cylinder\n", 1);
 	stofl_center(line[1], &cy.center);
 	stofl_vec(line[2], &cy.dir);
+	if (cy.dir.x == 0 && cy.dir.y < 0 && cy.dir.z == 0)
+		cy.dir.y = cy.dir.y * -1;
 	check_float_value(line[3]);
 	cy.radius = ft_stofl(line[3]) * 0.5;
 	check_float_value(line[4]);

@@ -6,12 +6,13 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/03 11:37:15 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/12/01 13:33:05 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/12/06 15:30:56 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include <math.h>
+#include <stdio.h> //weggegeggg
 
 t_point	rotate_axis_angle(t_point vec, t_point axis, float angle)
 {
@@ -91,6 +92,7 @@ int	hit_tube(t_cyl *cyl, t_ray ray, float t_max, t_hit *hit_rec)
 		cyl->center), axis, angle);
 	rot_ray.dir = normalize_point(rotate_axis_angle(ray.dir, axis, angle));
 	t = quadratic_form_cyl(cyl, rot_ray, t_max);
+	//Hij denk dat t -1 is bij cam naar beneden!!!
 	if (t == -1)
 		return (0);
 	tmp.dir = normalize_point(cyl->dir);
@@ -110,18 +112,7 @@ int	hit_tube(t_cyl *cyl, t_ray ray, float t_max, t_hit *hit_rec)
 	hit_rec->t = t;
 	hit_rec->hit_point = p;
 	hit_rec->center = cyl->center;
-	if (dot_points(ray.dir/*normalize_point(rot_ray.dir)*/, n) < 0)
-	{
-		hit_rec->front_face = 1;
-		hit_rec->normal = n;//normalize_point(rotate_axis_angle(normalize_point(n), 
-			//axis, angle * -1));
-	}
-	else
-	{
-		hit_rec->front_face = 0;
-		hit_rec->normal = multiply_point_float(n, -1.0);// normalize_point(rotate_axis_angle(normalize_point(multiply_point_float \
-			//(normalize_point(n), -1.0)), axis, angle * -1));
-	}
+	set_normal(/*rot_*/ray, hit_rec, normalize_point(n));
 	return (1);
 }
 
@@ -138,7 +129,7 @@ int	hit_any_cyl(t_parse map_info, t_ray ray, t_hit *hit_rec, \
 	hit_anything = -1;
 	while (tmp)
 	{
-		if (hit_both_caps((t_cyl *)tmp->content, ray, t_max, &tmp_rec))
+		if (hit_caps((t_cyl *)tmp->content, ray, t_max, &tmp_rec))
 		{
 			hit_anything = i;
 			t_max = tmp_rec.t;
