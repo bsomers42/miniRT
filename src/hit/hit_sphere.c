@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 15:46:19 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/11/02 17:39:53 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/11/18 14:29:49 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ float	calculate_c(t_point change, float diam)
 	return (result);
 }
 
-float	calculate_root(t_sphere *sphere, t_ray ray, float t_min, float t_max)
+float	calculate_root(t_sphere *sphere, t_ray ray, float t_max)
 {
 	t_point	change;
 	float	a;
@@ -37,23 +37,23 @@ float	calculate_root(t_sphere *sphere, t_ray ray, float t_min, float t_max)
 	if (d < 0.0)
 		return (-1.0);
 	root = (-half_b - sqrt(d)) / a;
-	if (root < t_min || t_max < root)
+	if (root < T_MIN || t_max < root)
 	{
 		root = (-half_b + sqrt(d)) / a;
-		if (root < t_min || t_max < root)
+		if (root < T_MIN || t_max < root)
 			return (-1.0);
 	}
 	return (root);
 }
 
-int	hit_sphere(t_sphere *sphere, t_ray ray, float t_min, float t_max, t_besthit *hit_rec)
+int	hit_sphere(t_sphere *sphere, t_ray ray, float t_max, t_besthit *hit_rec)
 {
 	float		root;
 	t_vector	outward_normal;
 	float		radius;
 
 	radius = sphere->diam / 2;
-	root = calculate_root(sphere, ray, t_min, t_max);
+	root = calculate_root(sphere, ray, t_max);
 	if (root == -1.0)
 		return (0);
 	hit_rec->t = root;
@@ -76,7 +76,7 @@ int	hit_sphere(t_sphere *sphere, t_ray ray, float t_min, float t_max, t_besthit 
 	return (1);
 }
 
-int	hit_any_sphere(t_parse map_info, t_ray ray, t_besthit *hit_rec, float t_min, float t_max)
+int	hit_any_sphere(t_parse map_info, t_ray ray, t_besthit *hit_rec, float t_max)
 {
 	int			hit_anything;
 	t_besthit	tmp_rec;
@@ -90,7 +90,7 @@ int	hit_any_sphere(t_parse map_info, t_ray ray, t_besthit *hit_rec, float t_min,
 	while (tmp)
 	{
 		sphere = (t_sphere *)tmp->content;
-		if (hit_sphere(sphere, ray, t_min, t_max, &tmp_rec))
+		if (hit_sphere(sphere, ray, t_max, &tmp_rec))
 		{
 			hit_anything = i;
 			t_max = tmp_rec.t;

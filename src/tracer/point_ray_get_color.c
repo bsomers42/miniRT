@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 13:26:28 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/11/17 14:34:09 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/11/18 14:24:58 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ t_color	calculate_shadow_shade(t_parse map_info, t_besthit record)
 	light_ray.dir = substract_points(map_info.light.origin, light_ray.origin); //temporary this is actually lightray length
 	light_len = sqrt((float)dot_points(light_ray.dir, light_ray.dir));
 	light_ray.dir = normalize_point(light_ray.dir);
-	if (hit_anything(map_info, light_ray, &not_needed, 0.01, light_len) > 0) // or inside of shape?
+	if (hit_anything(map_info, light_ray, &not_needed, light_len) > 0) // or inside of shape?
 	{
 		color.r = ((float)record.color.r / 255.0) / (float)M_PI * ((float)(float)map_info.light.bright + ((float)map_info.amb.color.r * map_info.amb.ratio / 255.0)) * 255.0;
 		color.g = ((float)record.color.g / 255.0) / (float)M_PI * ((float)(float)map_info.light.bright + ((float)map_info.amb.color.g * map_info.amb.ratio / 255.0)) * 255.0;
@@ -74,7 +74,7 @@ t_color	get_ray_color(t_parse map_info, t_ray ray)
 	t_besthit	record;
 	int			closest_index;
 
-	closest_index = hit_anything(map_info, ray, &record, 0.01, INFINITY);
+	closest_index = hit_anything(map_info, ray, &record, INFINITY);
 	if (closest_index > 0)
 	{
 		color = calculate_shadow_shade(map_info, record);
