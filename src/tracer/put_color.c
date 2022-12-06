@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 12:45:02 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/11/10 13:22:11 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/12/01 12:48:48 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,16 @@ void	put_color(t_threadinfo *info, int i, int j, t_color color)
 	unsigned int	red;
 	unsigned int	green;
 	unsigned int	blue;
-	unsigned int	alpha;
+	t_mlx_str		str;
 
-	red = color.r * pow(256, 3);
-	green = color.g * pow(256, 2);
+	str = info->data->mlx_str;
+	red = color.r * powf(256, 3);
+	green = color.g * powf(256, 2);
 	blue = color.b * 256;
-	alpha = 255;
-	color_hex = red + green + blue + alpha;
+	color_hex = red + green + blue + 255;
 	if (pthread_mutex_lock(&(info->data->mlx_lock)) != 0)
 		error_exit("pthread_mutex_lock", 1);
-	mlx_put_pixel(info->data->mlx_str.img, WIDTH - i - 1, HEIGHT - j - 1, color_hex);
+	mlx_put_pixel(str.img, WIDTH - i - 1, HEIGHT - j - 1, color_hex);
 	if (pthread_mutex_unlock(&(info->data->mlx_lock)) != 0)
 		error_exit("pthread_mutex_unlock", 1);
 }

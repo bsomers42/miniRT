@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 14:54:42 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/11/17 17:19:45 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/06 13:29:10 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,31 +14,32 @@
 #include "MLX42.h"
 #include "threads.h"
 #include <stdlib.h>
-#include <stdio.h>	//remove in end maybe
+// #include <stdio.h>	//remove in end maybe
 #include <pthread.h>
 #include "libft.h"
 
 void	minirt_keyhook(mlx_key_data_t keydata, void *ptr)
 {
-	t_threadinfo	*info;
+	// t_parse *parse;
 
-	info = (t_threadinfo *)ptr;
-	// (void)mlx_str; //variable set but not used // jma
-	//free things before exiting
+	// parse = ptr;
+	(void)ptr;
 	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
+	{
+		// free_minirt(parse); //Segfault!?
 		exit(EXIT_SUCCESS);
-	// if (keydata.key == MLX_KEY_UP && keydata.action == MLX_PRESS)
-	// {
-	// 	printf("hoi\n");
-	// 	info->data->parse->cam.fov -= 10; //creates crash
-	// }
+	}
 }
 
 void	minirt_close(void *ptr)
 {
+	// t_parse *parse;
+
+	// parse = ptr;
+
 	(void)ptr;
-	//free things
-	exit(EXIT_SUCCESS); //Bespreken met Jorien!! 
+	// free_minirt(parse); //Segfault?!
+	exit(EXIT_SUCCESS);
 }
 
 void	draw_loading_bar(void)
@@ -66,19 +67,18 @@ int	main(int argc, char *argv[])
 	t_threadinfo	*infos;
 
 	// atexit(func_atexit);
-
 	if (argc != 2)
 		write_exit("Incorrect args! Usage: ./minirt <mapname>.rt\n", 1);
 	init_data(&data, argv);
 	init_infos(&infos, &data);
-	mlx_key_hook(data.mlx_str.mlx, &minirt_keyhook, &infos);
-	mlx_close_hook(data.mlx_str.mlx, &minirt_close, NULL);
+	mlx_key_hook(data.mlx_str.mlx, &minirt_keyhook, NULL);//&data.parse);
+	mlx_close_hook(data.mlx_str.mlx, &minirt_close, NULL);//&data.parse);
 	mlx_image_to_window(data.mlx_str.mlx, data.mlx_str.img, 0, 0);
 	draw_loading_bar();
 	make_threads(&infos);
 	mlx_loop(data.mlx_str.mlx);
 	mlx_delete_image(data.mlx_str.mlx, data.mlx_str.img);
 	mlx_terminate(data.mlx_str.mlx);
-	free_minirt(data.parse);
+	// free_minirt(data.parse);
 	return (0);
 }

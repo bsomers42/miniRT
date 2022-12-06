@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 13:26:28 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/11/18 14:24:58 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/06 14:48:29 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,59 @@ t_point	ray_at(t_ray ray, float t)
 	return (result);
 }
 
+t_color	calculate_shadow(t_parse map_info, t_hit record)
+{
+	float	r;
+	float	g;
+	float	b;
+
+	r = (((float)map_info.amb.color.r / 255.0) * map_info.amb.ratio * \
+		(float)record.color.r / 255.0);
+	g = (((float)map_info.amb.color.g / 255.0) * map_info.amb.ratio * \
+		(float)record.color.g / 255.0);
+	b = (((float)map_info.amb.color.b / 255.0) * map_info.amb.ratio * \
+		(float)record.color.b / 255.0);
+	if (r > 1.0)
+		r = 1.0;
+	if (g > 1.0)
+		g = 1.0;
+	if (b > 1.0)
+		b = 1.0;
+	return (new_color(r * 255.0, g * 255.0, b * 255.0));
+}
+
+/**
+ * @brief calculates the shade of the pixel: 
+ * 
+ * @param map_info 
+ * @param record 
+ * @param costheta 
+ * @return t_color 
+ */
+t_color	calculate_shade(t_parse map_info, t_hit record, float costheta)
+{
+	float	r;
+	float	g;
+	float	b;
+
+	r = (float)record.color.r * map_info.light.bright * costheta / 255.0 + \
+		((float)map_info.amb.color.r / 255.0 * map_info.amb.ratio * \
+		(float)record.color.r / 255.0);
+	g = (float)record.color.g * map_info.light.bright * costheta / 255.0 + \
+		((float)map_info.amb.color.g / 255.0 * map_info.amb.ratio * \
+		(float)record.color.g / 255.0);
+	b = (float)record.color.b * map_info.light.bright * costheta / 255.0 + \
+		((float)map_info.amb.color.b / 255.0 * map_info.amb.ratio * \
+		(float)record.color.b / 255.0);
+	if (r > 1.0)
+		r = 1.0;
+	if (g > 1.0)
+		g = 1.0;
+	if (b > 1.0)
+		b = 1.0;
+	return (new_color(r * 255.0, g * 255.0, b * 255.0));
+}
+
 /**
  * @brief If this pixel is in the shadow, calculate the ambient light at this
  *  pixel. If not in the shadow, calculate the combination of ambient and 
@@ -32,57 +85,25 @@ t_point	ray_at(t_ray ray, float t)
  * @param record 	information on the object closest to the ray origin
  * @return t_color 	the shaded color
  */
-t_color	calculate_shadow_shade(t_parse map_info, t_besthit record)
+t_color	calculate_shadow_shade(t_parse map_info, t_hit record)
 {
 	t_ray		light_ray;
-	float		light_len;
-	t_besthit	not_needed;
-	t_color		color;
-	double		costheta;
+	t_hit		not_needed;
+	float		costheta;
+	t_point		light_line;
 
 	light_ray.origin = record.hit_point;
-	light_ray.dir = substract_points(map_info.light.origin, light_ray.origin); //temporary this is actually lightray length
-	light_len = sqrt((float)dot_points(light_ray.dir, light_ray.dir));
-	light_ray.dir = normalize_point(light_ray.dir);
-	if (hit_anything(map_info, light_ray, &not_needed, light_len) > 0) // or inside of shape?
+	light_line = substract_points(map_info.light.origin, light_ray.origin);
+	not_needed.t = norm(light_line);
+	light_ray.dir = normalize_point(light_line);
+	if (hit_anything(map_info, light_ray, &not_needed) > 0)
 	{
-		color.r = ((float)record.color.r / 255.0) / (float)M_PI * ((float)(float)map_info.light.bright + ((float)map_info.amb.color.r * map_info.amb.ratio / 255.0)) * 255.0;
-		color.g = ((float)record.color.g / 255.0) / (float)M_PI * ((float)(float)map_info.light.bright + ((float)map_info.amb.color.g * map_info.amb.ratio / 255.0)) * 255.0;
-		color.b = ((float)record.color.b / 255.0) / (float)M_PI * ((float)(float)map_info.light.bright + ((float)map_info.amb.color.b * map_info.amb.ratio / 255.0)) * 255.0;
-		return (color);
-	}	
-	costheta = (float)dot_points(record.normal, light_ray.dir);
+		return (calculate_shadow(map_info, record));
+	}
+	costheta = dot_points(record.normal, light_ray.dir);
 	if (costheta < 0.0)
 		costheta = 0.0;
-	color.r = (((float)record.color.r / 255.0) / (float)M_PI * ((float)(float)map_info.light.bright + ((float)costheta + (float)map_info.amb.color.r * map_info.amb.ratio / 255.0))) * 255.0;
-	color.g = (((float)record.color.g / 255.0) / (float)M_PI * ((float)(float)map_info.light.bright + ((float)costheta + (float)map_info.amb.color.g * map_info.amb.ratio / 255.0))) * 255.0;
-	color.b = (((float)record.color.b / 255.0) / (float)M_PI * ((float)(float)map_info.light.bright + ((double)costheta + (double)map_info.amb.color.b * map_info.amb.ratio / 255.0))) * 255.0;
-	return (color);
-}
-
-/**
- * @brief Get the color is this ray. If you hit nothing, color is black. Else,
- * the color is the shaded version of the color of the shape closest to you. 
- * 
- * @param map_info parsed info from .rt map
- * @param ray 
- * @return t_color 
- */
-t_color	get_ray_color(t_parse map_info, t_ray ray)
-{
-	t_color		color;
-	t_besthit	record;
-	int			closest_index;
-
-	closest_index = hit_anything(map_info, ray, &record, INFINITY);
-	if (closest_index > 0)
-	{
-		color = calculate_shadow_shade(map_info, record);
-		// color = record.color;
-	}
-	else
-		color = new_color(0, 0, 0);
-	return (color);
+	return (calculate_shade(map_info, record, costheta));
 }
 
 /**
@@ -96,15 +117,22 @@ t_color	get_ray_color(t_parse map_info, t_ray ray)
  */
 t_color	point_ray_get_color(t_parse map_info, float i, float j)
 {
-	t_ray	ray;
-	t_color	color;
+	t_ray		ray;
+	t_color		color;
+	t_hit		record;
+	int			closest_index;
 
 	ray.origin = map_info.cam.origin;
-	ray.dir = calc_lower_left_corner(map_info);
+	ray.dir = map_info.cam.llc;
 	ray.dir = add_horizontal_position(ray.dir, map_info, i);
 	ray.dir = add_vertical_position(ray.dir, map_info, j);
 	ray.dir = substract_points(ray.dir, ray.origin);
-	ray.dir = normalize_point(ray.dir);
-	color = get_ray_color(map_info, ray);
+	ray.dir = normalize_point(ray.dir); //!!!
+	record.t = INFINITY;
+	closest_index = hit_anything(map_info, ray, &record);
+	if (closest_index > 0)
+		color = calculate_shadow_shade(map_info, record);
+	else
+		color = new_color(0, 0, 0);
 	return (color);
 }

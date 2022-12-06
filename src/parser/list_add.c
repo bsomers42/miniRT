@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/11 11:13:12 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/11/29 13:31:01 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/06 11:19:32 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_lstadd_sp(t_list **lst, char **line)
 	if (check_num_of_elems(line, 4) != 0)
 		write_exit("Wrong information for sphere\n", 1);
 	stofl_center(line[1], &sp.center);
-	sp.diam = ft_stofl(line[2]);
+	sp.radius = ft_stofl(line[2]) * 0.5;
 	atoi_color(line[3], &sp.color);
 	sp_void = malloc(sizeof(t_sphere));
 	if (sp_void == NULL)

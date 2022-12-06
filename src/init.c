@@ -6,16 +6,23 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/26 11:16:15 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/11/02 16:46:01 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/06 14:17:00 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include "threads.h"
+#include <stdio.h> //wegggggg
 
 void	init_data(t_data *data, char *argv[])
 {
 	data->parse = parse_map(argv);
+	data->parse->cam.back = multiply_point_float(data->parse->cam.dir, -1.0);
+	printf("back dir x: [%f], y: [%f], z: [%f]\n", data->parse->cam.back.x, data->parse->cam.back.y, data->parse->cam.back.z);
+	data->parse->cam.horizontal = calc_horizontal(*(data->parse));
+	data->parse->cam.vertical = calc_vertical(*(data->parse));
+
+	data->parse->cam.llc = calculate_lower_left_corner(*(data->parse));
 	data->mlx_str.mlx = mlx_init(WIDTH, HEIGHT, "MickeyRT", true);
 	if (data->mlx_str.mlx == NULL)
 		error_exit("mlx_init failed!\n", 1);
