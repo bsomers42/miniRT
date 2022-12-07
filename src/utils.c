@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/19 11:41:16 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/12/06 13:19:52 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/07 16:19:22 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@
 
 void	free_lst(t_list **lst)
 {
-	t_list *curr;
+	t_list	*curr;
 
 	while (*lst)
 	{
