@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/11 12:37:15 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/12/06 14:45:21 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/06 21:34:53 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,12 @@ t_point	calc_vertical(t_parse map_info)
 
 	scale = tan((float)map_info.cam.fov * (float)M_PI / 180.0 * 0.5);
 	viewport_height = 2.0 * scale / 16.0 * 9.0;
-	left = normalize_point(cross_points(new_point(0, 1, 0), map_info.cam.back));
-	//bs: left heeft een foute waarde bij cam met vec 0,-1,0 niet werkt
+	if (map_info.cam.back.x == 0 && (map_info.cam.back.y == 1 || \
+		map_info.cam.back.y == -1) && map_info.cam.back.z == 0)
+		left = new_point(-1, 0, 0);
+	else
+		left = normalize_point(cross_points(new_point(0, 1, 0), \
+		map_info.cam.back));
 	true_up = cross_points(map_info.cam.back, left);
 	vertical = multiply_point_float(true_up, viewport_height);
 	return (vertical);
@@ -39,7 +43,12 @@ t_point	calc_horizontal(t_parse map_info)
 
 	scale = tan((float)map_info.cam.fov * (float)M_PI / 180.0 * 0.5);
 	viewport_width = 2.0 * scale;
-	left = normalize_point(cross_points(new_point(0, 1, 0), map_info.cam.back));
+	if (map_info.cam.back.x == 0 && (map_info.cam.back.y == 1 || \
+		map_info.cam.back.y == -1) && map_info.cam.back.z == 0)
+		left = new_point(-1, 0, 0);
+	else
+		left = normalize_point(cross_points(new_point(0, 1, 0), \
+		map_info.cam.back));
 	horizontal = multiply_point_float(left, viewport_width);
 	return (horizontal);
 }
