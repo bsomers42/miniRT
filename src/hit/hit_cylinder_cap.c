@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/18 16:38:10 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/12/06 15:23:59 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/07 12:24:47 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,29 @@ int	hit_caps(t_cyl *cyl, t_ray ray, float t_max, t_hit *hit_rec)
 		sides++;
 	}
 	return (0);
+}
+
+int	hit_any_cap(t_parse map_info, t_ray ray, t_hit *hit_rec, \
+	float t_max)
+{
+	int			hit_anything;
+	t_hit		tmp_rec;
+	int			i;
+	t_list		*tmp;
+
+	tmp = map_info.lst_cyl;
+	i = 0;
+	hit_anything = -1;
+	while (tmp)
+	{
+		if (hit_caps((t_cyl *)tmp->content, ray, t_max, &tmp_rec))
+		{
+			hit_anything = i;
+			t_max = tmp_rec.t;
+			*hit_rec = tmp_rec;
+		}
+		tmp = tmp->next;
+		i++;
+	}
+	return (hit_anything >= 0);
 }

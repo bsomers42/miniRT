@@ -1,44 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   hit_cylinder.c                                     :+:    :+:            */
+/*   hit_cylinder_tube.c                                :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/03 11:37:15 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/12/06 15:30:56 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/07 13:10:23 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include <math.h>
-#include <stdio.h> //weggegeggg
 
-t_point	rotate_axis_angle(t_point vec, t_point axis, float angle)
-{
-	t_point	vec_orig;
-
-	if (angle == 0)
-		return (vec);
-	vec_orig = vec;
-	vec = multiply_point_float(vec, cos(angle));
-	vec = add_points(vec, multiply_point_float((cross_points(axis, vec_orig)), sin(angle)));
-	vec = add_points(vec, multiply_point_float(multiply_point_float \
-		(axis, dot_points(axis, vec_orig)), (1 - cos(angle))));
-	return (vec);
-}
-
-float	quadratic_form_cyl(t_cyl *cyl, t_ray rot_ray, float t_max)
+void	abc_formula(t_ray rot_ray, t_cyl *cyl, float *t)
 {
 	float	a;
 	float	b;
 	float	c;
 	float	d;
-	t_point	p;
-	float	*t;
-	float	t_def;
 
-	t = malloc(3 * sizeof(float));
 	a = rot_ray.dir.x * rot_ray.dir.x + rot_ray.dir.z * rot_ray.dir.z;
 	b = 2 * (rot_ray.origin.x * rot_ray.dir.x + rot_ray.origin.z * \
 		rot_ray.dir.z);
@@ -46,9 +27,23 @@ float	quadratic_form_cyl(t_cyl *cyl, t_ray rot_ray, float t_max)
 		rot_ray.origin.z - powf(cyl->radius, 2);
 	d = b * b - 4 * a * c;
 	if (d < 0)
-		return (-1);
+	{
+		t[0] = -1;
+		t[1] = -1;
+		return ;
+	}
 	t[0] = (-b + sqrtf(d)) / (2 * a);
 	t[1] = (-b - sqrtf(d)) / (2 * a);
+}
+
+float	quadratic_form_cyl(t_cyl *cyl, t_ray rot_ray, float t_max)
+{
+	t_point	p;
+	float	*t;
+	float	t_def;
+
+	t = malloc(3 * sizeof(float));
+	abc_formula(rot_ray, cyl, t);
 	if ((t[0] < (float)T_MIN && t[1] < (float)T_MIN) || \
 		(t[0] > t_max && t[1] > t_max))
 		return (-1);
@@ -70,53 +65,46 @@ float	quadratic_form_cyl(t_cyl *cyl, t_ray rot_ray, float t_max)
 	return (t_def);
 }
 
-	//Note to self: don't forget to check if inside cyl!!
+void	find_cyl_values(t_cyl *cyl, t_point *p, t_point *n, t_ray tmp)
+{
+	t_point	bottom_center;
+	float	lena;
+	float	x;
+	t_point	pp;
+
+	bottom_center = ray_at(tmp, (cyl->height / 2 * -1));
+	lena = norm(substract_points(*p, bottom_center));
+	x = sqrtf(powf(cyl->radius, 2.0) + powf(lena, 2.0));
+	tmp.origin = bottom_center;
+	pp = ray_at(tmp, x);
+	*n = normalize_point(substract_points(*p, pp));
+}
+
 int	hit_tube(t_cyl *cyl, t_ray ray, float t_max, t_hit *hit_rec)
 {
 	t_ray	rot_ray;
 	t_point	n;
 	t_point	p;
-	t_point	axis;
-	float	angle;
-	// t_point	dir_a;
-	t_point	bottom_center;
 	t_ray	tmp;
 	float	t;
-	float	x;
-	float	lena;
-	t_point pp;
 
-	angle = calc_angle(new_point(0, 1, 0), cyl);
-	axis = normalize_point(cross_points(normalize_point(cyl->dir), new_point(0, 1, 0)));
-	rot_ray.origin = rotate_axis_angle(substract_points(ray.origin, \
-		cyl->center), axis, angle);
-	rot_ray.dir = normalize_point(rotate_axis_angle(ray.dir, axis, angle));
+	rot_ray = apply_rodrigues(cyl, ray);
 	t = quadratic_form_cyl(cyl, rot_ray, t_max);
-	//Hij denk dat t -1 is bij cam naar beneden!!!
 	if (t == -1)
 		return (0);
 	tmp.dir = normalize_point(cyl->dir);
 	tmp.origin = cyl->center;
 	p = ray_at(ray, t);
-	bottom_center = ray_at(tmp, (cyl->height / 2 * -1));
-	lena = norm(substract_points(p, bottom_center));
-	x = sqrtf(powf(cyl->radius, 2.0) + powf(lena, 2.0));//sinf(cyl->radius / lena);
-	tmp.origin = bottom_center;
-	pp = ray_at(tmp, x);
-	n = normalize_point(substract_points(p, pp));
-	// dir_a = /*normalize_point(*/substract_points(p, bottom_center);
-	// x = dot_points((dir_a), normalize_point(cyl->dir));
-	// n = normalize_point(substract_points(p, add_points((multiply_point_float \
-	// 	(normalize_point(cyl->dir), x)), bottom_center)));
+	find_cyl_values(cyl, &p, &n, tmp);
 	hit_rec->color = cyl->color;
 	hit_rec->t = t;
 	hit_rec->hit_point = p;
 	hit_rec->center = cyl->center;
-	set_normal(/*rot_*/ray, hit_rec, normalize_point(n));
+	set_normal(ray, hit_rec, normalize_point(n));
 	return (1);
 }
 
-int	hit_any_cyl(t_parse map_info, t_ray ray, t_hit *hit_rec, \
+int	hit_any_tube(t_parse map_info, t_ray ray, t_hit *hit_rec, \
 	float t_max)
 {
 	int			hit_anything;
@@ -129,12 +117,6 @@ int	hit_any_cyl(t_parse map_info, t_ray ray, t_hit *hit_rec, \
 	hit_anything = -1;
 	while (tmp)
 	{
-		if (hit_caps((t_cyl *)tmp->content, ray, t_max, &tmp_rec))
-		{
-			hit_anything = i;
-			t_max = tmp_rec.t;
-			*hit_rec = tmp_rec;
-		}
 		if (hit_tube((t_cyl *)tmp->content, ray, t_max, &tmp_rec))
 		{
 			hit_anything = i;

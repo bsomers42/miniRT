@@ -1,12 +1,12 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         ::::::::             #
-#    makefile                                           :+:    :+:             #
+#    Makefile                                           :+:    :+:             #
 #                                                      +:+                     #
 #    By: bsomers <bsomers@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/09/22 14:52:38 by bsomers       #+#    #+#                  #
-#    Updated: 2022/11/28 17:39:57 by jaberkro      ########   odam.nl          #
+#    Updated: 2022/12/07 12:25:05 by bsomers       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,7 @@ SRC = main.c \
 	hit/hit_sphere.c \
 	hit/hit_anything.c \
 	hit/hit_plane.c \
-	hit/hit_cylinder.c \
+	hit/hit_cylinder_tube.c \
 	hit/hit_cylinder_cap.c \
 	hit/hit_utils.c \
 	threads.c
