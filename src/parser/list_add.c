@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/11 11:13:12 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/12/08 14:58:13 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/08 16:47:30 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	ft_lstadd_sp(t_list **lst, char **line)
 
 	if (check_num_of_elems(line, 4) != 0)
 		write_exit("Wrong information for sphere\n", 1);
-	stofl_center(line[1], &sp.center);
-	sp.radius = ft_stofl(line[2]) * 0.5;
+	stod_center(line[1], &sp.center);
+	sp.radius = ft_stod(line[2]) * 0.5;
 	atoi_color(line[3], &sp.color);
 	sp_void = malloc(sizeof(t_sphere));
 	if (sp_void == NULL)
@@ -37,8 +37,8 @@ void	ft_lstadd_pl(t_list **lst, char **line)
 
 	if (check_num_of_elems(line, 4) != 0)
 		write_exit("Wrong information for plane\n", 1);
-	stofl_center(line[1], &pl.center);
-	stofl_vec(line[2], &pl.dir);
+	stod_center(line[1], &pl.center);
+	stod_vec(line[2], &pl.dir);
 	atoi_color(line[3], &pl.color);
 	pl_void = malloc(sizeof(t_plane));
 	if (pl_void == NULL)
@@ -55,14 +55,14 @@ void	ft_lstadd_cy(t_list **lst, char **line)
 
 	if (check_num_of_elems(line, 6) != 0)
 		write_exit("Wrong information for cylinder\n", 1);
-	stofl_center(line[1], &cy.center);
-	stofl_vec(line[2], &cy.dir);
+	stod_center(line[1], &cy.center);
+	stod_vec(line[2], &cy.dir);
 	if (cy.dir.x == 0 && cy.dir.y < 0 && cy.dir.z == 0)
 		cy.dir.y = cy.dir.y * -1;
 	check_double_value(line[3]);
-	cy.radius = ft_stofl(line[3]) * 0.5;
+	cy.radius = ft_stod(line[3]) * 0.5;
 	check_double_value(line[4]);
-	cy.height = ft_stofl(line[4]);
+	cy.height = ft_stod(line[4]);
 	atoi_color(line[5], &cy.color);
 	cy_void = malloc(sizeof(t_cyl));
 	if (cy_void == NULL)

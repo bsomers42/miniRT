@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 15:11:47 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/12/08 15:03:40 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/08 16:46:59 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,8 +110,8 @@ void	ft_lstadd_sp(t_list **lst, char **line);
 void	ft_lstadd_pl(t_list **lst, char **line);
 void	ft_lstadd_cy(t_list **lst, char **line);
 void	atoi_color(char *line, t_color *color);
-void	stofl_center(char *line, t_point *center);
-void	stofl_vec(char *line, t_point *vec);
+void	stod_center(char *line, t_point *center);
+void	stod_vec(char *line, t_point *vec);
 
 //parsing checks
 void	malloc_check_arr(char **str);

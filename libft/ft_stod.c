@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   ft_stofl.c                                         :+:    :+:            */
+/*   ft_stod.c                                         :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
@@ -12,28 +12,28 @@
 
 #include "libft.h"
 
-void	convert(float *fact_ptr, float *res_ptr, int d, int dot_found)
+void	convert(double *fact_ptr, double *res_ptr, int d, int dot_found)
 {
-	float	fact;
-	float	res;
+	double	fact;
+	double	res;
 
 	res = *res_ptr;
 	fact = *fact_ptr;
 	if (dot_found)
 	{
 		fact /= 10.0f;
-		res = res * 10.0f + (float)d;
+		res = res * 10.0f + (double)d;
 	}
 	else
-		res = res * 10.0f + (float)d;
+		res = res * 10.0f + (double)d;
 	*res_ptr = res;
 	*fact_ptr = fact;
 }
 
-float	ft_stofl(char *str)
+double	ft_stod(char *str)
 {
-	float	res;
-	float	fact;
+	double	res;
+	double	fact;
 	int		dot_found;
 	int		d;
 

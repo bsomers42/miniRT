@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 16:47:20 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/12/08 14:58:12 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/08 16:47:16 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	assign_ambient(char *str, int *amb_ptr, t_parse *parse)
 	if (check_num_of_elems(split, 3) != 0)
 		write_exit("Wrong information for ambient (A)\n", 1);
 	check_double_value(split[1]);
-	parse->amb.ratio = ft_stofl(split[1]);
+	parse->amb.ratio = ft_stod(split[1]);
 	if (parse->amb.ratio < 0 || parse->amb.ratio > 1)
 		write_exit("Wrong ambient lighting ratio. [0.0,1.0]\n", 1);
 	atoi_color(split[2], &parse->amb.color);
@@ -38,8 +38,8 @@ void	assign_camera(char *str, int *cam_ptr, t_parse *parse)
 	malloc_check_arr(split);
 	if (check_num_of_elems(split, 4) != 0)
 		write_exit("Wrong information for camera (C)\n", 1);
-	stofl_center(split[1], &parse->cam.origin);
-	stofl_vec(split[2], &parse->cam.dir);
+	stod_center(split[1], &parse->cam.origin);
+	stod_vec(split[2], &parse->cam.dir);
 	parse->cam.fov = ft_atoi(split[3]);
 	if (parse->cam.fov <= 0 || parse->cam.fov > 180)
 		write_exit("Wrong FOV value\n", 1);
@@ -55,9 +55,9 @@ void	assign_light(char *str, int *light_ptr, t_parse *parse)
 	malloc_check_arr(split);
 	if (check_num_of_elems(split, 3) != 0)
 		write_exit("Wrong information for light (L)\n", 1);
-	stofl_center(split[1], &parse->light.origin);
+	stod_center(split[1], &parse->light.origin);
 	check_double_value(split[2]);
-	parse->light.bright = ft_stofl(split[2]);
+	parse->light.bright = ft_stod(split[2]);
 	if (parse->light.bright < 0 || parse->light.bright > 1)
 		write_exit("Wrong light brightness ratio. [0.0,1.0]\n", 1);
 	free_array(split);

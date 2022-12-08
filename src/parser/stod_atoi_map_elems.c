@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   stofl_atoi_map_elems.c                             :+:    :+:            */
+/*   stod_atoi_map_elems.c                             :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
@@ -30,7 +30,7 @@ void	atoi_color(char *line, t_color *color)
 	free_array(tmp);
 }
 
-void	stofl_center(char *line, t_point *center)
+void	stod_center(char *line, t_point *center)
 {
 	char		**tmp;
 
@@ -41,13 +41,13 @@ void	stofl_center(char *line, t_point *center)
 	check_double_value(tmp[0]);
 	check_double_value(tmp[1]);
 	check_double_value(tmp[2]);
-	center->x = ft_stofl(tmp[0]);
-	center->y = ft_stofl(tmp[1]);
-	center->z = ft_stofl(tmp[2]);
+	center->x = ft_stod(tmp[0]);
+	center->y = ft_stod(tmp[1]);
+	center->z = ft_stod(tmp[2]);
 	free_array(tmp);
 }
 
-void	stofl_vec(char *line, t_point *vec)
+void	stod_vec(char *line, t_point *vec)
 {
 	char	**tmp;
 
@@ -58,9 +58,9 @@ void	stofl_vec(char *line, t_point *vec)
 	check_double_value(tmp[0]);
 	check_double_value(tmp[1]);
 	check_double_value(tmp[2]);
-	vec->x = ft_stofl(tmp[0]);
-	vec->y = ft_stofl(tmp[1]);
-	vec->z = ft_stofl(tmp[2]);
+	vec->x = ft_stod(tmp[0]);
+	vec->y = ft_stod(tmp[1]);
+	vec->z = ft_stod(tmp[2]);
 	check_vec_value(*vec);
 	*vec = normalize_point(*vec);
 	free_array(tmp);
