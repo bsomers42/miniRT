@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 14:54:42 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/12/06 13:29:10 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/08 10:49:20 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	minirt_keyhook(mlx_key_data_t keydata, void *ptr)
 {
 	// t_parse *parse;
 
-	// parse = ptr;
+	// parse = (t_parse*)ptr;
 	(void)ptr;
 	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
 	{
@@ -35,7 +35,7 @@ void	minirt_close(void *ptr)
 {
 	// t_parse *parse;
 
-	// parse = ptr;
+	// parse = (t_parse*)ptr;
 
 	(void)ptr;
 	// free_minirt(parse); //Segfault?!
@@ -71,8 +71,8 @@ int	main(int argc, char *argv[])
 		write_exit("Incorrect args! Usage: ./minirt <mapname>.rt\n", 1);
 	init_data(&data, argv);
 	init_infos(&infos, &data);
-	mlx_key_hook(data.mlx_str.mlx, &minirt_keyhook, NULL);//&data.parse);
-	mlx_close_hook(data.mlx_str.mlx, &minirt_close, NULL);//&data.parse);
+	mlx_key_hook(data.mlx_str.mlx, &minirt_keyhook, &data.parse);
+	mlx_close_hook(data.mlx_str.mlx, &minirt_close, &data.parse);
 	mlx_image_to_window(data.mlx_str.mlx, data.mlx_str.img, 0, 0);
 	draw_loading_bar();
 	make_threads(&infos);

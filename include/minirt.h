@@ -6,19 +6,19 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 15:11:47 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/12/07 13:09:11 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/08 12:08:42 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 # define MINIRT_H
 
-# define WIDTH 800
-# define HEIGHT 450
+# define WIDTH 1600
+# define HEIGHT 900
 
 # define T_MIN 0.01
 
-# define AA 2 //anti-aliasing
+# define AA 20 //anti-aliasing
 # define THREADS 7
 # include "libft.h"
 # include "MLX42.h"
@@ -129,12 +129,12 @@ void	free_minirt(t_parse *parse);
 //tracer
 int		hit_any_sp(t_parse map_info, t_ray ray, t_hit *hit_rec, float t_max);
 int		hit_any_pl(t_parse map_info, t_ray ray, t_hit *hit_rec, float t_max);
-int		hit_any_cap(t_parse map_info, t_ray ray, t_hit *hit_rec, float t_max);
+int		hit_any_cap(t_parse map_info, t_ray ray, t_hit *hit_rec, float t_max, int side);
 int		hit_any_tube(t_parse map_info, t_ray ray, t_hit *hit_rec, float t_max);
 int		hit_anything(t_parse map_info, t_ray ray, t_hit *hit_rec);
 
 // float	norm(t_point vec);
-int		hit_caps(t_cyl *cyl, t_ray ray, float t_max, t_hit *hit_rec);
+// int		hit_caps(t_cyl *cyl, t_ray ray, float t_max, t_hit *hit_rec);
 
 //tracer utils
 void	set_normal(t_ray ray, t_hit *hit_rec, t_point n);

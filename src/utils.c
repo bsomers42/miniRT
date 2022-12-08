@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/19 11:41:16 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/12/07 16:19:22 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/08 10:39:32 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,15 +79,18 @@ void	free_lst(t_list **lst)
 	{
 		curr = (*lst)->next;
 		free((*lst)->content);
-		free(*lst);
+		// free(*lst);
 		*lst = curr;
 	}
 }
 
 void	free_minirt(t_parse *parse)
 {
-	free_lst(&parse->lst_plane);
-	free_lst(&parse->lst_cyl);
-	free_lst(&parse->lst_sphere);
+	if (parse->lst_plane)
+		free_lst(&parse->lst_plane);
+	if (parse->lst_cyl)
+		free_lst(&parse->lst_cyl);
+	if (parse->lst_sphere)
+		free_lst(&parse->lst_sphere);
 	// free(parse);
 }

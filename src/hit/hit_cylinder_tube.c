@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/03 11:37:15 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/12/07 13:10:23 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/08 12:02:52 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	find_cyl_values(t_cyl *cyl, t_point *p, t_point *n, t_ray tmp)
 
 	bottom_center = ray_at(tmp, (cyl->height / 2 * -1));
 	lena = norm(substract_points(*p, bottom_center));
-	x = sqrtf(powf(cyl->radius, 2.0) + powf(lena, 2.0));
+	x = sqrtf(powf(lena, 2.0) - powf(cyl->radius, 2.0));
 	tmp.origin = bottom_center;
 	pp = ray_at(tmp, x);
 	*n = normalize_point(substract_points(*p, pp));
@@ -96,12 +96,16 @@ int	hit_tube(t_cyl *cyl, t_ray ray, float t_max, t_hit *hit_rec)
 	tmp.origin = cyl->center;
 	p = ray_at(ray, t);
 	find_cyl_values(cyl, &p, &n, tmp);
-	hit_rec->color = cyl->color;
-	hit_rec->t = t;
-	hit_rec->hit_point = p;
-	hit_rec->center = cyl->center;
-	set_normal(ray, hit_rec, normalize_point(n));
-	return (1);
+	if (t >= T_MIN && t < t_max)
+	{
+		hit_rec->color = cyl->color;
+		hit_rec->t = t;
+		hit_rec->hit_point = p;
+		hit_rec->center = cyl->center;
+		set_normal(ray, hit_rec, normalize_point(n));
+		return (1);
+	}
+	return (0);
 }
 
 int	hit_any_tube(t_parse map_info, t_ray ray, t_hit *hit_rec, \
