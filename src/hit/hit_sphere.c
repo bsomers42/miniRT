@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 15:46:19 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/12/06 11:21:29 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/08 13:25:25 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,15 +61,9 @@ int	hit_sphere(t_sphere *sphere, t_ray ray, float t_max, t_hit *hit_rec)
 	normal.y = (hit_rec->hit_point.y - sphere->center.y) / sphere->radius;
 	normal.z = (hit_rec->hit_point.z - sphere->center.z) / sphere->radius;
 	if (dot_points(ray.dir, normal) < 0)
-	{
-		hit_rec->front_face = 1;
 		hit_rec->normal = normal;
-	}
 	else
-	{
-		hit_rec->front_face = 0;
 		hit_rec->normal = multiply_point_float(normal, -1.0);
-	}
 	return (1);
 }
 
