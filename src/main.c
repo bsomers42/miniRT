@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 14:54:42 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/12/08 10:49:20 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/08 16:36:24 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	minirt_keyhook(mlx_key_data_t keydata, void *ptr)
 
 	// parse = (t_parse*)ptr;
 	(void)ptr;
+
 	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
 	{
 		// free_minirt(parse); //Segfault!?

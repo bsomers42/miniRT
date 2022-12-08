@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/18 14:32:01 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/12/08 14:58:14 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/08 15:10:19 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,5 @@ double	norm(t_point vec)
 	res = (double)powf(vec.x, 2);
 	res += (double)powf(vec.y, 2);
 	res += (double)powf(vec.z, 2);
-	return ((double)sqrtf(res)); //jma sqrt of sqrtf?
+	return ((double)sqrt(res));
 }

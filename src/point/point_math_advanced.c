@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/26 15:09:22 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/12/08 14:57:48 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/08 15:11:57 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ t_point	normalize_point(t_point dir)
 {
 	t_point	result;
 
-	result.x = dir.x / (sqrtf(dir.x * dir.x + dir.y * dir.y + dir.z * dir.z));
-	result.y = dir.y / (sqrtf(dir.x * dir.x + dir.y * dir.y + dir.z * dir.z));
-	result.z = dir.z / (sqrtf(dir.x * dir.x + dir.y * dir.y + dir.z * dir.z));
+	result.x = dir.x / (sqrt(dir.x * dir.x + dir.y * dir.y + dir.z * dir.z));
+	result.y = dir.y / (sqrt(dir.x * dir.x + dir.y * dir.y + dir.z * dir.z));
+	result.z = dir.z / (sqrt(dir.x * dir.x + dir.y * dir.y + dir.z * dir.z));
 	return (result);
 }

@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/18 16:38:10 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/12/08 14:58:19 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/08 15:12:48 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	intersect_circle(t_cyl *cyl, t_ray ray, double t, t_point cap_center)
 	p = ray_at(ray, t);
 	v = substract_points(p, cap_center);
 	d = dot_points(v, v);
-	return (sqrtf(d) <= cyl->radius);
+	return (sqrt(d) <= cyl->radius);
 }
 
 int	hit_caps(t_cyl *cyl, t_ray ray, t_hit *hit_rec, int side)
@@ -64,7 +64,8 @@ int	hit_caps(t_cyl *cyl, t_ray ray, t_hit *hit_rec, int side)
 	{
 		polo = substract_points(calc_cap_center(cyl, side), ray.origin);
 		t = (double)dot_points(polo, cyl->dir) / (double)denom;
-		if (t >= T_MIN && t <= hit_rec->t && intersect_circle(cyl, ray, t, calc_cap_center(cyl, side)))
+		if (t >= T_MIN && t <= hit_rec->t && \
+			intersect_circle(cyl, ray, t, calc_cap_center(cyl, side)))
 		{
 			*hit_rec = set_hit_rec_cyl(cyl, ray, t, calc_cap_center(cyl, side));
 			return (1);

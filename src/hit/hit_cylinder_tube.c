@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/03 11:37:15 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/12/08 14:58:17 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/08 15:12:39 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,16 @@ void	abc_formula(t_ray rot_ray, t_cyl *cyl, double *t)
 		t[1] = -1;
 		return ;
 	}
-	t[0] = (-b + sqrtf(d)) / (2 * a);
-	t[1] = (-b - sqrtf(d)) / (2 * a);
+	t[0] = (-b + sqrt(d)) / (2 * a);
+	t[1] = (-b - sqrt(d)) / (2 * a);
 }
 
 double	quadratic_form_cyl(t_cyl *cyl, t_ray rot_ray, double t_max)
 {
 	t_point	p;
-	double	*t;
+	double	t[3];
 	double	t_def;
 
-	t = malloc(3 * sizeof(double));
 	abc_formula(rot_ray, cyl, t);
 	if ((t[0] < (double)T_MIN && t[1] < (double)T_MIN) || \
 		(t[0] > t_max && t[1] > t_max))
@@ -61,7 +60,6 @@ double	quadratic_form_cyl(t_cyl *cyl, t_ray rot_ray, double t_max)
 			return (-1);
 	}
 	t_def = t[2];
-	free(t);
 	return (t_def);
 }
 
@@ -74,7 +72,7 @@ void	find_cyl_values(t_cyl *cyl, t_point *p, t_point *n, t_ray tmp)
 
 	bottom_center = ray_at(tmp, (cyl->height / 2 * -1));
 	lena = norm(substract_points(*p, bottom_center));
-	x = sqrtf(powf(lena, 2.0) - powf(cyl->radius, 2.0));
+	x = sqrt(powf(lena, 2.0) - powf(cyl->radius, 2.0));
 	tmp.origin = bottom_center;
 	pp = ray_at(tmp, x);
 	*n = normalize_point(substract_points(*p, pp));
