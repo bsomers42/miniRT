@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/24 14:57:48 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/12/08 11:55:37 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/08 13:25:12 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ int	hit_anything(t_parse map_info, t_ray ray, t_hit *hit_rec)
 	count = -1;
 	count += hit_any_pl(map_info, ray, hit_rec, hit_rec->t);
 	count += hit_any_tube(map_info, ray, hit_rec, hit_rec->t);
-	count += hit_any_cap(map_info, ray, hit_rec, hit_rec->t, 0);
-	count += hit_any_cap(map_info, ray, hit_rec, hit_rec->t, 1);
+	count += hit_any_cap(map_info, ray, hit_rec, 0);
+	count += hit_any_cap(map_info, ray, hit_rec, 1);
 	count += hit_any_sp(map_info, ray, hit_rec, hit_rec->t);
 	return (count >= 0);
 }

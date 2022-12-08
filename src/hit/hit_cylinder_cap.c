@@ -6,21 +6,23 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/18 16:38:10 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/12/08 11:59:31 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/08 13:24:23 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include <math.h>
 
-t_hit	set_hit_rec_cyl(t_hit *hit_rec, t_cyl *cyl, t_ray ray, float t, t_point cap_center)
+t_hit	set_hit_rec_cyl(t_cyl *cyl, t_ray ray, float t, t_point cap_center)
 {
-	hit_rec->t = t;
-	hit_rec->hit_point = ray_at(ray, hit_rec->t);
-	hit_rec->color = cyl->color;
-	hit_rec->center = cap_center;
-	set_normal(ray, hit_rec, cyl->dir);
-	return (*hit_rec);
+	t_hit	hit_rec;
+
+	hit_rec.t = t;
+	hit_rec.hit_point = ray_at(ray, hit_rec.t);
+	hit_rec.color = cyl->color;
+	hit_rec.center = cap_center;
+	set_normal(ray, &hit_rec, cyl->dir);
+	return (hit_rec);
 }
 
 t_point	calc_cap_center(t_cyl *cyl, int side)
@@ -49,39 +51,30 @@ int	intersect_circle(t_cyl *cyl, t_ray ray, float t, t_point cap_center)
 	return (sqrtf(d) <= cyl->radius);
 }
 
-int	hit_caps(t_cyl *cyl, t_ray ray, float t_max, t_hit *hit_rec, int side)
+int	hit_caps(t_cyl *cyl, t_ray ray, /*float t_max,*/ t_hit *hit_rec, int side)
 {
 	float	t;
 	t_point	polo;
-	// int		sides;
 	float	denom;
 	int		hit_anything;
 
-	// sides = 0;
 	hit_anything = 0;
 	denom = dot_points(cyl->dir, ray.dir);
-	// while (sides <= 1)
-	// {
-		if (fabs(denom) > 0)
+	if (fabs(denom) > 0)
+	{
+		polo = substract_points(calc_cap_center(cyl, side), ray.origin);
+		t = (float)dot_points(polo, cyl->dir) / (float)denom;
+		if (intersect_circle(cyl, ray, t, calc_cap_center(cyl, side)))
 		{
-			polo = substract_points(calc_cap_center(cyl, side), ray.origin);
-			t = (float)dot_points(polo, cyl->dir) / (float)denom;
-			if (t >= T_MIN && t < t_max && \
-			intersect_circle(cyl, ray, t, calc_cap_center(cyl, side)))
-			{
-				*hit_rec = set_hit_rec_cyl(hit_rec, cyl, ray, t, calc_cap_center(cyl, side));
-				t_max = t;
-				return (1);
-				//hit_anything++;
-			}
-		// }
-		// sides++;
+			*hit_rec = set_hit_rec_cyl(cyl, ray, t, calc_cap_center(cyl, side));
+			// t_max = t;
+			return (1);
+		}
 	}
-	return (0);//(hit_anything);
+	return (0);
 }
 
-int	hit_any_cap(t_parse map_info, t_ray ray, t_hit *hit_rec, \
-	float t_max, int side)
+int	hit_any_cap(t_parse map_info, t_ray ray, t_hit *hit_rec, int side)
 {
 	int			hit_anything;
 	t_hit		tmp_rec;
@@ -93,11 +86,13 @@ int	hit_any_cap(t_parse map_info, t_ray ray, t_hit *hit_rec, \
 	hit_anything = -1;
 	while (tmp)
 	{
-		if (hit_caps((t_cyl *)tmp->content, ray, t_max, &tmp_rec, side))
+		if (hit_caps((t_cyl *)tmp->content, ray, /*hit_rec->t,*/ &tmp_rec, side))
 		{
-			hit_anything = i;
-			t_max = tmp_rec.t;
-			*hit_rec = tmp_rec;
+			if (tmp_rec.t < hit_rec->t && tmp_rec.t >= T_MIN)
+			{
+				hit_anything = i;
+				*hit_rec = tmp_rec;
+			}
 		}
 		tmp = tmp->next;
 		i++;
