@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/17 13:15:51 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/11/11 15:36:34 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/12/08 16:45:18 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
  * 
  * @param info contains all info about the map and threads
  */
-static void	check_done(t_threadinfo *info)
+static int	check_done(t_threadinfo *info)
 {
 	if (pthread_mutex_lock(&(info->data->pixel_lock)) != 0)
 		error_exit("pthread_mutex_lock", 1);
@@ -27,9 +27,16 @@ static void	check_done(t_threadinfo *info)
 	{
 		write(1, "\nDONE!\n", 7);
 		info->data->pixels_done++;
-	}	
+	}
+	if (info->data->pixels_done > WIDTH * HEIGHT)
+	{
+		if (pthread_mutex_unlock(&(info->data->pixel_lock)) != 0)
+			error_exit("pthread_mutex_unlock", 1);
+		return (1);
+	}
 	if (pthread_mutex_unlock(&(info->data->pixel_lock)) != 0)
 		error_exit("pthread_mutex_unlock", 1);
+	return (0);
 }
 
 /**
@@ -72,17 +79,19 @@ static void	*fill_screen(void *ptr)
 	while (count < THREADS * 2)
 	{
 		y = count % THREADS;
-		write(1, "■", 4);
 		while (y <= HEIGHT - 1)
 		{
 			x = (info->i + (count % 2) * THREADS);
 			while (x <= WIDTH - 1)
 			{
+				// if (check_done(info) == 1)
+				// 	return (NULL);
 				fill_pixel(info, x, y);
 				x += THREADS * 2;
 			}
 			y += THREADS;
 		}
+		write(1, "■", 4);
 		count++;
 	}
 	check_done(info);

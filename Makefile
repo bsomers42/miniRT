@@ -6,13 +6,13 @@
 #    By: bsomers <bsomers@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/09/22 14:52:38 by bsomers       #+#    #+#                  #
-#    Updated: 2022/12/07 12:25:05 by bsomers       ########   odam.nl          #
+#    Updated: 2022/12/08 16:19:14 by jaberkro      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minirt
 
-FLAGS = -Wall -Wextra -Werror -O3 -g3 #-fsanitize=address
+FLAGS = -Wall -Wextra -Werror -O3 -g3 -fsanitize=address
 INCLUDE = -I include -I ./MLX42/include/MLX42 -I ./libft
 
 LIBFT_DIR = libft/

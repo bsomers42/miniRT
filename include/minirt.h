@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 15:11:47 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/12/08 14:59:29 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/08 15:49:05 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,6 @@ void	check_double_value(char *str);
 void	check_number_of_cla(int cam, int amb, int light);
 
 //utils
-void	free_minirt(t_parse *parse);
 
 //tracer
 int		hit_any_sp(t_parse map_info, t_ray ray, t_hit *hit_rec, double t_max);
