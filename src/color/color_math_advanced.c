@@ -6,15 +6,15 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/26 14:52:45 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/11/11 15:34:36 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/12/08 14:58:21 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "color.h"
 
-float	dot_colors(t_color first, t_color second)
+double	dot_colors(t_color first, t_color second)
 {
-	float	result;
+	double	result;
 
 	result = first.r * second.r;
 	result += first.g * second.g;

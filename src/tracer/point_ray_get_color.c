@@ -6,14 +6,14 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 13:26:28 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/12/08 11:56:47 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/08 14:58:04 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include <math.h>
 
-t_point	ray_at(t_ray ray, float t)
+t_point	ray_at(t_ray ray, double t)
 {
 	t_point	result;
 
@@ -25,16 +25,16 @@ t_point	ray_at(t_ray ray, float t)
 
 t_color	calculate_shadow(t_parse map_info, t_hit record)
 {
-	float	r;
-	float	g;
-	float	b;
+	double	r;
+	double	g;
+	double	b;
 
-	r = (((float)map_info.amb.color.r / 255.0) * map_info.amb.ratio * \
-		(float)record.color.r / 255.0);
-	g = (((float)map_info.amb.color.g / 255.0) * map_info.amb.ratio * \
-		(float)record.color.g / 255.0);
-	b = (((float)map_info.amb.color.b / 255.0) * map_info.amb.ratio * \
-		(float)record.color.b / 255.0);
+	r = (((double)map_info.amb.color.r / 255.0) * map_info.amb.ratio * \
+		(double)record.color.r / 255.0);
+	g = (((double)map_info.amb.color.g / 255.0) * map_info.amb.ratio * \
+		(double)record.color.g / 255.0);
+	b = (((double)map_info.amb.color.b / 255.0) * map_info.amb.ratio * \
+		(double)record.color.b / 255.0);
 	if (r > 1.0)
 		r = 1.0;
 	if (g > 1.0)
@@ -52,21 +52,21 @@ t_color	calculate_shadow(t_parse map_info, t_hit record)
  * @param costheta 
  * @return t_color 
  */
-t_color	calculate_shade(t_parse map_info, t_hit record, float costheta)
+t_color	calculate_shade(t_parse map_info, t_hit record, double costheta)
 {
-	float	r;
-	float	g;
-	float	b;
+	double	r;
+	double	g;
+	double	b;
 
-	r = (float)record.color.r * map_info.light.bright * costheta / 255.0 + \
-		((float)map_info.amb.color.r / 255.0 * map_info.amb.ratio * \
-		(float)record.color.r / 255.0);
-	g = (float)record.color.g * map_info.light.bright * costheta / 255.0 + \
-		((float)map_info.amb.color.g / 255.0 * map_info.amb.ratio * \
-		(float)record.color.g / 255.0);
-	b = (float)record.color.b * map_info.light.bright * costheta / 255.0 + \
-		((float)map_info.amb.color.b / 255.0 * map_info.amb.ratio * \
-		(float)record.color.b / 255.0);
+	r = (double)record.color.r * map_info.light.bright * costheta / 255.0 + \
+		((double)map_info.amb.color.r / 255.0 * map_info.amb.ratio * \
+		(double)record.color.r / 255.0);
+	g = (double)record.color.g * map_info.light.bright * costheta / 255.0 + \
+		((double)map_info.amb.color.g / 255.0 * map_info.amb.ratio * \
+		(double)record.color.g / 255.0);
+	b = (double)record.color.b * map_info.light.bright * costheta / 255.0 + \
+		((double)map_info.amb.color.b / 255.0 * map_info.amb.ratio * \
+		(double)record.color.b / 255.0);
 	if (r > 1.0)
 		r = 1.0;
 	if (g > 1.0)
@@ -89,7 +89,7 @@ t_color	calculate_shadow_shade(t_parse map_info, t_hit record)
 {
 	t_ray		light_ray;
 	t_hit		not_needed;
-	float		costheta;
+	double		costheta;
 	t_point		light_line;
 
 	light_ray.origin = record.hit_point;
@@ -115,7 +115,7 @@ t_color	calculate_shadow_shade(t_parse map_info, t_hit record)
  * @param j 		y location of pixel to calculate color of
  * @return t_color 	the found color  
  */
-t_color	point_ray_get_color(t_parse map_info, float i, float j)
+t_color	point_ray_get_color(t_parse map_info, double i, double j)
 {
 	t_ray		ray;
 	t_color		color;

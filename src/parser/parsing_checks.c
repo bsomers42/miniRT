@@ -6,14 +6,14 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/04 17:51:50 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/11/18 16:17:16 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/08 14:58:10 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include <stdio.h>
 
-void	check_float_value(char *str)
+void	check_double_value(char *str)
 {
 	int	i;
 	int	dot;
@@ -33,7 +33,7 @@ void	check_float_value(char *str)
 		i++;
 	}
 	if (!ft_isdigit(str[i - 1]) || dot > 2 || dot < 0)
-		write_exit("Invalid float value\n", 1);
+		write_exit("Invalid double value\n", 1);
 }
 
 void	check_vec_value(t_point vec)

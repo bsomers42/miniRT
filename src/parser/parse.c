@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 16:47:20 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/12/06 11:41:23 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/08 14:58:12 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	assign_ambient(char *str, int *amb_ptr, t_parse *parse)
 	malloc_check_arr(split);
 	if (check_num_of_elems(split, 3) != 0)
 		write_exit("Wrong information for ambient (A)\n", 1);
-	check_float_value(split[1]);
+	check_double_value(split[1]);
 	parse->amb.ratio = ft_stofl(split[1]);
 	if (parse->amb.ratio < 0 || parse->amb.ratio > 1)
 		write_exit("Wrong ambient lighting ratio. [0.0,1.0]\n", 1);
@@ -56,7 +56,7 @@ void	assign_light(char *str, int *light_ptr, t_parse *parse)
 	if (check_num_of_elems(split, 3) != 0)
 		write_exit("Wrong information for light (L)\n", 1);
 	stofl_center(split[1], &parse->light.origin);
-	check_float_value(split[2]);
+	check_double_value(split[2]);
 	parse->light.bright = ft_stofl(split[2]);
 	if (parse->light.bright < 0 || parse->light.bright > 1)
 		write_exit("Wrong light brightness ratio. [0.0,1.0]\n", 1);

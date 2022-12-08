@@ -6,19 +6,19 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/03 11:37:15 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/12/08 12:02:52 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/08 14:58:17 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include <math.h>
 
-void	abc_formula(t_ray rot_ray, t_cyl *cyl, float *t)
+void	abc_formula(t_ray rot_ray, t_cyl *cyl, double *t)
 {
-	float	a;
-	float	b;
-	float	c;
-	float	d;
+	double	a;
+	double	b;
+	double	c;
+	double	d;
 
 	a = rot_ray.dir.x * rot_ray.dir.x + rot_ray.dir.z * rot_ray.dir.z;
 	b = 2 * (rot_ray.origin.x * rot_ray.dir.x + rot_ray.origin.z * \
@@ -36,18 +36,18 @@ void	abc_formula(t_ray rot_ray, t_cyl *cyl, float *t)
 	t[1] = (-b - sqrtf(d)) / (2 * a);
 }
 
-float	quadratic_form_cyl(t_cyl *cyl, t_ray rot_ray, float t_max)
+double	quadratic_form_cyl(t_cyl *cyl, t_ray rot_ray, double t_max)
 {
 	t_point	p;
-	float	*t;
-	float	t_def;
+	double	*t;
+	double	t_def;
 
-	t = malloc(3 * sizeof(float));
+	t = malloc(3 * sizeof(double));
 	abc_formula(rot_ray, cyl, t);
-	if ((t[0] < (float)T_MIN && t[1] < (float)T_MIN) || \
+	if ((t[0] < (double)T_MIN && t[1] < (double)T_MIN) || \
 		(t[0] > t_max && t[1] > t_max))
 		return (-1);
-	if ((t[0] < t[1] && t[0] > (float)T_MIN) || t[1] < (float)T_MIN)
+	if ((t[0] < t[1] && t[0] > (double)T_MIN) || t[1] < (double)T_MIN)
 		t[2] = t[0];
 	else
 		t[2] = t[1];
@@ -68,8 +68,8 @@ float	quadratic_form_cyl(t_cyl *cyl, t_ray rot_ray, float t_max)
 void	find_cyl_values(t_cyl *cyl, t_point *p, t_point *n, t_ray tmp)
 {
 	t_point	bottom_center;
-	float	lena;
-	float	x;
+	double	lena;
+	double	x;
 	t_point	pp;
 
 	bottom_center = ray_at(tmp, (cyl->height / 2 * -1));
@@ -80,13 +80,13 @@ void	find_cyl_values(t_cyl *cyl, t_point *p, t_point *n, t_ray tmp)
 	*n = normalize_point(substract_points(*p, pp));
 }
 
-int	hit_tube(t_cyl *cyl, t_ray ray, float t_max, t_hit *hit_rec)
+int	hit_tube(t_cyl *cyl, t_ray ray, double t_max, t_hit *hit_rec)
 {
 	t_ray	rot_ray;
 	t_point	n;
 	t_point	p;
 	t_ray	tmp;
-	float	t;
+	double	t;
 
 	rot_ray = apply_rodrigues(cyl, ray);
 	t = quadratic_form_cyl(cyl, rot_ray, t_max);
@@ -96,7 +96,7 @@ int	hit_tube(t_cyl *cyl, t_ray ray, float t_max, t_hit *hit_rec)
 	tmp.origin = cyl->center;
 	p = ray_at(ray, t);
 	find_cyl_values(cyl, &p, &n, tmp);
-	if (t >= T_MIN && t < t_max)
+	if (t >= T_MIN && t <= t_max)
 	{
 		hit_rec->color = cyl->color;
 		hit_rec->t = t;
@@ -109,7 +109,7 @@ int	hit_tube(t_cyl *cyl, t_ray ray, float t_max, t_hit *hit_rec)
 }
 
 int	hit_any_tube(t_parse map_info, t_ray ray, t_hit *hit_rec, \
-	float t_max)
+	double t_max)
 {
 	int			hit_anything;
 	t_hit		tmp_rec;

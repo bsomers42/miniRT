@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/17 16:53:54 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/11/17 17:13:19 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/08 14:58:09 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ void	stofl_center(char *line, t_point *center)
 	malloc_check_arr(tmp);
 	if (check_num_of_elems(tmp, 3) != 0)
 		write_exit("Wrong information for coordinates or vector\n", 1);
-	check_float_value(tmp[0]);
-	check_float_value(tmp[1]);
-	check_float_value(tmp[2]);
+	check_double_value(tmp[0]);
+	check_double_value(tmp[1]);
+	check_double_value(tmp[2]);
 	center->x = ft_stofl(tmp[0]);
 	center->y = ft_stofl(tmp[1]);
 	center->z = ft_stofl(tmp[2]);
@@ -55,9 +55,9 @@ void	stofl_vec(char *line, t_point *vec)
 	malloc_check_arr(tmp);
 	if (check_num_of_elems(tmp, 3) != 0)
 		write_exit("Wrong information for vector\n", 1);
-	check_float_value(tmp[0]);
-	check_float_value(tmp[1]);
-	check_float_value(tmp[2]);
+	check_double_value(tmp[0]);
+	check_double_value(tmp[1]);
+	check_double_value(tmp[2]);
 	vec->x = ft_stofl(tmp[0]);
 	vec->y = ft_stofl(tmp[1]);
 	vec->z = ft_stofl(tmp[2]);

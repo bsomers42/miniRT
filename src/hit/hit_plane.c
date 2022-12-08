@@ -6,17 +6,17 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/02 16:07:31 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/12/06 15:24:35 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/08 14:58:16 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include <math.h>
 
-int	hit_plane(t_plane *plane, t_ray ray, float t_max, t_hit *hit_rec)
+int	hit_plane(t_plane *plane, t_ray ray, double t_max, t_hit *hit_rec)
 {
-	float	denom;
-	float	t;
+	double	denom;
+	double	t;
 	t_point	n;
 	t_point	polo;
 
@@ -25,7 +25,7 @@ int	hit_plane(t_plane *plane, t_ray ray, float t_max, t_hit *hit_rec)
 	if (fabs(denom) > 0)
 	{
 		polo = substract_points(plane->center, ray.origin);
-		t = (float)dot_points(polo, n) / (float)denom;
+		t = (double)dot_points(polo, n) / (double)denom;
 		if (t >= T_MIN && t < t_max)
 		{
 			hit_rec->t = t;
@@ -39,7 +39,7 @@ int	hit_plane(t_plane *plane, t_ray ray, float t_max, t_hit *hit_rec)
 	return (0);
 }
 
-int	hit_any_pl(t_parse map_info, t_ray ray, t_hit *hit_rec, float t_max)
+int	hit_any_pl(t_parse map_info, t_ray ray, t_hit *hit_rec, double t_max)
 {
 	int			hit_anything;
 	t_hit		tmp_rec;

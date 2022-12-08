@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/26 15:03:26 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/11/16 12:56:52 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/12/08 14:57:48 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_point	multiply_points(t_point first, t_point second)
 	return (result);
 }
 
-t_point	multiply_point_float(t_point point, float t)
+t_point	multiply_point_double(t_point point, double t)
 {
 	t_point	result;
 
@@ -52,7 +52,7 @@ t_point	multiply_point_float(t_point point, float t)
 	return (result);
 }
 
-t_point	divide_point_with_float(t_point point, float t)
+t_point	divide_point_with_double(t_point point, double t)
 {
 	t_point	result;
 

@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/17 17:20:40 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/11/11 14:10:56 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/12/08 14:58:08 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ t_color	antialias_color(t_parse map_info, int i, int j)
 	t_color	color;
 	int		k;
 	int		l;
-	float	x;
-	float	y;
+	double	x;
+	double	y;
 
 	color = new_color(0, 0, 0);
 	k = 0;
@@ -36,13 +36,13 @@ t_color	antialias_color(t_parse map_info, int i, int j)
 		l = 0;
 		while (l < AA)
 		{
-			x = (float)i + (float)k / (float)AA;
-			y = (float)j + (float)l / (float)AA;
+			x = (double)i + (double)k / (double)AA;
+			y = (double)j + (double)l / (double)AA;
 			color = add_colors(color, point_ray_get_color(map_info, x, y));
 			l++;
 		}
 		k++;
 	}
-	color = divide_color_with_float(color, AA * AA);
+	color = divide_color_with_double(color, AA * AA);
 	return (color);
 }

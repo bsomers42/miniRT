@@ -6,28 +6,28 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 15:46:19 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/12/08 13:25:25 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/08 14:58:15 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include <math.h>
 
-float	calculate_c(t_point change, float radius)
+double	calculate_c(t_point change, double radius)
 {
-	float	result;
+	double	result;
 
 	result = dot_points(change, change) - powf(radius, 2);
 	return (result);
 }
 
-float	calculate_root(t_sphere *sphere, t_ray ray, float t_max)
+double	calculate_root(t_sphere *sphere, t_ray ray, double t_max)
 {
 	t_point	change;
-	float	a;
-	float	half_b;
-	float	d;
-	float	root;
+	double	a;
+	double	half_b;
+	double	d;
+	double	root;
 
 	change = substract_points(ray.origin, sphere->center);
 	a = dot_points(ray.dir, ray.dir);
@@ -45,9 +45,9 @@ float	calculate_root(t_sphere *sphere, t_ray ray, float t_max)
 	return (root);
 }
 
-int	hit_sphere(t_sphere *sphere, t_ray ray, float t_max, t_hit *hit_rec)
+int	hit_sphere(t_sphere *sphere, t_ray ray, double t_max, t_hit *hit_rec)
 {
-	float		root;
+	double		root;
 	t_vector	normal;
 
 	root = calculate_root(sphere, ray, t_max);
@@ -63,11 +63,11 @@ int	hit_sphere(t_sphere *sphere, t_ray ray, float t_max, t_hit *hit_rec)
 	if (dot_points(ray.dir, normal) < 0)
 		hit_rec->normal = normal;
 	else
-		hit_rec->normal = multiply_point_float(normal, -1.0);
+		hit_rec->normal = multiply_point_double(normal, -1.0);
 	return (1);
 }
 
-int	hit_any_sp(t_parse map_info, t_ray ray, t_hit *hit_rec, float t_max)
+int	hit_any_sp(t_parse map_info, t_ray ray, t_hit *hit_rec, double t_max)
 {
 	int			hit_anything;
 	t_hit		tmp_rec;

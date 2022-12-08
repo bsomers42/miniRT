@@ -6,16 +6,16 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/26 15:09:22 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/12/01 12:49:57 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/12/08 14:57:48 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "point.h"
 #include <math.h>
 
-float	dot_points(t_point first, t_point second)
+double	dot_points(t_point first, t_point second)
 {
-	float	result;
+	double	result;
 
 	result = first.x * second.x;
 	result += first.y * second.y;

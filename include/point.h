@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/26 15:04:52 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/11/11 14:42:23 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/08 14:59:36 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 
 typedef struct s_point
 {
-	float	x;
-	float	y;
-	float	z;
+	double	x;
+	double	y;
+	double	z;
 }	t_point;
 
 typedef t_point	t_vector;
@@ -25,11 +25,11 @@ typedef t_point	t_vector;
 t_point	add_points(t_point first, t_point second);
 t_point	substract_points(t_point first, t_point second);
 t_point	multiply_points(t_point first, t_point second);
-t_point	multiply_point_float(t_point point, float t);
-t_point	divide_point_with_float(t_point point, float t);
-float	dot_points(t_point first, t_point second);
+t_point	multiply_point_double(t_point point, double t);
+t_point	divide_point_with_double(t_point point, double t);
+double	dot_points(t_point first, t_point second);
 t_point	cross_points(t_point first, t_point second);
 t_point	normalize_point(t_point dir);
-t_point	new_point(float r, float g, float b);
+t_point	new_point(double r, double g, double b);
 
 #endif
