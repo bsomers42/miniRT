@@ -6,12 +6,13 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/03 11:37:15 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/12/09 17:43:21 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/09 18:32:57 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include <math.h>
+#include <stdio.h> ///weegggg
 
 void	abc_formula_cone(t_ray rot_ray, /*t_cone *cone, */double *t)
 {
@@ -35,6 +36,7 @@ void	abc_formula_cone(t_ray rot_ray, /*t_cone *cone, */double *t)
 	}
 	t[0] = (-b + sqrt(d)) / (2 * a);
 	t[1] = (-b - sqrt(d)) / (2 * a);
+	// printf("t0: [%f], t1: [%f]\n", t[0], t[1]);
 }
 
 double	quadratic_form_cone(t_cone *cone, t_ray rot_ray, double t_max)
@@ -87,6 +89,7 @@ int	hit_cone(t_cone *cone, t_ray ray, double t_max, t_hit *hit_rec)
 	t_ray	tmp;
 	double	t;
 
+	// printf("ray: dir: x [%f], y [%f], z [%f]. Ori: x [%f], y [%f], z[%f]\n", ray.dir.x, ray.dir.y, ray.dir.z, ray.origin.x, ray.origin.y, ray.origin.z);
 	rot_ray = apply_rodrigues(cone->dir, cone->top, ray);
 	t = quadratic_form_cone(cone, rot_ray, t_max);
 	if (t == -1)

@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/03 11:37:15 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/12/08 15:12:39 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/09 16:45:22 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	hit_tube(t_cyl *cyl, t_ray ray, double t_max, t_hit *hit_rec)
 	t_ray	tmp;
 	double	t;
 
-	rot_ray = apply_rodrigues(cyl, ray);
+	rot_ray = apply_rodrigues(cyl->dir, cyl->center, ray);
 	t = quadratic_form_cyl(cyl, rot_ray, t_max);
 	if (t == -1)
 		return (0);
