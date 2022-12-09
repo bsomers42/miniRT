@@ -6,7 +6,7 @@
 #    By: bsomers <bsomers@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/09/22 14:52:38 by bsomers       #+#    #+#                  #
-#    Updated: 2022/12/08 16:46:44 by bsomers       ########   odam.nl          #
+#    Updated: 2022/12/09 17:03:27 by bsomers       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,8 @@ SRC = main.c \
 	point/new_point.c \
 	point/point_math_basics.c \
 	point/point_math_advanced.c \
+	hit/hit_cone.c \
+	hit/hit_cone_cap.c \
 	hit/hit_sphere.c \
 	hit/hit_anything.c \
 	hit/hit_plane.c \

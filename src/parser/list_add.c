@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/11 11:13:12 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/12/08 16:47:30 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/09 17:45:23 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,29 @@ void	ft_lstadd_cy(t_list **lst, char **line)
 		error_exit("malloc", 1);
 	*cy_void = cy;
 	ft_lstadd_back(lst, ft_lstnew(cy_void));
+	free_array(line);
+}
+
+void	ft_lstadd_cone(t_list **lst, char **line)
+{
+	t_cone	cone;
+	t_cone	*cone_void;
+
+	if (check_num_of_elems(line, 5) != 0)
+		write_exit("Wrong information for cone\n", 1);
+	stod_center(line[1], &cone.top);
+	stod_vec(line[2], &cone.dir);
+	if (cone.dir.x == 0 && cone.dir.y < 0 && cone.dir.z == 0)
+		cone.dir.y = cone.dir.y * -1;
+	check_double_value(line[3]);
+	cone.radius = ft_stod(line[3]) * 0.5;
+	// check_double_value(line[4]);
+	cone.height = ft_stod(line[3]);
+	atoi_color(line[4], &cone.color);
+	cone_void = malloc(sizeof(t_cone));
+	if (cone_void == NULL)
+		error_exit("malloc", 1);
+	*cone_void = cone;
+	ft_lstadd_back(lst, ft_lstnew(cone_void));
 	free_array(line);
 }

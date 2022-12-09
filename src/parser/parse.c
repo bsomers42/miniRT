@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 16:47:20 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/12/08 16:47:16 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/09 16:37:59 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ void	assign_to_struct(char **map_split_n, t_parse *parse)
 			ft_lstadd_pl(&(parse->lst_plane), ft_split(*map_split_n, ' '));
 		else if (ft_strncmp(*map_split_n, "cy ", 3) == 0)
 			ft_lstadd_cy(&(parse->lst_cyl), ft_split(*map_split_n, ' '));
+		else if (ft_strncmp(*map_split_n, "co ", 3) == 0)
+			ft_lstadd_cone(&(parse->lst_cone), ft_split(*map_split_n, ' '));
 		else if (ft_strncmp(*map_split_n, "# ", 2) != 0)
 			write_exit("Excessive characters included/information missing\n", 1);
 		map_split_n++;
@@ -103,6 +105,7 @@ t_parse	*parse_map(char *argv[])
 	parse->lst_sphere = NULL;
 	parse->lst_plane = NULL;
 	parse->lst_cyl = NULL;
+	parse->lst_cone = NULL;
 	map_char = get_map(argv);
 	map_split_newline = ft_split(map_char, '\n');
 	malloc_check_arr(map_split_newline);

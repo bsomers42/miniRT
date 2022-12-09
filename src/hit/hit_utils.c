@@ -6,21 +6,21 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/18 14:32:01 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/12/08 15:10:19 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/09 16:46:15 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include <math.h>
 
-double	calc_angle(t_point upaxis, t_cyl *cyl)
+double	calc_angle(t_point upaxis, t_point dir)//t_cyl *cyl)
 {
 	double	angle;
 	double	multip;
 	double	dotproduct;
 
-	multip = (norm(upaxis) * norm(cyl->dir));
-	dotproduct = dot_points(upaxis, cyl->dir);
+	multip = (norm(upaxis) * norm(/*cyl->*/dir));
+	dotproduct = dot_points(upaxis, /*cyl->*/dir);
 	angle = acos(dotproduct / multip);
 	return (angle);
 }
@@ -40,17 +40,17 @@ t_point	rotate_axis_angle(t_point vec, t_point axis, double angle)
 	return (vec);
 }
 
-t_ray	apply_rodrigues(t_cyl *cyl, t_ray ray)
+t_ray	apply_rodrigues(/*t_cyl *cyl*/ t_point dir, t_point center, t_ray ray)
 {
 	t_ray	rot_ray;
 	t_point	axis;
 	double	angle;
 
-	angle = calc_angle(new_point(0, 1, 0), cyl);
-	axis = normalize_point(cross_points(normalize_point(cyl->dir), \
+	angle = calc_angle(new_point(0, 1, 0), dir);
+	axis = normalize_point(cross_points(normalize_point(/*cyl->*/dir), \
 		new_point(0, 1, 0)));
 	rot_ray.origin = rotate_axis_angle(substract_points(ray.origin, \
-		cyl->center), axis, angle);
+		/*cyl->*/center), axis, angle);
 	rot_ray.dir = normalize_point(rotate_axis_angle(ray.dir, axis, angle));
 	return (rot_ray);
 }

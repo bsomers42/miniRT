@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 15:11:47 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/12/08 16:46:59 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/09 17:44:30 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,15 @@ typedef struct s_cyl
 	double		height;
 }	t_cyl;
 
+typedef struct s_cone
+{
+	t_point		top;
+	t_color		color;
+	t_vector	dir;
+	double		radius;
+	double		height;
+}	t_cone;
+
 typedef struct s_amb
 {
 	double			ratio;
@@ -100,6 +109,7 @@ typedef struct s_parse
 	t_list	*lst_sphere;
 	t_list	*lst_cyl;
 	t_list	*lst_plane;
+	t_list	*lst_cone;
 }	t_parse;
 
 //parsing
@@ -109,6 +119,7 @@ char	*get_next_line_e(int fd);
 void	ft_lstadd_sp(t_list **lst, char **line);
 void	ft_lstadd_pl(t_list **lst, char **line);
 void	ft_lstadd_cy(t_list **lst, char **line);
+void	ft_lstadd_cone(t_list **lst, char **line);
 void	atoi_color(char *line, t_color *color);
 void	stod_center(char *line, t_point *center);
 void	stod_vec(char *line, t_point *vec);
@@ -127,8 +138,10 @@ void	free_minirt(t_parse *parse);
 
 //tracer
 int		hit_any_sp(t_parse map_info, t_ray ray, t_hit *hit_rec, double t_max);
+int		hit_any_cone(t_parse map_info, t_ray ray, t_hit *hit_rec, double t_max);
 int		hit_any_pl(t_parse map_info, t_ray ray, t_hit *hit_rec, double t_max);
 int		hit_any_cap(t_parse map_info, t_ray ray, t_hit *hit_rec, int side);
+int		hit_any_cone_cap(t_parse map_info, t_ray ray, t_hit *hit_rec);
 int		hit_any_tube(t_parse map_info, t_ray ray, t_hit *hit_rec, double t_max);
 int		hit_anything(t_parse map_info, t_ray ray, t_hit *hit_rec);
 
@@ -138,7 +151,8 @@ int		hit_anything(t_parse map_info, t_ray ray, t_hit *hit_rec);
 //tracer utils
 void	set_normal(t_ray ray, t_hit *hit_rec, t_point n);
 double	norm(t_point vec);
-t_ray	apply_rodrigues(t_cyl *cyl, t_ray ray);
+// t_ray	apply_rodrigues(t_cyl *cyl, t_ray ray);
+t_ray	apply_rodrigues(/*t_cyl *cyl*/ t_point dir, t_point center, t_ray ray);
 
 t_color	antialias_color(t_parse map_info, int x, int y);
 t_color	point_ray_get_color(t_parse map_info, double i, double j);
