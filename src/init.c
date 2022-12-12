@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/26 11:16:15 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/12/08 16:37:22 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/12/12 11:20:37 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	init_data(t_data *data, char *argv[])
 	if (data->mlx_str.img == NULL)
 		error_exit("mlx_new_image failed!\n", 1);
 	data->pixels_done = 0;
+	data->threads_done = 0;
 	pthread_mutex_init(&(data->pixel_lock), NULL);
 	pthread_mutex_init(&(data->mlx_lock), NULL);
 }

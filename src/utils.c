@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/19 11:41:16 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/12/08 16:50:44 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/12/12 11:14:21 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ void	free_lst(t_list **lst)
 		tmp = *lst;
 		*lst = (*lst)->next;
 		// del(tmp->content);
+		free(tmp->content);
 		free(tmp);
 		// curr = (*lst)->next;
 		// free((*lst)->content);
@@ -89,17 +90,15 @@ void	free_lst(t_list **lst)
 	}
 }
 
-void	free_minirt(t_parse *parse)
+void	free_minirt(t_threadinfo **infos)
 {
-
-	if (parse->lst_plane)
-		free_lst(&parse->lst_plane);
-		// (void)infos;
-		// 	free_lst(&infos[0]->data->parse->lst_plane);
-		// if (infos[0]->data->parse->lst_cyl)
-		// 	free_lst(&infos[0]->data->parse->lst_cyl);
-		// if (infos[0]->data->parse->lst_sphere)
-		// 	free_lst(&infos[0]->data->parse->lst_sphere);
-
-	// free(parse);
+	if (infos[0]->data->parse->lst_plane)
+		free_lst(&infos[0]->data->parse->lst_plane);
+	if (infos[0]->data->parse->lst_cyl)
+		free_lst(&infos[0]->data->parse->lst_cyl);
+	if (infos[0]->data->parse->lst_sphere)
+		free_lst(&infos[0]->data->parse->lst_sphere);
+	free(infos[0]->data->parse);
+	mlx_delete_image(infos[0]->data->mlx_str.mlx, infos[0]->data->mlx_str.img);
+	free(*infos);
 }

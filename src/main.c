@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 14:54:42 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/12/08 16:43:40 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/12/12 11:24:55 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "MLX42.h"
 #include "threads.h"
 #include <stdlib.h>
-#include <stdio.h>	//remove in end maybe
 #include <pthread.h>
 #include "libft.h"
 
@@ -25,9 +24,14 @@ void	minirt_keyhook(mlx_key_data_t keydata, void *ptr)
 	infos = (t_threadinfo **)ptr;
 	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
 	{
-		// free_minirt(infos[0].data->parse); //Segfault!?
-		free(*infos);
-		printf("hoi\n");
+		if (pthread_mutex_lock(&(infos[0]->data->pixel_lock)) != 0)
+			error_exit("pthread_mutex_lock", 1);
+		infos[0]->data->pixels_done = WIDTH * HEIGHT + 1;
+		infos[0]->data->threads_done++;
+		if (infos[0]->data->threads_done == THREADS)
+			free_minirt(infos);
+		if (pthread_mutex_unlock(&(infos[0]->data->pixel_lock)) != 0)
+			error_exit("pthread_mutex_unlock", 1);
 		exit(EXIT_SUCCESS);
 	}
 }
@@ -37,8 +41,14 @@ void	minirt_close(void *ptr)
 	t_threadinfo	**infos;
 
 	infos = (t_threadinfo **)ptr;
-	// free_minirt(infos[0].data->parse); //Segfault!?
-	free(*infos);
+	if (pthread_mutex_lock(&(infos[0]->data->pixel_lock)) != 0)
+		error_exit("pthread_mutex_lock", 1);
+	infos[0]->data->pixels_done = WIDTH * HEIGHT + 1;
+	infos[0]->data->threads_done++;
+	if (infos[0]->data->threads_done == THREADS)
+		free_minirt(infos);
+	if (pthread_mutex_unlock(&(infos[0]->data->pixel_lock)) != 0)
+		error_exit("pthread_mutex_unlock", 1);
 	exit(EXIT_SUCCESS);
 }
 
@@ -78,5 +88,6 @@ int	main(int argc, char *argv[])
 	make_threads(&infos);
 	mlx_loop(data.mlx_str.mlx);
 	mlx_terminate(data.mlx_str.mlx);
+	free_minirt(&infos);
 	return (0);
 }

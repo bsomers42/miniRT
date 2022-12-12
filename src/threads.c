@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/17 13:15:51 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/12/08 16:45:18 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/12/12 11:15:18 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,8 @@ static void	*fill_screen(void *ptr)
 			x = (info->i + (count % 2) * THREADS);
 			while (x <= WIDTH - 1)
 			{
-				// if (check_done(info) == 1)
-				// 	return (NULL);
+				if (check_done(info) == 1)
+					return (NULL);
 				fill_pixel(info, x, y);
 				x += THREADS * 2;
 			}

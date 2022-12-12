@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/12 14:07:57 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/12/08 16:37:08 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/12/12 11:20:20 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ typedef struct s_data
 {
 	t_mlx_str		mlx_str;
 	int				pixels_done;
+	int				threads_done;
 	pthread_mutex_t	pixel_lock;
 	pthread_mutex_t	mlx_lock;
 	t_parse			*parse;
@@ -36,6 +37,6 @@ void	put_color(t_threadinfo *info, int i, int j, t_color color);
 void	init_data(t_data *data, char *argv[]);
 void	init_infos(t_threadinfo **infos, t_data *data);
 
-void	free_minirt(t_parse *parse);
+void	free_minirt(t_threadinfo **infos);
 
 #endif
