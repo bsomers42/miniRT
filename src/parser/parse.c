@@ -6,12 +6,11 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 16:47:20 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/12/08 14:58:12 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/12 11:29:31 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-#include <stdio.h> //voor printf, wegggg!!!
 
 void	assign_ambient(char *str, int *amb_ptr, t_parse *parse)
 {
