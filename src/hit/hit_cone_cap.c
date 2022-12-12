@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/18 16:38:10 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/12/12 12:12:34 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/12 20:07:54 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,7 @@ int	hit_cone_cap(t_cone *cone, t_ray ray, t_hit *hit_rec)
 	double	t;
 	t_point	polo;
 	double	denom;
-	int		hit_anything;
 
-	hit_anything = 0;
 	denom = dot_points(cone->dir, ray.dir);
 	if (fabs(denom) > 0)
 	{
