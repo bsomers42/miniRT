@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/03 11:37:15 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/12/12 12:14:02 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/12 20:07:21 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,11 @@ double	quadratic_form_cone(t_cone *cone, t_ray rot_ray, double t_max)
 
 void	find_cone_values(t_cone *cone, t_point *p, t_point *n, t_ray tmp)
 {
-	t_point	bottom_center;
 	double	len_a;
 	double	x;
 	t_point	pp;
 	double	tmp_radius;
 
-	bottom_center = ray_at(tmp, (cone->height * -1));
 	len_a = norm(substract_points(*p, cone->top));
 	tmp_radius = len_a * sin(0.785398);
 	x = sqrt(pow(len_a, 2.0) - pow(tmp_radius, 2.0));
