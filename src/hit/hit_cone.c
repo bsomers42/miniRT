@@ -6,15 +6,15 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/03 11:37:15 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/12/09 18:32:57 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/12 12:14:02 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include <math.h>
-#include <stdio.h> ///weegggg
+#include <stdio.h>
 
-void	abc_formula_cone(t_ray rot_ray, /*t_cone *cone, */double *t)
+void	abc_formula_cone(t_ray rot_ray, double *t)
 {
 	double	a;
 	double	b;
@@ -26,7 +26,7 @@ void	abc_formula_cone(t_ray rot_ray, /*t_cone *cone, */double *t)
 	b = 2 * (rot_ray.origin.x * rot_ray.dir.x + rot_ray.origin.z * \
 		rot_ray.dir.z - rot_ray.origin.y * rot_ray.dir.y);
 	c = rot_ray.origin.x * rot_ray.origin.x + rot_ray.origin.z * \
-		rot_ray.origin.z - rot_ray.origin.y * rot_ray.origin.y;//Adding this makes hyperboloid: - powf(cone->radius, 2);
+		rot_ray.origin.z - rot_ray.origin.y * rot_ray.origin.y;
 	d = b * b - 4 * a * c;
 	if (d < 0)
 	{
@@ -36,7 +36,6 @@ void	abc_formula_cone(t_ray rot_ray, /*t_cone *cone, */double *t)
 	}
 	t[0] = (-b + sqrt(d)) / (2 * a);
 	t[1] = (-b - sqrt(d)) / (2 * a);
-	// printf("t0: [%f], t1: [%f]\n", t[0], t[1]);
 }
 
 double	quadratic_form_cone(t_cone *cone, t_ray rot_ray, double t_max)
@@ -45,7 +44,7 @@ double	quadratic_form_cone(t_cone *cone, t_ray rot_ray, double t_max)
 	double	t[3];
 	double	t_def;
 
-	abc_formula_cone(rot_ray, /*cone,*/ t);
+	abc_formula_cone(rot_ray, t);
 	if ((t[0] < (double)T_MIN && t[1] < (double)T_MIN) || \
 		(t[0] > t_max && t[1] > t_max))
 		return (-1);
@@ -54,12 +53,12 @@ double	quadratic_form_cone(t_cone *cone, t_ray rot_ray, double t_max)
 	else
 		t[2] = t[1];
 	p = ray_at(rot_ray, t[2]);
-	if (!(p.y >  0 && p.y < cone->height ))
+	if (!(p.y > 0 && p.y < cone->height))
 	{
 		if (t[2] == t[0])
 			t[2] = t[1];
 		p = ray_at(rot_ray, t[2]);
-		if (!(p.y >  0 && p.y < cone->height ))
+		if (!(p.y > 0 && p.y < cone->height))
 			return (-1);
 	}
 	t_def = t[2];
@@ -69,16 +68,18 @@ double	quadratic_form_cone(t_cone *cone, t_ray rot_ray, double t_max)
 void	find_cone_values(t_cone *cone, t_point *p, t_point *n, t_ray tmp)
 {
 	t_point	bottom_center;
-	double	lena;
+	double	len_a;
 	double	x;
 	t_point	pp;
+	double	tmp_radius;
 
-	bottom_center = ray_at(tmp, (cone->height / 2 * -1));
-	lena = norm(substract_points(*p, bottom_center));
-	x = sqrt(powf(lena, 2.0) - powf(cone->radius, 2.0));
-	tmp.origin = bottom_center;
+	bottom_center = ray_at(tmp, (cone->height * -1));
+	len_a = norm(substract_points(*p, cone->top));
+	tmp_radius = len_a * sin(0.785398);
+	x = sqrt(pow(len_a, 2.0) - pow(tmp_radius, 2.0));
+	tmp.origin = cone->top;
 	pp = ray_at(tmp, x);
-	*n = normalize_point(substract_points(*p, pp));
+	*n = normalize_point(substract_points(*p, (pp)));
 }
 
 int	hit_cone(t_cone *cone, t_ray ray, double t_max, t_hit *hit_rec)
@@ -89,7 +90,6 @@ int	hit_cone(t_cone *cone, t_ray ray, double t_max, t_hit *hit_rec)
 	t_ray	tmp;
 	double	t;
 
-	// printf("ray: dir: x [%f], y [%f], z [%f]. Ori: x [%f], y [%f], z[%f]\n", ray.dir.x, ray.dir.y, ray.dir.z, ray.origin.x, ray.origin.y, ray.origin.z);
 	rot_ray = apply_rodrigues(cone->dir, cone->top, ray);
 	t = quadratic_form_cone(cone, rot_ray, t_max);
 	if (t == -1)
@@ -104,7 +104,7 @@ int	hit_cone(t_cone *cone, t_ray ray, double t_max, t_hit *hit_rec)
 		hit_rec->t = t;
 		hit_rec->hit_point = p;
 		hit_rec->center = cone->top;
-		set_normal(ray, hit_rec, normalize_point(n));
+		hit_rec->normal = n;
 		return (1);
 	}
 	return (0);

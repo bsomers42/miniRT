@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 15:11:47 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/12/09 17:44:30 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/12 12:16:26 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,14 +145,10 @@ int		hit_any_cone_cap(t_parse map_info, t_ray ray, t_hit *hit_rec);
 int		hit_any_tube(t_parse map_info, t_ray ray, t_hit *hit_rec, double t_max);
 int		hit_anything(t_parse map_info, t_ray ray, t_hit *hit_rec);
 
-// double	norm(t_point vec);
-// int		hit_caps(t_cyl *cyl, t_ray ray, double t_max, t_hit *hit_rec);
-
 //tracer utils
 void	set_normal(t_ray ray, t_hit *hit_rec, t_point n);
 double	norm(t_point vec);
-// t_ray	apply_rodrigues(t_cyl *cyl, t_ray ray);
-t_ray	apply_rodrigues(/*t_cyl *cyl*/ t_point dir, t_point center, t_ray ray);
+t_ray	apply_rodrigues(t_point dir, t_point center, t_ray ray);
 
 t_color	antialias_color(t_parse map_info, int x, int y);
 t_color	point_ray_get_color(t_parse map_info, double i, double j);

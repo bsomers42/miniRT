@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 14:54:42 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/12/08 16:36:24 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/12 12:15:41 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "MLX42.h"
 #include "threads.h"
 #include <stdlib.h>
-// #include <stdio.h>	//remove in end maybe
 #include <pthread.h>
 #include "libft.h"
 
@@ -28,6 +27,7 @@ void	minirt_keyhook(mlx_key_data_t keydata, void *ptr)
 	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
 	{
 		// free_minirt(parse); //Segfault!?
+		//while (1), wacht op de counter voor de gesloten threads en doe dan free en exit
 		exit(EXIT_SUCCESS);
 	}
 }

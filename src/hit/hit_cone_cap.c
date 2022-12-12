@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/18 16:38:10 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/12/09 17:47:02 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/12 12:12:34 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_point	calc_cap_cone_center(t_cone *cone)
 
 	tmp.dir = normalize_point(cone->dir);
 	tmp.origin = cone->top;
-	cap_center = ray_at(tmp, (cone->height  ));
+	cap_center = ray_at(tmp, cone->height);
 	return (cap_center);
 }
 
@@ -64,7 +64,8 @@ int	hit_cone_cap(t_cone *cone, t_ray ray, t_hit *hit_rec)
 		if (t >= T_MIN && t <= hit_rec->t && \
 			intersect_circle_cone(cone, ray, t, calc_cap_cone_center(cone)))
 		{
-			*hit_rec = set_hit_rec_cone(cone, ray, t, calc_cap_cone_center(cone));
+			*hit_rec = set_hit_rec_cone(cone, \
+				ray, t, calc_cap_cone_center(cone));
 			return (1);
 		}
 	}

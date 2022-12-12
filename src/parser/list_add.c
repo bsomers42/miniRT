@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/11 11:13:12 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/12/09 18:36:19 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/12 12:14:43 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,6 @@ void	ft_lstadd_cy(t_list **lst, char **line)
 		write_exit("Wrong information for cylinder\n", 1);
 	stod_center(line[1], &cy.center);
 	stod_vec(line[2], &cy.dir);
-	// if (cy.dir.x == 0 && cy.dir.y < 0 && cy.dir.z == 0)
-	// 	cy.dir.y = cy.dir.y * -1;
 	check_double_value(line[3]);
 	cy.radius = ft_stod(line[3]) * 0.5;
 	check_double_value(line[4]);
@@ -81,11 +79,8 @@ void	ft_lstadd_cone(t_list **lst, char **line)
 		write_exit("Wrong information for cone\n", 1);
 	stod_center(line[1], &cone.top);
 	stod_vec(line[2], &cone.dir);
-	// if (cone.dir.x == 0 && cone.dir.y < 0 && cone.dir.z == 0)
-	// 	cone.dir.y = cone.dir.y * -1;
 	check_double_value(line[3]);
 	cone.radius = ft_stod(line[3]) * 0.5;
-	// check_double_value(line[4]);
 	cone.height = ft_stod(line[3]);
 	atoi_color(line[4], &cone.color);
 	cone_void = malloc(sizeof(t_cone));
