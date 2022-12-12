@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 13:26:28 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/12/08 14:58:04 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/12 12:17:10 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,13 @@ t_point	ray_at(t_ray ray, double t)
 	return (result);
 }
 
+/**
+ * @brief calculates the shadow of the pixel
+ * 
+ * @param map_info 	parsed info from .rt map
+ * @param record 	the shape closest to the ray origin
+ * @return t_color 	the color of the shadow
+ */
 t_color	calculate_shadow(t_parse map_info, t_hit record)
 {
 	double	r;
@@ -45,12 +52,12 @@ t_color	calculate_shadow(t_parse map_info, t_hit record)
 }
 
 /**
- * @brief calculates the shade of the pixel: 
+ * @brief calculates the shade of the pixel
  * 
- * @param map_info 
- * @param record 
- * @param costheta 
- * @return t_color 
+ * @param map_info	parsed info from .rt map
+ * @param record 	the shape closest to the ray origin
+ * @param costheta 	the angle between the shape normal and the ray towards light
+ * @return t_color 	the shaded color
  */
 t_color	calculate_shade(t_parse map_info, t_hit record, double costheta)
 {
@@ -77,13 +84,11 @@ t_color	calculate_shade(t_parse map_info, t_hit record, double costheta)
 }
 
 /**
- * @brief If this pixel is in the shadow, calculate the ambient light at this
- *  pixel. If not in the shadow, calculate the combination of ambient and 
- * normal light coming together at this pixel.
+ * @brief checks if this pixel is in shadow or not, calculates color of pixel
  * 
  * @param map_info 	parsed info from .rt map
- * @param record 	information on the object closest to the ray origin
- * @return t_color 	the shaded color
+ * @param record 	the shape closest to the ray origin
+ * @return t_color 	the color of the pixel, shaded or in shadow
  */
 t_color	calculate_shadow_shade(t_parse map_info, t_hit record)
 {
@@ -107,13 +112,13 @@ t_color	calculate_shadow_shade(t_parse map_info, t_hit record)
 }
 
 /**
- * @brief point the ray in the right direction, get the color of the object 
- * intersecting ray.dir closest to ray.origin
+ * @brief point the ray in the right direction, get the color of the shape 
+ * closest to the ray origin
  * 
  * @param map_info	parsed info from .rt map
- * @param i 		x location of pixel to calculate color of
- * @param j 		y location of pixel to calculate color of
- * @return t_color 	the found color  
+ * @param i 		x location of pixel to fill
+ * @param j 		y location of pixel to fill
+ * @return t_color 	the found color
  */
 t_color	point_ray_get_color(t_parse map_info, double i, double j)
 {
@@ -127,7 +132,7 @@ t_color	point_ray_get_color(t_parse map_info, double i, double j)
 	ray.dir = add_horizontal_position(ray.dir, map_info, i);
 	ray.dir = add_vertical_position(ray.dir, map_info, j);
 	ray.dir = substract_points(ray.dir, ray.origin);
-	ray.dir = normalize_point(ray.dir); //!!!
+	ray.dir = normalize_point(ray.dir);
 	record.t = INFINITY;
 	closest_index = hit_anything(map_info, ray, &record);
 	if (closest_index > 0)
