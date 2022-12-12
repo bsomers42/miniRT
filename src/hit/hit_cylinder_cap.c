@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/18 16:38:10 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/12/08 15:12:48 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/12 20:06:17 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,7 @@ int	hit_caps(t_cyl *cyl, t_ray ray, t_hit *hit_rec, int side)
 	double	t;
 	t_point	polo;
 	double	denom;
-	int		hit_anything;
 
-	hit_anything = 0;
 	denom = dot_points(cyl->dir, ray.dir);
 	if (fabs(denom) > 0)
 	{
