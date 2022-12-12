@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 15:46:19 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/12/08 14:58:15 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/08 15:10:55 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ double	calculate_root(t_sphere *sphere, t_ray ray, double t_max)
 	d = half_b * half_b - a * calculate_c(change, sphere->radius);
 	if (d < 0.0)
 		return (-1.0);
-	root = (-half_b - sqrtf(d)) / a;
+	root = (-half_b - sqrt(d)) / a;
 	if (root < T_MIN || t_max < root)
 	{
-		root = (-half_b + sqrtf(d)) / a;
+		root = (-half_b + sqrt(d)) / a;
 		if (root < T_MIN || t_max < root)
 			return (-1.0);
 	}

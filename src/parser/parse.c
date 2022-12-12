@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 16:47:20 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/12/12 11:29:31 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/12/12 12:21:03 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	assign_ambient(char *str, int *amb_ptr, t_parse *parse)
 	if (check_num_of_elems(split, 3) != 0)
 		write_exit("Wrong information for ambient (A)\n", 1);
 	check_double_value(split[1]);
-	parse->amb.ratio = ft_stofl(split[1]);
+	parse->amb.ratio = ft_stod(split[1]);
 	if (parse->amb.ratio < 0 || parse->amb.ratio > 1)
 		write_exit("Wrong ambient lighting ratio. [0.0,1.0]\n", 1);
 	atoi_color(split[2], &parse->amb.color);
@@ -37,8 +37,8 @@ void	assign_camera(char *str, int *cam_ptr, t_parse *parse)
 	malloc_check_arr(split);
 	if (check_num_of_elems(split, 4) != 0)
 		write_exit("Wrong information for camera (C)\n", 1);
-	stofl_center(split[1], &parse->cam.origin);
-	stofl_vec(split[2], &parse->cam.dir);
+	stod_center(split[1], &parse->cam.origin);
+	stod_vec(split[2], &parse->cam.dir);
 	parse->cam.fov = ft_atoi(split[3]);
 	if (parse->cam.fov <= 0 || parse->cam.fov > 180)
 		write_exit("Wrong FOV value\n", 1);
@@ -54,9 +54,9 @@ void	assign_light(char *str, int *light_ptr, t_parse *parse)
 	malloc_check_arr(split);
 	if (check_num_of_elems(split, 3) != 0)
 		write_exit("Wrong information for light (L)\n", 1);
-	stofl_center(split[1], &parse->light.origin);
+	stod_center(split[1], &parse->light.origin);
 	check_double_value(split[2]);
-	parse->light.bright = ft_stofl(split[2]);
+	parse->light.bright = ft_stod(split[2]);
 	if (parse->light.bright < 0 || parse->light.bright > 1)
 		write_exit("Wrong light brightness ratio. [0.0,1.0]\n", 1);
 	free_array(split);
@@ -82,6 +82,8 @@ void	assign_to_struct(char **map_split_n, t_parse *parse)
 			ft_lstadd_pl(&(parse->lst_plane), ft_split(*map_split_n, ' '));
 		else if (ft_strncmp(*map_split_n, "cy ", 3) == 0)
 			ft_lstadd_cy(&(parse->lst_cyl), ft_split(*map_split_n, ' '));
+		else if (ft_strncmp(*map_split_n, "co ", 3) == 0)
+			ft_lstadd_cone(&(parse->lst_cone), ft_split(*map_split_n, ' '));
 		else if (ft_strncmp(*map_split_n, "# ", 2) != 0)
 			write_exit("Excessive characters included/information missing\n", 1);
 		map_split_n++;
@@ -102,6 +104,7 @@ t_parse	*parse_map(char *argv[])
 	parse->lst_sphere = NULL;
 	parse->lst_plane = NULL;
 	parse->lst_cyl = NULL;
+	parse->lst_cone = NULL;
 	map_char = get_map(argv);
 	map_split_newline = ft_split(map_char, '\n');
 	malloc_check_arr(map_split_newline);
