@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 15:11:47 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/12/12 12:20:18 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/12/12 12:36:33 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 # define T_MIN 0.01
 
-# define AA 2
+# define AA 1
 # define THREADS 7
 # include "libft.h"
 # include "MLX42.h"
