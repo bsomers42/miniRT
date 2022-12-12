@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/17 13:15:51 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/12/12 11:15:18 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/12/12 14:00:27 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ static int	check_done(t_threadinfo *info)
 	}
 	if (info->data->pixels_done > WIDTH * HEIGHT)
 	{
+		info->data->threads_done++;
 		if (pthread_mutex_unlock(&(info->data->pixel_lock)) != 0)
 			error_exit("pthread_mutex_unlock", 1);
 		return (1);
@@ -69,24 +70,22 @@ static void	fill_pixel(t_threadinfo *info, int x, int y)
  */
 static void	*fill_screen(void *ptr)
 {
-	t_threadinfo	*info;
 	int				x;
 	int				y;
 	int				count;
 
 	count = 0;
-	info = ptr;
 	while (count < THREADS * 2)
 	{
 		y = count % THREADS;
 		while (y <= HEIGHT - 1)
 		{
-			x = (info->i + (count % 2) * THREADS);
+			x = (((t_threadinfo *)ptr)->i + (count % 2) * THREADS);
 			while (x <= WIDTH - 1)
 			{
-				if (check_done(info) == 1)
+				if (check_done((t_threadinfo *)ptr) == 1)
 					return (NULL);
-				fill_pixel(info, x, y);
+				fill_pixel((t_threadinfo *)ptr, x, y);
 				x += THREADS * 2;
 			}
 			y += THREADS;
@@ -94,7 +93,7 @@ static void	*fill_screen(void *ptr)
 		write(1, "■", 4);
 		count++;
 	}
-	check_done(info);
+	check_done((t_threadinfo *)ptr);
 	return (NULL);
 }
 
