@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 15:11:47 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/12/08 15:49:05 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/12/12 11:26:58 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 # define T_MIN 0.01
 
-# define AA 2 //anti-aliasing
+# define AA 2
 # define THREADS 7
 # include "libft.h"
 # include "MLX42.h"
@@ -122,17 +122,12 @@ int		check_num_of_elems(char **array, int num);
 void	check_double_value(char *str);
 void	check_number_of_cla(int cam, int amb, int light);
 
-//utils
-
 //tracer
 int		hit_any_sp(t_parse map_info, t_ray ray, t_hit *hit_rec, double t_max);
 int		hit_any_pl(t_parse map_info, t_ray ray, t_hit *hit_rec, double t_max);
 int		hit_any_cap(t_parse map_info, t_ray ray, t_hit *hit_rec, int side);
 int		hit_any_tube(t_parse map_info, t_ray ray, t_hit *hit_rec, double t_max);
 int		hit_anything(t_parse map_info, t_ray ray, t_hit *hit_rec);
-
-// double	norm(t_point vec);
-// int		hit_caps(t_cyl *cyl, t_ray ray, double t_max, t_hit *hit_rec);
 
 //tracer utils
 void	set_normal(t_ray ray, t_hit *hit_rec, t_point n);
