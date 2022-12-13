@@ -6,13 +6,13 @@
 #    By: bsomers <bsomers@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/09/22 14:52:38 by bsomers       #+#    #+#                  #
-#    Updated: 2022/12/12 14:01:59 by jaberkro      ########   odam.nl          #
+#    Updated: 2022/12/13 16:09:30 by bsomers       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = minirt
+NAME = miniRT
 
-FLAGS = -Wall -Wextra -Werror -O3 -g3
+FLAGS = -Wall -Wextra -Werror -O3
 INCLUDE = -I include -I ./MLX42/include/MLX42 -I ./libft
 
 LIBFT_DIR = libft/
@@ -24,6 +24,7 @@ BUILD_DIR = obj
 
 SRC = main.c \
 	init.c \
+	threads.c \
 	error.c \
 	utils.c \
 	parser/parse.c \
@@ -50,8 +51,7 @@ SRC = main.c \
 	hit/hit_plane.c \
 	hit/hit_cylinder_tube.c \
 	hit/hit_cylinder_cap.c \
-	hit/hit_utils.c \
-	threads.c
+	hit/hit_utils.c
 
 OBJ := $(addprefix $(BUILD_DIR)/, $(SRC:.c=.o))
 SRC := $(addprefix $(SRC_DIR)/, $(SRC))
@@ -60,6 +60,7 @@ all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJ) $(LIBMLX42)
 	$(CC) $^ $(FLAGS) $(INCLUDE) -lglfw3 -framework Cocoa -framework OpenGL -framework IOKit -L. -o $(NAME)
+
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 	mkdir -p $(dir $@)
 	$(CC) -c $(INCLUDE) $(FLAGS) -o $@ $<
@@ -76,7 +77,6 @@ clean:
 	rm -rf $(BUILD_DIR)
 	@make clean -C $(LIBFT_DIR)
 	@make clean -C ./MLX42
-
 
 fclean: clean
 	rm -f $(NAME)
