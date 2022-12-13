@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/03 11:37:15 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/12/09 16:45:22 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/12 15:33:51 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int	hit_tube(t_cyl *cyl, t_ray ray, double t_max, t_hit *hit_rec)
 	tmp.origin = cyl->center;
 	p = ray_at(ray, t);
 	find_cyl_values(cyl, &p, &n, tmp);
-	if (t >= T_MIN && t <= t_max)
+	if (t > T_MIN && t < t_max)
 	{
 		hit_rec->color = cyl->color;
 		hit_rec->t = t;

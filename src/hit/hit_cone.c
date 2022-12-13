@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/03 11:37:15 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/12/12 12:14:02 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/12 15:28:34 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ double	quadratic_form_cone(t_cone *cone, t_ray rot_ray, double t_max)
 	return (t_def);
 }
 
-void	find_cone_values(t_cone *cone, t_point *p, t_point *n, t_ray tmp)
+void	find_cone_values(t_cone *cone, t_point p, t_point *n, t_ray tmp)
 {
 	t_point	bottom_center;
 	double	len_a;
@@ -74,12 +74,11 @@ void	find_cone_values(t_cone *cone, t_point *p, t_point *n, t_ray tmp)
 	double	tmp_radius;
 
 	bottom_center = ray_at(tmp, (cone->height * -1));
-	len_a = norm(substract_points(*p, cone->top));
+	len_a = norm(substract_points(p, cone->top));
 	tmp_radius = len_a * sin(0.785398);
 	x = sqrt(pow(len_a, 2.0) - pow(tmp_radius, 2.0));
-	tmp.origin = cone->top;
 	pp = ray_at(tmp, x);
-	*n = normalize_point(substract_points(*p, (pp)));
+	*n = normalize_point(substract_points(p, (pp)));
 }
 
 int	hit_cone(t_cone *cone, t_ray ray, double t_max, t_hit *hit_rec)
@@ -94,11 +93,11 @@ int	hit_cone(t_cone *cone, t_ray ray, double t_max, t_hit *hit_rec)
 	t = quadratic_form_cone(cone, rot_ray, t_max);
 	if (t == -1)
 		return (0);
-	tmp.dir = normalize_point(cone->dir);
+	tmp.dir = cone->dir;
 	tmp.origin = cone->top;
 	p = ray_at(ray, t);
-	find_cone_values(cone, &p, &n, tmp);
-	if (t >= T_MIN && t <= t_max)
+	find_cone_values(cone, p, &n, tmp);
+	if (t > T_MIN && t < t_max)
 	{
 		hit_rec->color = cone->color;
 		hit_rec->t = t;

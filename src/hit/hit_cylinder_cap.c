@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/18 16:38:10 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/12/08 15:12:48 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/12 15:34:39 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,17 +54,17 @@ int	intersect_circle(t_cyl *cyl, t_ray ray, double t, t_point cap_center)
 int	hit_caps(t_cyl *cyl, t_ray ray, t_hit *hit_rec, int side)
 {
 	double	t;
-	t_point	polo;
-	double	denom;
+	t_point	cam_to_cntr;
+	double	cam_to_normal;
 	int		hit_anything;
 
 	hit_anything = 0;
-	denom = dot_points(cyl->dir, ray.dir);
-	if (fabs(denom) > 0)
+	cam_to_normal = dot_points(cyl->dir, ray.dir);
+	if (fabs(cam_to_normal) > 0)
 	{
-		polo = substract_points(calc_cap_center(cyl, side), ray.origin);
-		t = (double)dot_points(polo, cyl->dir) / (double)denom;
-		if (t >= T_MIN && t <= hit_rec->t && \
+		cam_to_cntr = substract_points(calc_cap_center(cyl, side), ray.origin);
+		t = (double)dot_points(cam_to_cntr, cyl->dir) / (double)cam_to_normal;
+		if (t > T_MIN && t < hit_rec->t && \
 			intersect_circle(cyl, ray, t, calc_cap_center(cyl, side)))
 		{
 			*hit_rec = set_hit_rec_cyl(cyl, ray, t, calc_cap_center(cyl, side));
@@ -89,11 +89,8 @@ int	hit_any_cap(t_parse map_info, t_ray ray, t_hit *hit_rec, int side)
 	{
 		if (hit_caps((t_cyl *)tmp->content, ray, &tmp_rec, side))
 		{
-			if (tmp_rec.t <= hit_rec->t && tmp_rec.t >= T_MIN)
-			{
-				hit_anything = i;
-				*hit_rec = tmp_rec;
-			}
+			hit_anything = i;
+			*hit_rec = tmp_rec;
 		}
 		tmp = tmp->next;
 		i++;

@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/02 16:07:31 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/12/08 14:58:16 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/12 15:27:37 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,18 @@
 
 int	hit_plane(t_plane *plane, t_ray ray, double t_max, t_hit *hit_rec)
 {
-	double	denom;
+	double	cam_to_normal;
 	double	t;
 	t_point	n;
-	t_point	polo;
+	t_point	cam_to_center;
 
-	n = normalize_point(plane->dir);
-	denom = dot_points(n, ray.dir);
-	if (fabs(denom) > 0)
+	n = plane->dir;
+	cam_to_normal = dot_points(n, ray.dir);
+	if (fabs(cam_to_normal) > 0)
 	{
-		polo = substract_points(plane->center, ray.origin);
-		t = (double)dot_points(polo, n) / (double)denom;
-		if (t >= T_MIN && t < t_max)
+		cam_to_center = substract_points(plane->center, ray.origin);
+		t = (double)dot_points(cam_to_center, n) / (double)cam_to_normal;
+		if (t > T_MIN && t < t_max)
 		{
 			hit_rec->t = t;
 			hit_rec->hit_point = ray_at(ray, hit_rec->t);

@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/11 11:13:12 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/12/12 12:20:55 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/12/12 14:28:47 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,11 @@ void	ft_lstadd_sp(t_list **lst, char **line)
 	t_sphere	sp;
 	t_sphere	*sp_void;
 
+	malloc_check_arr(line);
 	if (check_num_of_elems(line, 4) != 0)
 		write_exit("Wrong information for sphere\n", 1);
 	stod_center(line[1], &sp.center);
+	check_double_value(line[2]);
 	sp.radius = ft_stod(line[2]) * 0.5;
 	atoi_color(line[3], &sp.color);
 	sp_void = malloc(sizeof(t_sphere));
@@ -35,6 +37,7 @@ void	ft_lstadd_pl(t_list **lst, char **line)
 	t_plane	pl;
 	t_plane	*pl_void;
 
+	malloc_check_arr(line);
 	if (check_num_of_elems(line, 4) != 0)
 		write_exit("Wrong information for plane\n", 1);
 	stod_center(line[1], &pl.center);
@@ -53,6 +56,7 @@ void	ft_lstadd_cy(t_list **lst, char **line)
 	t_cyl	cy;
 	t_cyl	*cy_void;
 
+	malloc_check_arr(line);
 	if (check_num_of_elems(line, 6) != 0)
 		write_exit("Wrong information for cylinder\n", 1);
 	stod_center(line[1], &cy.center);
@@ -75,6 +79,7 @@ void	ft_lstadd_cone(t_list **lst, char **line)
 	t_cone	cone;
 	t_cone	*cone_void;
 
+	malloc_check_arr(line);
 	if (check_num_of_elems(line, 5) != 0)
 		write_exit("Wrong information for cone\n", 1);
 	stod_center(line[1], &cone.top);

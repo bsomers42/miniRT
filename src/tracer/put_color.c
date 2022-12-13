@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 12:45:02 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/12/01 12:48:48 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/12/13 16:11:20 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ void	put_color(t_threadinfo *info, int i, int j, t_color color)
 	t_mlx_str		str;
 
 	str = info->data->mlx_str;
-	red = color.r * powf(256, 3);
-	green = color.g * powf(256, 2);
+	red = color.r * pow(256, 3);
+	green = color.g * pow(256, 2);
 	blue = color.b * 256;
 	color_hex = red + green + blue + 255;
 	if (pthread_mutex_lock(&(info->data->mlx_lock)) != 0)

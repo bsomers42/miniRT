@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/17 13:15:51 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/12/12 14:00:27 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/12/12 14:51:08 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,7 @@ static int	check_done(t_threadinfo *info)
 		error_exit("pthread_mutex_lock", 1);
 	if (info->data->pixels_done == WIDTH * HEIGHT)
 	{
-		write(1, "\nDONE!\n", 7);
-		info->data->pixels_done++;
-	}
-	if (info->data->pixels_done > WIDTH * HEIGHT)
-	{
+		write(1, "\nRendering complete!\n", 21);
 		info->data->threads_done++;
 		if (pthread_mutex_unlock(&(info->data->pixel_lock)) != 0)
 			error_exit("pthread_mutex_unlock", 1);
@@ -78,10 +74,10 @@ static void	*fill_screen(void *ptr)
 	while (count < THREADS * 2)
 	{
 		y = count % THREADS;
-		while (y <= HEIGHT - 1)
+		while (y < HEIGHT)
 		{
 			x = (((t_threadinfo *)ptr)->i + (count % 2) * THREADS);
-			while (x <= WIDTH - 1)
+			while (x < WIDTH)
 			{
 				if (check_done((t_threadinfo *)ptr) == 1)
 					return (NULL);
