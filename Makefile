@@ -1,12 +1,12 @@
 # **************************************************************************** #
 #                                                                              #
 #                                                         ::::::::             #
-#    Makefile                                           :+:    :+:             #
+#    makefile                                           :+:    :+:             #
 #                                                      +:+                     #
 #    By: bsomers <bsomers@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/09/22 14:52:38 by bsomers       #+#    #+#                  #
-#    Updated: 2022/12/13 16:09:30 by bsomers       ########   odam.nl          #
+#    Updated: 2022/12/14 17:16:49 by jaberkro      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,6 @@ SRC = main.c \
 	tracer/put_color.c \
 	color/new_color.c \
 	color/color_math_basics.c \
-	color/color_math_advanced.c \
 	point/new_point.c \
 	point/point_math_basics.c \
 	point/point_math_advanced.c \
