@@ -1,10 +1,19 @@
-A 0.7 255,255,255
+A 0.6 255,255,255
 L 0,5,0 1
+
+# camera looking from a diagonal angle (3D vision)
+C 5,5,-5 -1,-1,1 90
+# camera looking forward (standard view)
+# C 0,0,-5 0,0,1 90
+# camera looking down from above cylinder
 # C 0,5,0 0,-1,0 90
+# camera looking up from below cylinder
 # C 0,-5,0 0,1,0 90
+# camera looking left from right side of cylinder
 # C 5,0,0 -1,0,0 90
+# camera looking right from left side of cylinder
 # C -5,0,0 1,0,0 90
+# camera looking back from behind cylinder
 # C 0,0,5 0,0,-1 90
-C 0,0,-5 0,0,1 90
 
 cy 0,0,0 0,0,-1 2 2 254,185,236
