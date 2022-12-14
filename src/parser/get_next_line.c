@@ -6,14 +6,14 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/11/29 13:49:34 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/10/21 10:55:41 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/14 17:34:37 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #define BUFFER_SIZE 20
 
-char	*ft_charjoin(char *s1, char c)
+static char	*ft_charjoin(char *s1, char c)
 {
 	char	*sdef;
 	int		i;
@@ -40,7 +40,7 @@ char	*ft_charjoin(char *s1, char c)
 	return (sdef);
 }
 
-char	*search_and_make(int fd, char *buf, t_gnl *gnl, t_gnl *stat)
+static char	*search_and_make(int fd, char *buf, t_gnl *gnl, t_gnl *stat)
 {
 	if (stat->flag == 1)
 		return (NULL);
@@ -68,7 +68,7 @@ char	*search_and_make(int fd, char *buf, t_gnl *gnl, t_gnl *stat)
 	return (buf);
 }
 
-char	*loop_through_rest(char *buf, t_gnl *gnl, t_gnl *stat)
+static char	*loop_through_rest(char *buf, t_gnl *gnl, t_gnl *stat)
 {
 	while ((buf[gnl->n] != '\n') && (buf[gnl->n] != '\0'))
 		gnl->n++;
@@ -83,7 +83,7 @@ char	*loop_through_rest(char *buf, t_gnl *gnl, t_gnl *stat)
 	return (NULL);
 }
 
-char	*gnl_arrange(int fd, t_gnl *gnl, t_gnl *stat, char *buf)
+static char	*gnl_arrange(int fd, t_gnl *gnl, t_gnl *stat, char *buf)
 {
 	if (stat->a == 1)
 	{

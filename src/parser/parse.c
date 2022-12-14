@@ -6,13 +6,13 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 16:47:20 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/12/12 12:21:03 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/12/14 17:36:09 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-void	assign_ambient(char *str, int *amb_ptr, t_parse *parse)
+static void	assign_ambient(char *str, int *amb_ptr, t_parse *parse)
 {
 	char	**split;
 
@@ -29,7 +29,7 @@ void	assign_ambient(char *str, int *amb_ptr, t_parse *parse)
 	*amb_ptr = *amb_ptr + 1;
 }
 
-void	assign_camera(char *str, int *cam_ptr, t_parse *parse)
+static void	assign_camera(char *str, int *cam_ptr, t_parse *parse)
 {
 	char	**split;
 
@@ -46,7 +46,7 @@ void	assign_camera(char *str, int *cam_ptr, t_parse *parse)
 	*cam_ptr = *cam_ptr + 1;
 }
 
-void	assign_light(char *str, int *light_ptr, t_parse *parse)
+static void	assign_light(char *str, int *light_ptr, t_parse *parse)
 {
 	char	**split;
 
@@ -63,7 +63,7 @@ void	assign_light(char *str, int *light_ptr, t_parse *parse)
 	*light_ptr = *light_ptr + 1;
 }
 
-void	assign_to_struct(char **map_split_n, t_parse *parse)
+static void	assign_to_struct(char **map_split_n, t_parse *parse)
 {
 	int	*cla;
 

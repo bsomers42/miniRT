@@ -6,14 +6,14 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/21 14:40:13 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/11/17 17:07:44 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/14 17:33:54 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include <stdio.h>
 
-void	check_extension_permission(char *str)
+static void	check_extension_permission(char *str)
 {
 	char	*tmp;
 
@@ -27,7 +27,7 @@ void	check_extension_permission(char *str)
 	free (tmp);
 }
 
-char	*read_input(char *strdef, int fd, int *count)
+static char	*read_input(char *strdef, int fd, int *count)
 {
 	char	*str;
 
