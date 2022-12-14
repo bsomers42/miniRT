@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/26 15:03:26 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/12/14 17:45:34 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/12/14 18:23:08 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,3 @@ t_point	multiply_point_double(t_point point, double t)
 	result.z = point.z * t;
 	return (result);
 }
-
