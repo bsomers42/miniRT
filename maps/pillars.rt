@@ -1,14 +1,15 @@
-
 A 0.4 255,255,255
-C 0,0,-500 0,0,1 120
-# C 0,0,200 0,0,1 120
-# C 0,0,0 0,0,1 90
-# C 0,0,600 0,0,1 120
-
-# L 0,-200,400 0.3 255,255,255
-# L 0,200,400 0.3 255,255,255
 L -400,0,0 0.3
-# L 400,0,0 0.3 255,255,255
+
+# camera in front of origin looking forward
+# c 0,0,-500 0,0,1 90
+# camera in front of origin looking forward, fov bigger than 'normal' fov
+C 0,0,-500 0,0,1 120
+# camera behind origin looking forward
+# c 0,0,200 0,0,1 90
+# c 0,0,600 0,0,1 90
+# camera from origin looking forward
+# C 0,0,0 0,0,1 90
 
 sp 0,0,800 180 255,101,47
 
