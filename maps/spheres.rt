@@ -12,7 +12,7 @@ C 0.0,0.0,-10 0,0,1 90
 # backward view
 # C 0.0,0.0,10 0,0,-1 90
 
-
+# 8 spheres in a circle around the origin
 sp 3,0,0    2   255,0,0
 sp 2,2,0    2   255,80,0
 sp 0,3,0    2   255,255,0
