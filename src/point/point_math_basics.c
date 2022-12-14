@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/26 15:03:26 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/12/08 14:57:48 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/14 17:45:34 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,6 @@ t_point	substract_points(t_point first, t_point second)
 	return (result);
 }
 
-t_point	multiply_points(t_point first, t_point second)
-{
-	t_point	result;
-
-	result.x = first.x * second.x;
-	result.y = first.y * second.y;
-	result.z = first.z * second.z;
-	return (result);
-}
-
 t_point	multiply_point_double(t_point point, double t)
 {
 	t_point	result;
@@ -52,12 +42,3 @@ t_point	multiply_point_double(t_point point, double t)
 	return (result);
 }
 
-t_point	divide_point_with_double(t_point point, double t)
-{
-	t_point	result;
-
-	result.x = point.x / t;
-	result.y = point.y / t;
-	result.z = point.z / t;
-	return (result);
-}
