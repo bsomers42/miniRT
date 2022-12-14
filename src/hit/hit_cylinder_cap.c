@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/18 16:38:10 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/12/12 15:34:39 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/14 10:56:08 by bsomers       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,7 @@ int	hit_caps(t_cyl *cyl, t_ray ray, t_hit *hit_rec, int side)
 	double	t;
 	t_point	cam_to_cntr;
 	double	cam_to_normal;
-	int		hit_anything;
 
-	hit_anything = 0;
 	cam_to_normal = dot_points(cyl->dir, ray.dir);
 	if (fabs(cam_to_normal) > 0)
 	{
