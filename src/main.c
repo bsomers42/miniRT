@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 14:54:42 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/12/13 16:10:27 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/14 17:39:52 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	minirt_keyhook(mlx_key_data_t keydata, void *ptr)
 	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
 	{
 		finish_hook_cleanup_minirt(infos);
-		write(1, "\n", 1);
 		exit(EXIT_SUCCESS);
 	}
 }
@@ -36,7 +35,6 @@ void	minirt_close(void *ptr)
 
 	infos = (t_threadinfo **)ptr;
 	finish_hook_cleanup_minirt(infos);
-	write(1, "\n", 1);
 	exit(EXIT_SUCCESS);
 }
 

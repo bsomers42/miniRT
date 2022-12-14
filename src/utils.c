@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/19 11:41:16 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/12/12 20:04:54 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/12/14 17:40:39 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void	finish_hook_cleanup_minirt(t_threadinfo **infos)
 {
 	if (pthread_mutex_lock(&(infos[0]->data->pixel_lock)) != 0)
 		error_exit("pthread_mutex_lock", 1);
+	if (infos[0]->data->pixels_done != WIDTH * HEIGHT)
+		write(1, "\n", 1);
 	infos[0]->data->pixels_done = WIDTH * HEIGHT;
 	infos[0]->data->threads_done++;
 	if (infos[0]->data->threads_done == THREADS)

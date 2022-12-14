@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/17 13:15:51 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/12/14 17:01:21 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/12/14 17:40:08 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	check_done(t_threadinfo *info)
 		error_exit("pthread_mutex_lock", 1);
 	if (info->data->pixels_done == WIDTH * HEIGHT)
 	{
-		write(1, "\nRendering complete!", 20);
+		write(1, "\nRendering complete!\n", 21);
 		info->data->threads_done++;
 		if (pthread_mutex_unlock(&(info->data->pixel_lock)) != 0)
 			error_exit("pthread_mutex_unlock", 1);
