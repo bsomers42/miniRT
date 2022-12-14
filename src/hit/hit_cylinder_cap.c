@@ -6,14 +6,14 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/18 16:38:10 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/12/14 10:57:53 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/14 17:29:30 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include <math.h>
 
-t_hit	set_hit_rec_cyl(t_cyl *cyl, t_ray ray, double t, t_point cap_center)
+static t_hit	set_hit_rec_cyl(t_cyl *cyl, t_ray ray, double t, t_point cap_center)
 {
 	t_hit	hit_rec;
 
@@ -25,7 +25,7 @@ t_hit	set_hit_rec_cyl(t_cyl *cyl, t_ray ray, double t, t_point cap_center)
 	return (hit_rec);
 }
 
-t_point	calc_cap_center(t_cyl *cyl, int side)
+static t_point	calc_cap_center(t_cyl *cyl, int side)
 {
 	t_point	cap_center;
 	t_ray	tmp;
@@ -39,7 +39,7 @@ t_point	calc_cap_center(t_cyl *cyl, int side)
 	return (cap_center);
 }
 
-int	intersect_circle(t_cyl *cyl, t_ray ray, double t, t_point cap_center)
+static int	intersect_circle(t_cyl *cyl, t_ray ray, double t, t_point cap_center)
 {
 	t_point	p;
 	t_point	v;
@@ -51,7 +51,7 @@ int	intersect_circle(t_cyl *cyl, t_ray ray, double t, t_point cap_center)
 	return (sqrt(d) <= cyl->radius);
 }
 
-int	hit_caps(t_cyl *cyl, t_ray ray, t_hit *hit_rec, int side)
+static int	hit_caps(t_cyl *cyl, t_ray ray, t_hit *hit_rec, int side)
 {
 	double	t;
 	t_point	cam_to_cntr;

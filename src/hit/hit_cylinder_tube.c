@@ -6,14 +6,14 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/03 11:37:15 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/12/12 15:33:51 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/14 17:31:18 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include <math.h>
 
-void	abc_formula(t_ray rot_ray, t_cyl *cyl, double *t)
+static void	abc_formula(t_ray rot_ray, t_cyl *cyl, double *t)
 {
 	double	a;
 	double	b;
@@ -36,7 +36,7 @@ void	abc_formula(t_ray rot_ray, t_cyl *cyl, double *t)
 	t[1] = (-b - sqrt(d)) / (2 * a);
 }
 
-double	quadratic_form_cyl(t_cyl *cyl, t_ray rot_ray, double t_max)
+static double	quadratic_form_cyl(t_cyl *cyl, t_ray rot_ray, double t_max)
 {
 	t_point	p;
 	double	t[3];
@@ -63,7 +63,7 @@ double	quadratic_form_cyl(t_cyl *cyl, t_ray rot_ray, double t_max)
 	return (t_def);
 }
 
-void	find_cyl_values(t_cyl *cyl, t_point *p, t_point *n, t_ray tmp)
+static void	find_cyl_values(t_cyl *cyl, t_point *p, t_point *n, t_ray tmp)
 {
 	t_point	bottom_center;
 	double	lena;
@@ -78,7 +78,7 @@ void	find_cyl_values(t_cyl *cyl, t_point *p, t_point *n, t_ray tmp)
 	*n = normalize_point(substract_points(*p, pp));
 }
 
-int	hit_tube(t_cyl *cyl, t_ray ray, double t_max, t_hit *hit_rec)
+static int	hit_tube(t_cyl *cyl, t_ray ray, double t_max, t_hit *hit_rec)
 {
 	t_ray	rot_ray;
 	t_point	n;
@@ -106,8 +106,7 @@ int	hit_tube(t_cyl *cyl, t_ray ray, double t_max, t_hit *hit_rec)
 	return (0);
 }
 
-int	hit_any_tube(t_parse map_info, t_ray ray, t_hit *hit_rec, \
-	double t_max)
+int	hit_any_tube(t_parse map_info, t_ray ray, t_hit *hit_rec, double t_max)
 {
 	int			hit_anything;
 	t_hit		tmp_rec;

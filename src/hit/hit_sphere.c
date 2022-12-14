@@ -6,14 +6,14 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 15:46:19 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/12/08 15:10:55 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/14 17:32:15 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include <math.h>
 
-double	calculate_c(t_point change, double radius)
+static double	calculate_c(t_point change, double radius)
 {
 	double	result;
 
@@ -21,7 +21,7 @@ double	calculate_c(t_point change, double radius)
 	return (result);
 }
 
-double	calculate_root(t_sphere *sphere, t_ray ray, double t_max)
+static double	calculate_root(t_sphere *sphere, t_ray ray, double t_max)
 {
 	t_point	change;
 	double	a;

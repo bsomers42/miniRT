@@ -6,14 +6,14 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/18 16:38:10 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/12/14 11:01:42 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/14 17:27:37 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include <math.h>
 
-t_hit	set_hit_rec_cone(t_cone *cone, t_ray ray, double t, t_point cap_center)
+static t_hit	set_hit_rec_cone(t_cone *cone, t_ray ray, double t, t_point cap_center)
 {
 	t_hit	hit_rec;
 
@@ -25,7 +25,7 @@ t_hit	set_hit_rec_cone(t_cone *cone, t_ray ray, double t, t_point cap_center)
 	return (hit_rec);
 }
 
-t_point	calc_cap_cone_center(t_cone *cone)
+static t_point	calc_cap_cone_center(t_cone *cone)
 {
 	t_point	cap_center;
 	t_ray	tmp;
@@ -36,7 +36,7 @@ t_point	calc_cap_cone_center(t_cone *cone)
 	return (cap_center);
 }
 
-int	intersect_circle_cone(t_cone *cone, t_ray ray, double t, t_point cap_center)
+static int	intersect_circle_cone(t_cone *cone, t_ray ray, double t, t_point cap_center)
 {
 	t_point	p;
 	t_point	v;
@@ -48,7 +48,7 @@ int	intersect_circle_cone(t_cone *cone, t_ray ray, double t, t_point cap_center)
 	return (sqrt(d) <= cone->radius * 2);
 }
 
-int	hit_cone_cap(t_cone *cone, t_ray ray, t_hit *hit_rec)
+static int	hit_cone_cap(t_cone *cone, t_ray ray, t_hit *hit_rec)
 {
 	double	t;
 	t_point	cam_to_cntr;

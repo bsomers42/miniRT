@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/03 11:37:15 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/12/14 10:58:05 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/14 17:28:52 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <math.h>
 #include <stdio.h>
 
-void	abc_formula_cone(t_ray rot_ray, double *t)
+static void	abc_formula_cone(t_ray rot_ray, double *t)
 {
 	double	a;
 	double	b;
@@ -38,7 +38,7 @@ void	abc_formula_cone(t_ray rot_ray, double *t)
 	t[1] = (-b - sqrt(d)) / (2 * a);
 }
 
-double	quadratic_form_cone(t_cone *cone, t_ray rot_ray, double t_max)
+static double	quadratic_form_cone(t_cone *cone, t_ray rot_ray, double t_max)
 {
 	t_point	p;
 	double	t[3];
@@ -65,7 +65,7 @@ double	quadratic_form_cone(t_cone *cone, t_ray rot_ray, double t_max)
 	return (t_def);
 }
 
-void	find_cone_values(t_cone *cone, t_point p, t_point *n, t_ray tmp)
+static void	find_cone_values(t_cone *cone, t_point p, t_point *n, t_ray tmp)
 {
 	double	len_a;
 	double	x;
@@ -79,7 +79,7 @@ void	find_cone_values(t_cone *cone, t_point p, t_point *n, t_ray tmp)
 	*n = normalize_point(substract_points(p, (pp)));
 }
 
-int	hit_cone(t_cone *cone, t_ray ray, double t_max, t_hit *hit_rec)
+static int	hit_cone(t_cone *cone, t_ray ray, double t_max, t_hit *hit_rec)
 {
 	t_ray	rot_ray;
 	t_point	n;

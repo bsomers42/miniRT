@@ -6,14 +6,14 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/02 16:07:31 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/12/12 15:27:37 by bsomers       ########   odam.nl         */
+/*   Updated: 2022/12/14 17:31:34 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include <math.h>
 
-int	hit_plane(t_plane *plane, t_ray ray, double t_max, t_hit *hit_rec)
+static int	hit_plane(t_plane *plane, t_ray ray, double t_max, t_hit *hit_rec)
 {
 	double	cam_to_normal;
 	double	t;
