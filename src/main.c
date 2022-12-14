@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/09/22 14:54:42 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/12/14 17:39:52 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/12/14 17:50:21 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include <pthread.h>
 #include "libft.h"
 
-void	minirt_keyhook(mlx_key_data_t keydata, void *ptr)
+static void	minirt_keyhook(mlx_key_data_t keydata, void *ptr)
 {
 	t_threadinfo	**infos;
 
@@ -29,7 +29,7 @@ void	minirt_keyhook(mlx_key_data_t keydata, void *ptr)
 	}
 }
 
-void	minirt_close(void *ptr)
+static void	minirt_close(void *ptr)
 {
 	t_threadinfo	**infos;
 
@@ -38,7 +38,7 @@ void	minirt_close(void *ptr)
 	exit(EXIT_SUCCESS);
 }
 
-void	draw_loading_bar(void)
+static void	draw_loading_bar(void)
 {
 	int	i;
 

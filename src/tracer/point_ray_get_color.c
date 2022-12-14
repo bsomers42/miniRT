@@ -6,7 +6,7 @@
 /*   By: jaberkro <jaberkro@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 13:26:28 by jaberkro      #+#    #+#                 */
-/*   Updated: 2022/12/12 12:21:34 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/12/14 17:49:20 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_point	ray_at(t_ray ray, double t)
  * @param record 	the shape closest to the ray origin
  * @return t_color 	the color of the shadow
  */
-t_color	calculate_shadow(t_parse map_info, t_hit record)
+static t_color	calculate_shadow(t_parse map_info, t_hit record)
 {
 	double	r;
 	double	g;
@@ -59,7 +59,7 @@ t_color	calculate_shadow(t_parse map_info, t_hit record)
  * @param costheta 	the angle between the shape normal and the ray towards light
  * @return t_color 	the shaded color
  */
-t_color	calculate_shade(t_parse map_info, t_hit record, double costheta)
+static t_color	calculate_shade(t_parse map_info, t_hit record, double costheta)
 {
 	double	r;
 	double	g;
@@ -90,7 +90,7 @@ t_color	calculate_shade(t_parse map_info, t_hit record, double costheta)
  * @param record 	the shape closest to the ray origin
  * @return t_color 	the color of the pixel, shaded or in shadow
  */
-t_color	calculate_shadow_shade(t_parse map_info, t_hit record)
+static t_color	calculate_shadow_shade(t_parse map_info, t_hit record)
 {
 	t_ray		light_ray;
 	t_hit		not_needed;

@@ -6,14 +6,14 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/19 11:41:16 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/12/14 17:40:39 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/12/14 17:52:22 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include "threads.h"
 
-void	free_lst(t_list **lst)
+static void	free_lst(t_list **lst)
 {
 	t_list	*tmp;
 
