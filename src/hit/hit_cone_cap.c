@@ -6,14 +6,15 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/18 16:38:10 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/12/14 17:27:37 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/12/14 18:24:14 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 #include <math.h>
 
-static t_hit	set_hit_rec_cone(t_cone *cone, t_ray ray, double t, t_point cap_center)
+static t_hit	set_hit_rec_cone(t_cone *cone, t_ray ray, double t, \
+	t_point cap_center)
 {
 	t_hit	hit_rec;
 
@@ -36,7 +37,8 @@ static t_point	calc_cap_cone_center(t_cone *cone)
 	return (cap_center);
 }
 
-static int	intersect_circle_cone(t_cone *cone, t_ray ray, double t, t_point cap_center)
+static int	intersect_circle_cone(t_cone *cone, t_ray ray, double t, \
+	t_point cap_center)
 {
 	t_point	p;
 	t_point	v;
