@@ -6,7 +6,7 @@
 /*   By: bsomers <bsomers@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/11/18 14:32:01 by bsomers       #+#    #+#                 */
-/*   Updated: 2022/12/12 12:20:44 by jaberkro      ########   odam.nl         */
+/*   Updated: 2022/12/14 18:37:18 by jaberkro      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <math.h>
 #include <stdio.h>
 
-double	calc_angle(t_point upaxis, t_point dir)
+static double	calc_angle(t_point upaxis, t_point dir)
 {
 	double	angle;
 	double	multip;
@@ -26,7 +26,7 @@ double	calc_angle(t_point upaxis, t_point dir)
 	return (angle);
 }
 
-t_point	rotate_axis_angle(t_point vec, t_point axis, double angle)
+static t_point	rotate_axis_angle(t_point vec, t_point axis, double angle)
 {
 	t_point	vec_orig;
 
