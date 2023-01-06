@@ -4,7 +4,7 @@ by [jaberkro](https://github.com/jaberkro) and [bsomers](https://github.com/bsom
 miniRT is the 11th project of the Codam core curriculum, and the last one entirely written in C. 
 Using raytracing, various scenes can be rendered.
 
-## Running:
+## Running
 
 `make && ./miniRT <map_name>.rt`
 
